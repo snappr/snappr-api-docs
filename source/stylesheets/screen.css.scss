@@ -489,15 +489,6 @@ html, body {
     @extend %code-font;
   }
   
-  // Snappr new...
-  tr td:first-child {
-    // background-color: rgba(0,0,0,0.05)!important;
-    padding-top: 12px;
-    border-radius: 3px;
-    @extend %break-words;
-    @extend %code-font;
-  }
-
   pre>code {
     background-color: transparent;
     padding: 0;
@@ -663,4 +654,9 @@ html, body {
 
 .highlight, .highlight .w {
   background-color: $code-bg;
+}
+
+// Snappr new...
+code>span.route_param {
+  color: $code-route-param-text;
 }
