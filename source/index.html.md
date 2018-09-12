@@ -17,9 +17,9 @@ search: true
 
 # Introduction
 
-Welcome to the Snappr API! You can use our API to manage bookings conducted through the Snappr marketplace network. The API is available only to organizations using the Snappr enterprise Photography Portal. If you do not currently have a Photography Portal account and are interesting in setting one up, find out more <a href="https://www.snappr.co/partner">here</a>.
+Welcome to the Snappr API! You can use our API to commission and manage photoshoots within the Snappr marketplace network. The API is available only to organizations using the Snappr enterprise Photography Portal. If you do not currently have a Photography Portal account and are interesting in setting one up, find out more <a href="https://www.snappr.co/partner">here</a>.
 
-We have language bindings in Shell and JavaScript. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+We have language bindings in Shell and JavaScript. You can view code examples in the panel on the right, and you can switch the programming language of the examples with the tabs on the top-right.
 
 # Authentication
 
@@ -34,11 +34,11 @@ const snappr = require('snappr-api');
 let api = snappr.authorize('zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z');
 ```
 
-> Make sure to replace the example key above with your API key.
+> Replace the example key above with your API key. This fake key is used in all of the following request examples.
 
-Snappr uses API keys to allow access to the API. You can access or regenerate your API key from your Photography Portal GUI. Each user has their own API key. Regenerating your API key will deactivate your API key. Deleting a user will deactivate their API key.
+Snappr uses API keys to allow access to the API. You can access or regenerate your API key from your Photography Portal GUI. Each user has a single unique active API key. Regenerating your API key will deactivate your previous key. Deleting a user will deactivate their API key.
 
-An API key to be included in all API requests in a header of this format:
+An API key needs to be included in all API requests in a header of this format:
 
 <code>Authorization: Bearer <span class="route_param">api_key</span></code>
 
@@ -53,7 +53,7 @@ You must replace <code>api_key</code> with your user API key.
 > Example request:
 
 ```shell
-curl "http://api.snappr.co/availability?latitude=34.0522&longitude=-118.2437&shoottype=event&duration=120&date=2018-12-01" \
+curl "https://api.snappr.co/availability?latitude=34.0522&longitude=-118.2437&shoottype=event&duration=120&date=2018-12-01" \
   -H 'accept-version: 1.0.0' \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"
 ```
@@ -94,7 +94,7 @@ This endpoint returns time availability (i.e. available shoot start times) for a
 
 ### HTTP Request
 
-<code>GET http://api.snappr.co/availability?latitude=<span class="route_param">:latitude</span>&longitude=<span class="route_param">:longitude</span>&shoottype=<span class="route_param">:shoottype</span>&duration=<span class="route_param">:duration</span>&date=<span class="route_param">:date</span></code>
+<code>GET https://api.snappr.co/availability?latitude=<span class="route_param">:latitude</span>&longitude=<span class="route_param">:longitude</span>&shoottype=<span class="route_param">:shoottype</span>&duration=<span class="route_param">:duration</span>&date=<span class="route_param">:date</span></code>
 
 ### Query Parameters
 
@@ -117,7 +117,7 @@ All available times within the range of the local date will be returned. However
 > Example request:
 
 ```shell
-curl "http://api.snappr.co/bookings" \
+curl "https://api.snappr.co/bookings" \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
   -H 'accept-version: 1.0.0' \
   -H "Content-Type: application/json" \
@@ -164,7 +164,7 @@ let bookings = api.bookings.post({
 ```json
 {
   "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
-  "status": "created",
+  "status": "paid",
   "credits": 249,
   "latitude": 34.0522,
   "longitude": -118.2437,
@@ -178,6 +178,7 @@ let bookings = api.bookings.post({
   "customer_email": "test@snappr.co",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
+  "photographer_name": "Hollie B.",
   "created_at": "2018-09-01T09:12:00Z",
   "updated_at": "2018-09-01T09:12:00Z"
 }
@@ -187,7 +188,7 @@ This endpoint creates a new photoshoot booking.
 
 ### HTTP Request
 
-`POST http://api.snappr.co/bookings`
+`POST https://api.snappr.co/bookings`
 
 ### Request (Body) Parameters
 
@@ -212,129 +213,152 @@ Always check availability before trying to create a new booking. If you try to m
 
 ## Get All Bookings
 
+> Example request:
+
 ```shell
-curl "http://example.com/api/bookings"
-  -H "Authorization: meowmeowmeow"
+curl "https://api.snappr.co/bookings" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0' \
 ```
 
 ```javascript
 const snappr = require('snappr-api');
 
-let api = snappr.authorize('meowmeowmeow');
-let bookings = api.bookings.get();
+let api = snappr.authorize('zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z');
+let bookings = api.bookings.get({
+  // no params
+});
 ```
 
-> The above command returns JSON structured like this:
+> Example JSON response:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+{
+  "results": [
+    {
+      "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
+      "status": "paid",
+      "credits": 249,
+      "latitude": 34.0522,
+      "longitude": -118.2437,
+      "shoottype": "event",
+      "start_at": "2018-12-01T07:30:00Z",
+      "duration": 120,
+      "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+      "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+      "customer_firstname": "Mary",
+      "customer_surname": "Smith",
+      "customer_email": "test@snappr.co",
+      "customer_mobilephone": "+14153339966",
+      "customer_company": "Snappr Inc.",
+      "photographer_name": "Hollie B.",
+      "created_at": "2018-09-01T09:12:00Z",
+      "updated_at": "2018-09-01T09:12:00Z"
+    },
+    {
+      "uid": "48b095fd-7fc0-41dc-b632-9b032e0a65e6",
+      "status": "paid",
+      "credits": 349,
+      "latitude": 34.1513,
+      "longitude": -118.2439,
+      "shoottype": "family",
+      "start_at": "2018-12-01T07:30:00Z",
+      "duration": 180,
+      "location_notes": "Meet near the park entance",
+      "style_notes": "Variety of group shots of the family with different backgrounds",
+      "customer_firstname": "John",
+      "customer_surname": "Smith",
+      "customer_email": "testing@snappr.co",
+      "customer_mobilephone": "+14153338822",
+      "customer_company": null,
+      "photographer_name": "Jamie C.",
+      "created_at": "2018-09-01T08:34:00Z",
+      "updated_at": "2018-09-01T08:34:00Z"
+    }
+  ],
+  "count": 2,
+  "limit": 100,
+  "offset": 0,
+  "total": 2
+}
 ```
 
 This endpoint retrieves all bookings.
 
 ### HTTP Request
 
-`GET http://example.com/api/bookings`
+<code>GET https://api.snappr.co/bookings?limit=<span class="route_param">:limit</span>&offset=<span class="route_param">:offset</span></code>
 
 ### Query Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include bookings that have already been adopted.
+Parameter | Type | Description | Required
+--------- | ---- | ----------- | --------
+`limit` | Integer |	Maximum number of bookings to be returned (maximum of 100). Defaults to `100`. | No
+`offset` | Integer | Offset used for pagination if there are more bookings than the limit (or more than 100 bookings if there is no limit). Defaults to `0`. | No
 
-<aside class="success">
-Remember — a happy booking is an authenticated booking!
+<aside class="notice">
+The API does not currently support booking filters (e.g. filtering by a certain status), but this is planned for an upcoming release.
 </aside>
 
-## Get a Specific Booking
+## Get Single Booking
+
+> Example request:
 
 ```shell
-curl "http://example.com/api/bookings/2"
-  -H "Authorization: meowmeowmeow"
+curl "https://api.snappr.co/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0' \
 ```
 
 ```javascript
 const snappr = require('snappr-api');
 
-let api = snappr.authorize('meowmeowmeow');
-let max = api.bookings.get(2);
+let api = snappr.authorize('zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z');
+let bookings = api.bookings.get({
+  uid: "0ccefa53-b346-4d3e-8dcb-79a914289928";
+});
 ```
 
-> The above command returns JSON structured like this:
+> Example JSON response:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
+  "status": "paid",
+  "credits": 249,
+  "latitude": 34.0522,
+  "longitude": -118.2437,
+  "shoottype": "event",
+  "start_at": "2018-12-01T07:30:00Z",
+  "duration": 120,
+  "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+  "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+  "customer_firstname": "Mary",
+  "customer_surname": "Smith",
+  "customer_email": "test@snappr.co",
+  "customer_mobilephone": "+14153339966",
+  "customer_company": "Snappr Inc.",
+  "photographer_name": "Hollie B.",
+  "created_at": "2018-09-01T09:12:00Z",
+  "updated_at": "2018-09-01T09:12:00Z"
 }
 ```
 
-This endpoint retrieves a specific booking.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+This endpoint retrieves a specific booking using the ID of the booking.
 
 ### HTTP Request
 
-`GET http://example.com/bookings/<ID>`
+<code>GET https://api.snappr.co/bookings/<span class="route_param">:booking_uid</span></code>
 
-### URL Parameters
+### Request Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the booking to retrieve
+Parameter | Type | Description | Required
+--------- | ---- | ----------- | --------
+`booking_uid` | String (UUID) |	The identifier of the booking. | Yes
 
-## Delete a Specific Booking
 
-```shell
-curl "http://example.com/api/bookings/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
 
-```javascript
-const snappr = require('snappr-api');
 
-let api = snappr.authorize('meowmeowmeow');
-let max = api.bookings.delete(2);
-```
 
-> The above command returns JSON structured like this:
 
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific booking.
-
-### HTTP Request
-
-`DELETE http://example.com/bookings/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the booking to delete
-
+<!-- <aside class="warning">Remember to be good to your mother.</aside> -->
