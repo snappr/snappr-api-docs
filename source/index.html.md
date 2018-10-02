@@ -357,6 +357,47 @@ Parameter | Type | Description | Required
 `booking_uid` | String (UUID) |	The identifier of the booking. | Yes
 
 
+# Custom Webhooks
+
+> Example JSON payload sent to webhook URL as POST:
+
+```json
+{
+  "type": "update",
+  "booking": {
+    "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
+    "status": "paid",
+    "credits": 249,
+    "latitude": 34.0522,
+    "longitude": -118.2437,
+    "shoottype": "event",
+    "start_at": "2018-12-01T07:30:00Z",
+    "duration": 120,
+    "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+    "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+    "customer_firstname": "Mary",
+    "customer_surname": "Smith",
+    "customer_email": "test@snappr.co",
+    "customer_mobilephone": "+14153339966",
+    "customer_company": "Snappr Inc.",
+    "photographer_name": "Hollie B.",
+    "created_at": "2018-09-01T09:12:00Z",
+    "updated_at": "2018-09-01T09:12:00Z"
+  }
+}
+```
+
+You can set a custom webhook URL in the Snappr Photography Portal GUI. If the custom webhook URL is set, we will POST to that URL every time a booking is created or updated.
+
+### Setting URL
+
+Click on the 'API' link in the top-right drop-down menu in your Photography Portal, or go to the following URL:
+
+<code>https://app.snappr.co/partner/<span class="route_param">your-slug</span>/api</code>
+
+Replace <code>your-slug</code> with your company's custom Snappr slug.
+
+Go to the 'Custom Webhook' section and click the 'Edit' button in the URL field. Type in the receiving URL of your choice, then click the 'Save' button. If you entered a valid URL, that endpoint will now start receiving all booking updates.
 
 
 
