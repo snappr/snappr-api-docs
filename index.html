@@ -256,6 +256,14 @@
               </ul>
           </li>
           <li>
+            <a href="#custom-webhooks" class="toc-h1 toc-link" data-title="Custom Webhooks">Custom Webhooks</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#setting-url" class="toc-h2 toc-link" data-title="Setting URL">Setting URL</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </ul>
@@ -680,6 +688,43 @@ The API does not currently support booking filters (e.g. filtering by a certain 
 <td>Yes</td>
 </tr>
 </tbody></table>
+<h1 id='custom-webhooks'>Custom Webhooks</h1>
+<blockquote>
+<p>Example JSON payload sent to webhook URL as POST:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"update"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"booking"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0ccefa53-b346-4d3e-8dcb-79a914289928"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paid"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"credits"</span><span class="p">:</span><span class="w"> </span><span class="mi">249</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">34.0522</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-118.2437</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"shoottype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"event"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"start_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-01T07:30:00Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"duration"</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"location_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Location is Emerald Theatre - ring buzzer at main entrance on arrival"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"style_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Shots of as many members of crowd as possible; shallow depth of field where possible"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"customer_firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mary"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"customer_surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.co"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>You can set a custom webhook URL in the Snappr Photography Portal GUI. If the custom webhook URL is set, we will POST to that URL every time a booking is created or updated.</p>
+<h3 id='setting-url'>Setting URL</h3>
+<p>Click on the &#39;API&#39; link in the top-right drop-down menu in your Photography Portal, or go to the following URL:</p>
+
+<p><code>https://app.snappr.co/partner/<span class="route_param">your-slug</span>/api</code></p>
+
+<p>Replace <code>your-slug</code> with your company&#39;s custom Snappr slug.</p>
+
+<p>Go to the &#39;Custom Webhook&#39; section and click the &#39;Edit&#39; button in the URL field. Type in the receiving URL of your choice, then click the &#39;Save&#39; button. If you entered a valid URL, that endpoint will now start receiving all booking updates.</p>
 
 <!-- <aside class="warning">Remember to be good to your mother.</aside> -->
 <h1 id='errors'>Errors</h1>
