@@ -233,7 +233,6 @@ curl "https://api.snappr.co/bookings" \
       "latitude": 34.0522,
       "longitude": -118.2437,
       "shoottype": "event",
-      "start_at": "2018-12-01T07:30:00Z",
       "duration": 120,
       "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
       "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
@@ -241,7 +240,8 @@ curl "https://api.snappr.co/bookings" \
       "customer_surname": "Smith",
       "customer_email": "test@snappr.co",
       "customer_mobilephone": "+14153339966",
-      "customer_company": "Snappr Inc."
+      "customer_company": "Snappr Inc.",
+      "customer_scheduling": true
     }
   }'
 ```
@@ -290,8 +290,7 @@ let bookings = api.bookings.post({
   "customer_company": "Snappr Inc.",
   "photographer_name": "Hollie B.",
   "created_at": "2018-09-01T09:12:00Z",
-  "updated_at": "2018-09-01T09:12:00Z",
-  "customer_scheduling": true
+  "updated_at": "2018-09-01T09:12:00Z"
 }
 ```
 
