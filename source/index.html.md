@@ -31,7 +31,9 @@ curl "/example-endpoint" \
 ```javascript
 const snappr = require('snappr-api');
 
-let api = snappr.authorize('zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z');
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
 ```
 
 > Replace the example key above with your API key. This fake key is used in all of the following request examples.
@@ -61,13 +63,15 @@ curl "https://api.snappr.co/availability?latitude=34.0522&longitude=-118.2437&sh
 ```javascript
 const snappr = require('snappr-api');
 
-let api = snappr.authorize('zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z');
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
 let availability = api.availability.get({
   latitude: 34.0522,
   longitude: -118.2437,
-  shoottype: "event",
+  shoottype: 'event',
   duration: 120,
-  date: "2018-12-01"
+  date: '2018-12-01'
 });
 ```
 
@@ -98,13 +102,13 @@ This endpoint returns time availability (i.e. available shoot start times) for a
 
 ### Query Parameters
 
-Parameter | Type | Description | Required
---------- | ---- | ----------- | --------
-`latitude` | Number | Latitude of the shoot location. | Yes
-`longitude` | Number | Longitude of the shoot location. | Yes
-`shoottype` | String | Name of the shoottype (see `Shoottypes` endpoints), e.g. "event". | Yes
-`duration` | Integer | Length of the shoot in minutes. | Yes
-`date` | Date (ISO) | Date for which you want to check time availability. | Yes
+| Parameter   | Type       | Description                                                       | Required |
+| ----------- | ---------- | ----------------------------------------------------------------- | -------- |
+| `latitude`  | Number     | Latitude of the shoot location.                                   | Yes      |
+| `longitude` | Number     | Longitude of the shoot location.                                  | Yes      |
+| `shoottype` | String     | Name of the shoottype (see `Shoottypes` endpoints), e.g. "event". | Yes      |
+| `duration`  | Integer    | Length of the shoot in minutes.                                   | Yes      |
+| `date`      | Date (ISO) | Date for which you want to check time availability.               | Yes      |
 
 <aside class="notice">
 All available times within the range of the local date will be returned. However, the format of the returned times is always in UTC for simplicity.
@@ -142,20 +146,24 @@ curl "https://api.snappr.co/bookings" \
 ```javascript
 const snappr = require('snappr-api');
 
-let api = snappr.authorize('zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z');
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
 let bookings = api.bookings.post({
   latitude: 34.0522,
   longitude: -118.2437,
-  shoottype: "event",
-  start_at: "2018-12-01T07:30:00Z",
+  shoottype: 'event',
+  start_at: '2018-12-01T07:30:00Z',
   duration: 120,
-  location_notes: "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
-  style_notes: "Shots of as many members of crowd as possible; shallow depth of field where possible",
-  customer_firstname: "Mary",
-  customer_surname: "Smith",
-  customer_email: "test@snappr.co",
-  customer_mobilephone: "+14153339966",
-  customer_company: "Snappr Inc."
+  location_notes:
+    'Location is Emerald Theatre - ring buzzer at main entrance on arrival',
+  style_notes:
+    'Shots of as many members of crowd as possible; shallow depth of field where possible',
+  customer_firstname: 'Mary',
+  customer_surname: 'Smith',
+  customer_email: 'test@snappr.co',
+  customer_mobilephone: '+14153339966',
+  customer_company: 'Snappr Inc.'
 });
 ```
 
@@ -192,20 +200,123 @@ This endpoint creates a new photoshoot booking.
 
 ### Request (Body) Parameters
 
-Parameter | Type | Description | Required
---------- | ---- | ----------- | --------
-`latitude` | Number | Latitude of the shoot location. | Yes
-`longitude` | Number | Longitude of the shoot location. | Yes
-`shoottype` | String | Name of the shoottype (see `Shoottypes` endpoints), e.g. "event". | Yes
-`start_at` | Datetime (ISO) | Start time of the shoot in UTC. | Yes
-`duration` | Integer | Length of the shoot in minutes. | Yes
-`location_notes` | String | Details to help the photographer find the specific location and contact person at the time of the shoot. | No
-`style_notes` | String | Instructions, stylistic preferences and other special requests. | No
-`customer_firstname` | String | First name of your end-customer. | Yes
-`customer_surname` | String | Last name of your end-customer. | No
-`customer_email` | String (email) | Valid email address of your end-customer. | Yes
-`customer_mobilephone` | String | Valid mobile phone number of your end-customer. | Yes
-`customer_company` | String | Length of the shoot in minutes. | No
+| Parameter              | Type           | Description                                                                                              | Required |
+| ---------------------- | -------------- | -------------------------------------------------------------------------------------------------------- | -------- |
+| `latitude`             | Number         | Latitude of the shoot location.                                                                          | Yes      |
+| `longitude`            | Number         | Longitude of the shoot location.                                                                         | Yes      |
+| `shoottype`            | String         | Name of the shoottype (see `Shoottypes` endpoints), e.g. "event".                                        | Yes      |
+| `start_at`             | Datetime (ISO) | Start time of the shoot in UTC.                                                                          | Yes      |
+| `duration`             | Integer        | Length of the shoot in minutes.                                                                          | Yes      |
+| `location_notes`       | String         | Details to help the photographer find the specific location and contact person at the time of the shoot. | No       |
+| `style_notes`          | String         | Instructions, stylistic preferences and other special requests.                                          | No       |
+| `customer_firstname`   | String         | First name of your end-customer.                                                                         | Yes      |
+| `customer_surname`     | String         | Last name of your end-customer.                                                                          | No       |
+| `customer_email`       | String (email) | Valid email address of your end-customer.                                                                | Yes      |
+| `customer_mobilephone` | String         | Valid mobile phone number of your end-customer.                                                          | Yes      |
+| `customer_company`     | String         | Length of the shoot in minutes.                                                                          | No       |
+
+<aside class="notice">
+Always check availability before trying to create a new booking. If you try to make a booking at for combination of location, date/time and shoottype for which there are no available photographers, you will receive a 400 error (see <code>Errors</code> section).
+</aside>
+
+## Create New Booking (End customer defined start date and time)
+
+> Example request:
+
+```shell
+curl "https://api.snappr.co/bookings" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0' \
+  -H "Content-Type: application/json" \
+  --data-binary $'{
+    "fields": {
+      "latitude": 34.0522,
+      "longitude": -118.2437,
+      "shoottype": "event",
+      "start_at": "2018-12-01T07:30:00Z",
+      "duration": 120,
+      "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+      "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+      "customer_firstname": "Mary",
+      "customer_surname": "Smith",
+      "customer_email": "test@snappr.co",
+      "customer_mobilephone": "+14153339966",
+      "customer_company": "Snappr Inc."
+    }
+  }'
+```
+
+```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.post({
+  latitude: 34.0522,
+  longitude: -118.2437,
+  shoottype: 'event',
+  duration: 120,
+  location_notes:
+    'Location is Emerald Theatre - ring buzzer at main entrance on arrival',
+  style_notes:
+    'Shots of as many members of crowd as possible; shallow depth of field where possible',
+  customer_firstname: 'Mary',
+  customer_surname: 'Smith',
+  customer_email: 'test@snappr.co',
+  customer_mobilephone: '+14153339966',
+  customer_company: 'Snappr Inc.',
+  customer_scheduling: true
+});
+```
+
+> Example JSON response:
+
+```json
+{
+  "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
+  "status": "paid",
+  "credits": 249,
+  "latitude": 34.0522,
+  "longitude": -118.2437,
+  "shoottype": "event",
+  "duration": 120,
+  "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+  "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+  "customer_firstname": "Mary",
+  "customer_surname": "Smith",
+  "customer_email": "test@snappr.co",
+  "customer_mobilephone": "+14153339966",
+  "customer_company": "Snappr Inc.",
+  "photographer_name": "Hollie B.",
+  "created_at": "2018-09-01T09:12:00Z",
+  "updated_at": "2018-09-01T09:12:00Z",
+  "customer_scheduling": true
+}
+```
+
+This endpoint creates a new photoshoot booking. It will ask your end customer to define the start date and time.
+
+### HTTP Request
+
+`POST https://api.snappr.co/bookings`
+
+### Request (Body) Parameters
+
+| Parameter              | Type           | Description                                                                                              | Required |
+| ---------------------- | -------------- | -------------------------------------------------------------------------------------------------------- | -------- |
+| `latitude`             | Number         | Latitude of the shoot location.                                                                          | Yes      |
+| `longitude`            | Number         | Longitude of the shoot location.                                                                         | Yes      |
+| `shoottype`            | String         | Name of the shoottype (see `Shoottypes` endpoints), e.g. "event".                                        | Yes      |
+| `start_at`             | Datetime (ISO) | Start time of the shoot in UTC.                                                                          | Yes      |
+| `duration`             | Integer        | Length of the shoot in minutes.                                                                          | Yes      |
+| `location_notes`       | String         | Details to help the photographer find the specific location and contact person at the time of the shoot. | No       |
+| `style_notes`          | String         | Instructions, stylistic preferences and other special requests.                                          | No       |
+| `customer_firstname`   | String         | First name of your end-customer.                                                                         | Yes      |
+| `customer_surname`     | String         | Last name of your end-customer.                                                                          | No       |
+| `customer_email`       | String (email) | Valid email address of your end-customer.                                                                | Yes      |
+| `customer_mobilephone` | String         | Valid mobile phone number of your end-customer.                                                          | Yes      |
+| `customer_company`     | String         | Length of the shoot in minutes.                                                                          | No       |
 
 <aside class="notice">
 Always check availability before trying to create a new booking. If you try to make a booking at for combination of location, date/time and shoottype for which there are no available photographers, you will receive a 400 error (see <code>Errors</code> section).
@@ -224,7 +335,9 @@ curl "https://api.snappr.co/bookings" \
 ```javascript
 const snappr = require('snappr-api');
 
-let api = snappr.authorize('zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z');
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
 let bookings = api.bookings.get({
   // no params
 });
@@ -291,10 +404,10 @@ This endpoint retrieves all bookings.
 
 ### Query Parameters
 
-Parameter | Type | Description | Required
---------- | ---- | ----------- | --------
-`limit` | Integer |	Maximum number of bookings to be returned (maximum of 100). Defaults to `100`. | No
-`offset` | Integer | Offset used for pagination if there are more bookings than the limit (or more than 100 bookings if there is no limit). Defaults to `0`. | No
+| Parameter | Type    | Description                                                                                                                             | Required |
+| --------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `limit`   | Integer | Maximum number of bookings to be returned (maximum of 100). Defaults to `100`.                                                          | No       |
+| `offset`  | Integer | Offset used for pagination if there are more bookings than the limit (or more than 100 bookings if there is no limit). Defaults to `0`. | No       |
 
 <aside class="notice">
 The API does not currently support booking filters (e.g. filtering by a certain status), but this is planned for an upcoming release.
@@ -352,10 +465,9 @@ This endpoint retrieves a specific booking using the ID of the booking.
 
 ### Request Parameters
 
-Parameter | Type | Description | Required
---------- | ---- | ----------- | --------
-`booking_uid` | String (UUID) |	The identifier of the booking. | Yes
-
+| Parameter     | Type          | Description                    | Required |
+| ------------- | ------------- | ------------------------------ | -------- |
+| `booking_uid` | String (UUID) | The identifier of the booking. | Yes      |
 
 # Custom Webhooks
 
@@ -398,8 +510,5 @@ Click on the 'API' link in the top-right drop-down menu in your Photography Port
 Replace <code>your-slug</code> with your company's custom Snappr slug.
 
 Go to the 'Custom Webhook' section and click the 'Edit' button in the URL field. Type in the receiving URL of your choice, then click the 'Save' button. If you entered a valid URL, that endpoint will now start receiving all booking updates.
-
-
-
 
 <!-- <aside class="warning">Remember to be good to your mother.</aside> -->
