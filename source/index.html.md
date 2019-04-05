@@ -275,7 +275,7 @@ let bookings = api.bookings.post({
 ```json
 {
   "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
-  "status": "paid",
+  "status": "paid_pending_schedule",
   "credits": 249,
   "latitude": 34.0522,
   "longitude": -118.2437,
@@ -307,7 +307,6 @@ This endpoint creates a new photoshoot booking. It will ask your end customer to
 | `latitude`             | Number         | Latitude of the shoot location.                                                                          | Yes      |
 | `longitude`            | Number         | Longitude of the shoot location.                                                                         | Yes      |
 | `shoottype`            | String         | Name of the shoottype (see `Shoottypes` endpoints), e.g. "event".                                        | Yes      |
-| `start_at`             | Datetime (ISO) | Start time of the shoot in UTC.                                                                          | Yes      |
 | `duration`             | Integer        | Length of the shoot in minutes.                                                                          | Yes      |
 | `location_notes`       | String         | Details to help the photographer find the specific location and contact person at the time of the shoot. | No       |
 | `style_notes`          | String         | Instructions, stylistic preferences and other special requests.                                          | No       |
@@ -316,6 +315,7 @@ This endpoint creates a new photoshoot booking. It will ask your end customer to
 | `customer_email`       | String (email) | Valid email address of your end-customer.                                                                | Yes      |
 | `customer_mobilephone` | String         | Valid mobile phone number of your end-customer.                                                          | Yes      |
 | `customer_company`     | String         | Length of the shoot in minutes.                                                                          | No       |
+| `customer_scheduling`  | Boolean (true) | Indicates that the start date and time of the shoot will be defined by the end customer.                 | Yes      |
 
 ## Get All Bookings
 
