@@ -317,10 +317,6 @@ This endpoint creates a new photoshoot booking. It will ask your end customer to
 | `customer_mobilephone` | String         | Valid mobile phone number of your end-customer.                                                          | Yes      |
 | `customer_company`     | String         | Length of the shoot in minutes.                                                                          | No       |
 
-<aside class="notice">
-Always check availability before trying to create a new booking. If you try to make a booking at for combination of location, date/time and shoottype for which there are no available photographers, you will receive a 400 error (see <code>Errors</code> section).
-</aside>
-
 ## Get All Bookings
 
 > Example request:
