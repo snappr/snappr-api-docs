@@ -118,7 +118,7 @@ All available times within the range of the local date will be returned. However
 
 ## Create New Booking
 
-> Example request:
+> Example request when start_at is provided:
 
 ```shell
 curl "https://api.snappr.co/bookings" \
@@ -192,36 +192,7 @@ let bookings = api.bookings.post({
 }
 ```
 
-This endpoint creates a new photoshoot booking.
-
-### HTTP Request
-
-`POST https://api.snappr.co/bookings`
-
-### Request (Body) Parameters
-
-| Parameter              | Type           | Description                                                                                              | Required |
-| ---------------------- | -------------- | -------------------------------------------------------------------------------------------------------- | -------- |
-| `latitude`             | Number         | Latitude of the shoot location.                                                                          | Yes      |
-| `longitude`            | Number         | Longitude of the shoot location.                                                                         | Yes      |
-| `shoottype`            | String         | Name of the shoottype (see `Shoottypes` endpoints), e.g. "event".                                        | Yes      |
-| `start_at`             | Datetime (ISO) | Start time of the shoot in UTC.                                                                          | Yes      |
-| `duration`             | Integer        | Length of the shoot in minutes.                                                                          | Yes      |
-| `location_notes`       | String         | Details to help the photographer find the specific location and contact person at the time of the shoot. | No       |
-| `style_notes`          | String         | Instructions, stylistic preferences and other special requests.                                          | No       |
-| `customer_firstname`   | String         | First name of your end-customer.                                                                         | Yes      |
-| `customer_surname`     | String         | Last name of your end-customer.                                                                          | No       |
-| `customer_email`       | String (email) | Valid email address of your end-customer.                                                                | Yes      |
-| `customer_mobilephone` | String         | Valid mobile phone number of your end-customer.                                                          | Yes      |
-| `customer_company`     | String         | Name of your end-customer's company.                                                                     | No       |
-
-<aside class="notice">
-Always check availability before trying to create a new booking. If you try to make a booking at for combination of location, date/time and shoottype for which there are no available photographers, you will receive a 400 error (see <code>Errors</code> section).
-</aside>
-
-## Create New Booking (End customer defined start date and time)
-
-> Example request:
+> Example request when start_at is not provided (end-customer picked date and time):
 
 ```shell
 curl "https://api.snappr.co/bookings" \
@@ -233,6 +204,7 @@ curl "https://api.snappr.co/bookings" \
       "latitude": 34.0522,
       "longitude": -118.2437,
       "shoottype": "event",
+      "start_at": null,
       "duration": 120,
       "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
       "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
@@ -240,8 +212,7 @@ curl "https://api.snappr.co/bookings" \
       "customer_surname": "Smith",
       "customer_email": "test@snappr.co",
       "customer_mobilephone": "+14153339966",
-      "customer_company": "Snappr Inc.",
-      "customer_scheduling": true
+      "customer_company": "Snappr Inc."
     }
   }'
 ```
@@ -256,6 +227,7 @@ let bookings = api.bookings.post({
   latitude: 34.0522,
   longitude: -118.2437,
   shoottype: 'event',
+  start_at: null,
   duration: 120,
   location_notes:
     'Location is Emerald Theatre - ring buzzer at main entrance on arrival',
@@ -265,8 +237,7 @@ let bookings = api.bookings.post({
   customer_surname: 'Smith',
   customer_email: 'test@snappr.co',
   customer_mobilephone: '+14153339966',
-  customer_company: 'Snappr Inc.',
-  customer_scheduling: true
+  customer_company: 'Snappr Inc.'
 });
 ```
 
@@ -294,7 +265,12 @@ let bookings = api.bookings.post({
 }
 ```
 
-This endpoint creates a new photoshoot booking. It will ask your end customer to define the start date and time.
+This endpoint creates a new photoshoot booking.
+
+Broadly, there are two main ways to create a new photoshoot booking, and examples are provided for each:
+
+1. Provide all shoot details _including_ the start date and time for the shoot (`start_at`). With this option, Snappr will not seek any input on shoot details from your end-customer, they will simply be notified if the booking is placed successfully.
+2. Provide all shoot details _except_ the start date and time for the shoot (`start_at` set to `null`). This will trigger an automatic process to collect the start date and time from your end-customer using the contact details (email and/or mobile phone) provided. End-customers will be able to select from all available dates and times for the shoot location, using a Snappr UI.
 
 ### HTTP Request
 
@@ -302,20 +278,30 @@ This endpoint creates a new photoshoot booking. It will ask your end customer to
 
 ### Request (Body) Parameters
 
-| Parameter              | Type           | Description                                                                                              | Required |
-| ---------------------- | -------------- | -------------------------------------------------------------------------------------------------------- | -------- |
-| `latitude`             | Number         | Latitude of the shoot location.                                                                          | Yes      |
-| `longitude`            | Number         | Longitude of the shoot location.                                                                         | Yes      |
-| `shoottype`            | String         | Name of the shoottype (see `Shoottypes` endpoints), e.g. "event".                                        | Yes      |
-| `duration`             | Integer        | Length of the shoot in minutes.                                                                          | Yes      |
-| `location_notes`       | String         | Details to help the photographer find the specific location and contact person at the time of the shoot. | No       |
-| `style_notes`          | String         | Instructions, stylistic preferences and other special requests.                                          | No       |
-| `customer_firstname`   | String         | First name of your end-customer.                                                                         | Yes      |
-| `customer_surname`     | String         | Last name of your end-customer.                                                                          | No       |
-| `customer_email`       | String (email) | Valid email address of your end-customer.                                                                | Yes      |
-| `customer_mobilephone` | String         | Valid mobile phone number of your end-customer.                                                          | Yes      |
-| `customer_company`     | String         | Name of your end-customer's company.                                                                     | No       |
-| `customer_scheduling`  | Boolean (true) | Indicates that the start date and time of the shoot will be defined by the end customer.                 | Yes      |
+| Parameter              | Type           | Description                                                                                                                           | Required |
+| ---------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `latitude`             | Number         | Latitude of the shoot location.                                                                                                       | Yes      |
+| `longitude`            | Number         | Longitude of the shoot location.                                                                                                      | Yes      |
+| `shoottype`            | String         | Name of the shoottype (see `Shoottypes` endpoints), e.g. "event".                                                                     | Yes      |
+| `start_at`             | Datetime (ISO) | Start time of the shoot in UTC. If this is set to `null`, then Snappr will automatically seek this information from the end-customer. | Yes      |
+| `duration`             | Integer        | Length of the shoot in minutes.                                                                                                       | Yes      |
+| `location_notes`       | String         | Details to help the photographer find the specific location and contact person at the time of the shoot.                              | No       |
+| `style_notes`          | String         | Instructions, stylistic preferences and other special requests.                                                                       | No       |
+| `customer_firstname`   | String         | First name of your end-customer.                                                                                                      | Yes      |
+| `customer_surname`     | String         | Last name of your end-customer.                                                                                                       | No       |
+| `customer_email`       | String (email) | Valid email address of your end-customer.                                                                                             | Yes      |
+| `customer_mobilephone` | String         | Valid mobile phone number of your end-customer.                                                                                       | Yes      |
+| `customer_company`     | String         | Name of your end-customer's company.                                                                                                  | No       |
+
+<aside class="notice">
+
+If <code>start_at</code> is set to <code>null</code> the system assumes you want the end-customer to pick the start date and time.
+
+</aside>
+
+<aside class="notice">
+Always check <a href="#availability">availability</a> before trying to create a new booking with <code>start_at</code> defined. If you try to make a booking at for combination of location, date/time and shoottype for which there are no available photographers, you will receive a 400 error (see <code>Errors</code> section).
+</aside>
 
 ## Get All Bookings
 
