@@ -248,6 +248,9 @@
                     <a href="#create-new-booking" class="toc-h2 toc-link" data-title="Create New Booking">Create New Booking</a>
                   </li>
                   <li>
+                    <a href="#create-new-booking-end-customer-defined-start-date-and-time" class="toc-h2 toc-link" data-title="Create New Booking (End customer defined start date and time)">Create New Booking (End customer defined start date and time)</a>
+                  </li>
+                  <li>
                     <a href="#get-all-bookings" class="toc-h2 toc-link" data-title="Get All Bookings">Get All Bookings</a>
                   </li>
                   <li>
@@ -283,7 +286,9 @@
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">snappr</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'snappr-api'</span><span class="p">);</span>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span>
+  <span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span>
+<span class="p">);</span>
 </code></pre>
 <blockquote>
 <p>Replace the example key above with your API key. This fake key is used in all of the following request examples.</p>
@@ -307,13 +312,15 @@ You must replace <code>api_key</code> with your user API key.
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">snappr</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'snappr-api'</span><span class="p">);</span>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span>
+  <span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span>
+<span class="p">);</span>
 <span class="kd">let</span> <span class="nx">availability</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">availability</span><span class="p">.</span><span class="nx">get</span><span class="p">({</span>
   <span class="na">latitude</span><span class="p">:</span> <span class="mf">34.0522</span><span class="p">,</span>
   <span class="na">longitude</span><span class="p">:</span> <span class="o">-</span><span class="mf">118.2437</span><span class="p">,</span>
-  <span class="na">shoottype</span><span class="p">:</span> <span class="s2">"event"</span><span class="p">,</span>
+  <span class="na">shoottype</span><span class="p">:</span> <span class="s1">'event'</span><span class="p">,</span>
   <span class="na">duration</span><span class="p">:</span> <span class="mi">120</span><span class="p">,</span>
-  <span class="na">date</span><span class="p">:</span> <span class="s2">"2018-12-01"</span>
+  <span class="na">date</span><span class="p">:</span> <span class="s1">'2018-12-01'</span>
 <span class="p">});</span>
 </code></pre>
 <blockquote>
@@ -407,20 +414,24 @@ All available times within the range of the local date will be returned. However
   }'</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">snappr</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'snappr-api'</span><span class="p">);</span>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span>
+  <span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span>
+<span class="p">);</span>
 <span class="kd">let</span> <span class="nx">bookings</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">bookings</span><span class="p">.</span><span class="nx">post</span><span class="p">({</span>
   <span class="na">latitude</span><span class="p">:</span> <span class="mf">34.0522</span><span class="p">,</span>
   <span class="na">longitude</span><span class="p">:</span> <span class="o">-</span><span class="mf">118.2437</span><span class="p">,</span>
-  <span class="na">shoottype</span><span class="p">:</span> <span class="s2">"event"</span><span class="p">,</span>
-  <span class="na">start_at</span><span class="p">:</span> <span class="s2">"2018-12-01T07:30:00Z"</span><span class="p">,</span>
+  <span class="na">shoottype</span><span class="p">:</span> <span class="s1">'event'</span><span class="p">,</span>
+  <span class="na">start_at</span><span class="p">:</span> <span class="s1">'2018-12-01T07:30:00Z'</span><span class="p">,</span>
   <span class="na">duration</span><span class="p">:</span> <span class="mi">120</span><span class="p">,</span>
-  <span class="na">location_notes</span><span class="p">:</span> <span class="s2">"Location is Emerald Theatre - ring buzzer at main entrance on arrival"</span><span class="p">,</span>
-  <span class="na">style_notes</span><span class="p">:</span> <span class="s2">"Shots of as many members of crowd as possible; shallow depth of field where possible"</span><span class="p">,</span>
-  <span class="na">customer_firstname</span><span class="p">:</span> <span class="s2">"Mary"</span><span class="p">,</span>
-  <span class="na">customer_surname</span><span class="p">:</span> <span class="s2">"Smith"</span><span class="p">,</span>
-  <span class="na">customer_email</span><span class="p">:</span> <span class="s2">"test@snappr.co"</span><span class="p">,</span>
-  <span class="na">customer_mobilephone</span><span class="p">:</span> <span class="s2">"+14153339966"</span><span class="p">,</span>
-  <span class="na">customer_company</span><span class="p">:</span> <span class="s2">"Snappr Inc."</span>
+  <span class="na">location_notes</span><span class="p">:</span>
+    <span class="s1">'Location is Emerald Theatre - ring buzzer at main entrance on arrival'</span><span class="p">,</span>
+  <span class="na">style_notes</span><span class="p">:</span>
+    <span class="s1">'Shots of as many members of crowd as possible; shallow depth of field where possible'</span><span class="p">,</span>
+  <span class="na">customer_firstname</span><span class="p">:</span> <span class="s1">'Mary'</span><span class="p">,</span>
+  <span class="na">customer_surname</span><span class="p">:</span> <span class="s1">'Smith'</span><span class="p">,</span>
+  <span class="na">customer_email</span><span class="p">:</span> <span class="s1">'test@snappr.co'</span><span class="p">,</span>
+  <span class="na">customer_mobilephone</span><span class="p">:</span> <span class="s1">'+14153339966'</span><span class="p">,</span>
+  <span class="na">customer_company</span><span class="p">:</span> <span class="s1">'Snappr Inc.'</span>
 <span class="p">});</span>
 </code></pre>
 <blockquote>
@@ -528,7 +539,7 @@ All available times within the range of the local date will be returned. However
 <tr>
 <td><code>customer_company</code></td>
 <td>String</td>
-<td>Length of the shoot in minutes.</td>
+<td>Name of your end-customer&#39;s company.</td>
 <td>No</td>
 </tr>
 </tbody></table>
@@ -536,6 +547,160 @@ All available times within the range of the local date will be returned. However
 <aside class="notice">
 Always check availability before trying to create a new booking. If you try to make a booking at for combination of location, date/time and shoottype for which there are no available photographers, you will receive a 400 error (see <code>Errors</code> section).
 </aside>
+<h2 id='create-new-booking-end-customer-defined-start-date-and-time'>Create New Booking (End customer defined start date and time)</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/bookings"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  --data-binary <span class="s1">$'{
+    "fields": {
+      "latitude": 34.0522,
+      "longitude": -118.2437,
+      "shoottype": "event",
+      "duration": 120,
+      "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+      "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+      "customer_firstname": "Mary",
+      "customer_surname": "Smith",
+      "customer_email": "test@snappr.co",
+      "customer_mobilephone": "+14153339966",
+      "customer_company": "Snappr Inc.",
+      "customer_scheduling": true
+    }
+  }'</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">snappr</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'snappr-api'</span><span class="p">);</span>
+
+<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span>
+  <span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span>
+<span class="p">);</span>
+<span class="kd">let</span> <span class="nx">bookings</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">bookings</span><span class="p">.</span><span class="nx">post</span><span class="p">({</span>
+  <span class="na">latitude</span><span class="p">:</span> <span class="mf">34.0522</span><span class="p">,</span>
+  <span class="na">longitude</span><span class="p">:</span> <span class="o">-</span><span class="mf">118.2437</span><span class="p">,</span>
+  <span class="na">shoottype</span><span class="p">:</span> <span class="s1">'event'</span><span class="p">,</span>
+  <span class="na">duration</span><span class="p">:</span> <span class="mi">120</span><span class="p">,</span>
+  <span class="na">location_notes</span><span class="p">:</span>
+    <span class="s1">'Location is Emerald Theatre - ring buzzer at main entrance on arrival'</span><span class="p">,</span>
+  <span class="na">style_notes</span><span class="p">:</span>
+    <span class="s1">'Shots of as many members of crowd as possible; shallow depth of field where possible'</span><span class="p">,</span>
+  <span class="na">customer_firstname</span><span class="p">:</span> <span class="s1">'Mary'</span><span class="p">,</span>
+  <span class="na">customer_surname</span><span class="p">:</span> <span class="s1">'Smith'</span><span class="p">,</span>
+  <span class="na">customer_email</span><span class="p">:</span> <span class="s1">'test@snappr.co'</span><span class="p">,</span>
+  <span class="na">customer_mobilephone</span><span class="p">:</span> <span class="s1">'+14153339966'</span><span class="p">,</span>
+  <span class="na">customer_company</span><span class="p">:</span> <span class="s1">'Snappr Inc.'</span><span class="p">,</span>
+  <span class="na">customer_scheduling</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>Example JSON response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0ccefa53-b346-4d3e-8dcb-79a914289928"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paid_pending_schedule"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"credits"</span><span class="p">:</span><span class="w"> </span><span class="mi">249</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">34.0522</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-118.2437</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"shoottype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"event"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"duration"</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"location_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Location is Emerald Theatre - ring buzzer at main entrance on arrival"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"style_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Shots of as many members of crowd as possible; shallow depth of field where possible"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mary"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.co"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint creates a new photoshoot booking. It will ask your end customer to define the start date and time.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>POST https://api.snappr.co/bookings</code></p>
+<h3 id='request-body-parameters-2'>Request (Body) Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>latitude</code></td>
+<td>Number</td>
+<td>Latitude of the shoot location.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>longitude</code></td>
+<td>Number</td>
+<td>Longitude of the shoot location.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>shoottype</code></td>
+<td>String</td>
+<td>Name of the shoottype (see <code>Shoottypes</code> endpoints), e.g. &quot;event&quot;.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>duration</code></td>
+<td>Integer</td>
+<td>Length of the shoot in minutes.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>location_notes</code></td>
+<td>String</td>
+<td>Details to help the photographer find the specific location and contact person at the time of the shoot.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>style_notes</code></td>
+<td>String</td>
+<td>Instructions, stylistic preferences and other special requests.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>customer_firstname</code></td>
+<td>String</td>
+<td>First name of your end-customer.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>customer_surname</code></td>
+<td>String</td>
+<td>Last name of your end-customer.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>customer_email</code></td>
+<td>String (email)</td>
+<td>Valid email address of your end-customer.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>customer_mobilephone</code></td>
+<td>String</td>
+<td>Valid mobile phone number of your end-customer.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>customer_company</code></td>
+<td>String</td>
+<td>Name of your end-customer&#39;s company.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>customer_scheduling</code></td>
+<td>Boolean (true)</td>
+<td>Indicates that the start date and time of the shoot will be defined by the end customer.</td>
+<td>Yes</td>
+</tr>
+</tbody></table>
 <h2 id='get-all-bookings'>Get All Bookings</h2>
 <blockquote>
 <p>Example request:</p>
@@ -545,7 +710,9 @@ Always check availability before trying to create a new booking. If you try to m
   -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">snappr</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'snappr-api'</span><span class="p">);</span>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span>
+  <span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span>
+<span class="p">);</span>
 <span class="kd">let</span> <span class="nx">bookings</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">bookings</span><span class="p">.</span><span class="nx">get</span><span class="p">({</span>
   <span class="c1">// no params</span>
 <span class="p">});</span>
@@ -603,7 +770,7 @@ Always check availability before trying to create a new booking. If you try to m
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves all bookings.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
+<h3 id='http-request-4'>HTTP Request</h3>
 <p><code>GET https://api.snappr.co/bookings?limit=<span class="route_param">:limit</span>&amp;offset=<span class="route_param">:offset</span></code></p>
 <h3 id='query-parameters-2'>Query Parameters</h3>
 <table><thead>
@@ -670,7 +837,7 @@ The API does not currently support booking filters (e.g. filtering by a certain 
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves a specific booking using the ID of the booking.</p>
-<h3 id='http-request-4'>HTTP Request</h3>
+<h3 id='http-request-5'>HTTP Request</h3>
 <p><code>GET https://api.snappr.co/bookings/<span class="route_param">:booking_uid</span></code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
 <table><thead>
