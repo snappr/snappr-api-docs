@@ -310,7 +310,7 @@ Always check <a href="#availability">availability</a> before trying to create a 
 ```shell
 curl "https://api.snappr.co/bookings" \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
-  -H 'accept-version: 1.0.0' \
+  -H 'accept-version: 1.0.0'
 ```
 
 ```javascript
@@ -449,6 +449,55 @@ This endpoint retrieves a specific booking using the ID of the booking.
 | Parameter     | Type          | Description                    | Required |
 | ------------- | ------------- | ------------------------------ | -------- |
 | `booking_uid` | String (UUID) | The identifier of the booking. | Yes      |
+
+# Shoot Types
+
+## Get All Shoot Types
+
+> Example request:
+
+```shell
+curl "https://api.snappr.co/shoottypes" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0'
+```
+
+```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.shoottypes.get({});
+```
+
+> Example JSON response:
+
+```json
+{
+  "results": [
+    {
+      "name": "food",
+      "display_name": "Food"
+    },
+    {
+      "name": "real-estate",
+      "display_name": "Real Estate"
+    },
+    ...
+  ],
+  "count": 10,
+  "limit": 100,
+  "offset": 0,
+  "total": 10
+}
+```
+
+This endpoint returns all available Snappr shoot types.
+
+### HTTP Request
+
+<code>GET https://api.snappr.co/shoottypes</code>
 
 # Custom Webhooks
 
