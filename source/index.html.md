@@ -454,7 +454,9 @@ This endpoint retrieves a specific booking using the ID of the booking.
 | ------------- | ------------- | ------------------------------ | -------- |
 | `booking_uid` | String (UUID) | The identifier of the booking. | Yes      |
 
-## Get Booking Images
+# Images
+
+## Get All Images For a Booking
 
 > Example request:
 
@@ -483,20 +485,20 @@ let bookings = api.bookings.getImages({
     {
       "uid": "ed10cf86-97f9-4ce6-af6f-a01dfe891114",
       "file_name": "ZD 001.JPG",
-      "full_size_url": "https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D",
-      "gallerythumb_url": "https://dev-img.snappr.co/QlXCPwnEgV7P_RO4AJDLhOsq500=/fit-in/600x0/ed10cf86-97f9-4ce6-af6f-a01dfe891114"
+      "url_original": "https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D",
+      "url_thumb": "https://dev-img.snappr.co/QlXCPwnEgV7P_RO4AJDLhOsq500=/fit-in/600x0/ed10cf86-97f9-4ce6-af6f-a01dfe891114"
     },
     {
       "uid": "ee9be5f8-84a8-4592-88a0-1781d0c39d0a",
       "file_name": "ZD 002.JPG",
-      "full_size_url": "https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D",
-      "gallerythumb_url": "https://dev-img.snappr.co/rXtW9z6hGdDm3lebP9IPHGo9V5k=/fit-in/600x0/ee9be5f8-84a8-4592-88a0-1781d0c39d0a"
+      "url_original": "https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D",
+      "url_thumb": "https://dev-img.snappr.co/rXtW9z6hGdDm3lebP9IPHGo9V5k=/fit-in/600x0/ee9be5f8-84a8-4592-88a0-1781d0c39d0a"
     },
     {
       "uid": "6b6eae3e-ebfb-4776-8a20-2b8087f76418",
       "file_name": "ZD 003.JPG",
-      "full_size_url": "https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D",
-      "gallerythumb_url": "https://dev-img.snappr.co/gXk81aciTVokDvyi2NdWGNluhNg=/fit-in/600x0/6b6eae3e-ebfb-4776-8a20-2b8087f76418"
+      "url_original": "https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D",
+      "url_thumb": "https://dev-img.snappr.co/gXk81aciTVokDvyi2NdWGNluhNg=/fit-in/600x0/6b6eae3e-ebfb-4776-8a20-2b8087f76418"
     }
   ],
   "count": 3,
@@ -522,7 +524,7 @@ This endpoint retrieves all the images of a specific booking.
 
 | Parameter | Type    | Description                                                                                                                             | Required |
 | --------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `limit`   | Integer | Maximum number of images to be returned (maximum of 10000). Defaults to `5000`.                                                         | No       |
+| `limit`   | Integer | Maximum number of images to be returned (maximum of 10000). Defaults to `1000`.                                                         | No       |
 | `offset`  | Integer | Offset used for pagination if there are more images than the limit (or more than 10000 bookings if there is no limit). Defaults to `0`. | No       |
 
 # Shoot Types
