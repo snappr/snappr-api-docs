@@ -407,9 +407,11 @@ curl "https://api.snappr.co/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928" \
 ```javascript
 const snappr = require('snappr-api');
 
-let api = snappr.authorize('zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z');
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
 let bookings = api.bookings.get({
-  uid: "0ccefa53-b346-4d3e-8dcb-79a914289928";
+  uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
 });
 ```
 
@@ -443,6 +445,70 @@ This endpoint retrieves a specific booking using the ID of the booking.
 ### HTTP Request
 
 <code>GET https://api.snappr.co/bookings/<span class="route_param">:booking_uid</span></code>
+
+### Request Parameters
+
+| Parameter     | Type          | Description                    | Required |
+| ------------- | ------------- | ------------------------------ | -------- |
+| `booking_uid` | String (UUID) | The identifier of the booking. | Yes      |
+
+## Get Booking Images
+
+> Example request:
+
+```shell
+curl "https://api.snappr.co/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928/images" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0'
+```
+
+```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.getImages({
+  uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
+});
+```
+
+> Example JSON response:
+
+```json
+{
+  "results": [
+    {
+      "uid": "ed10cf86-97f9-4ce6-af6f-a01dfe891114",
+      "file_name": "ZD 001.JPG",
+      "full_size_url": "https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D",
+      "gallerythumb_url": "https://dev-img.snappr.co/QlXCPwnEgV7P_RO4AJDLhOsq500=/fit-in/600x0/ed10cf86-97f9-4ce6-af6f-a01dfe891114"
+    },
+    {
+      "uid": "ee9be5f8-84a8-4592-88a0-1781d0c39d0a",
+      "file_name": "ZD 002.JPG",
+      "full_size_url": "https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D",
+      "gallerythumb_url": "https://dev-img.snappr.co/rXtW9z6hGdDm3lebP9IPHGo9V5k=/fit-in/600x0/ee9be5f8-84a8-4592-88a0-1781d0c39d0a"
+    },
+    {
+      "uid": "6b6eae3e-ebfb-4776-8a20-2b8087f76418",
+      "file_name": "ZD 003.JPG",
+      "full_size_url": "https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D",
+      "gallerythumb_url": "https://dev-img.snappr.co/gXk81aciTVokDvyi2NdWGNluhNg=/fit-in/600x0/6b6eae3e-ebfb-4776-8a20-2b8087f76418"
+    }
+  ],
+  "count": 3,
+  "limit": 5000,
+  "offset": 0,
+  "total": 3
+}
+```
+
+This endpoint retrieves all the images of a specific booking.
+
+### HTTP Request
+
+<code>GET https://api.snappr.co/bookings/<span class="route_param">:booking_uid</span>/images</code>
 
 ### Request Parameters
 
