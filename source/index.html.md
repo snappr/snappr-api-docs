@@ -502,7 +502,7 @@ let bookings = api.bookings.getImages({
     }
   ],
   "count": 3,
-  "limit": 5000,
+  "limit": 1000,
   "offset": 0,
   "total": 3
 }
@@ -522,10 +522,10 @@ This endpoint retrieves all the images of a specific booking.
 
 ### Query Parameters
 
-| Parameter | Type    | Description                                                                                                                            | Required |
-| --------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `limit`   | Integer | Maximum number of images to be returned (maximum of 10000). Defaults to `1000`.                                                        | No       |
-| `offset`  | Integer | Offset used for pagination if there are more images than the limit (or more than 1000 bookings if there is no limit). Defaults to `0`. | No       |
+| Parameter | Type    | Description                                                                                                                          | Required |
+| --------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `limit`   | Integer | Maximum number of images to be returned (maximum of 10000). Defaults to `1000`.                                                      | No       |
+| `offset`  | Integer | Offset used for pagination if there are more images than the limit (or more than 1000 images if there is no limit). Defaults to `0`. | No       |
 
 # Shoot Types
 
