@@ -96,7 +96,7 @@ let availability = api.availability.get({
 }
 ```
 
-This endpoint returns time availability (i.e. available shoot start times) for a combination of location, date, shoottype and duration.
+This endpoint returns time availability (i.e. available shoot start times) for a combination of location, date, shoot type and duration.
 
 ### HTTP Request
 
@@ -104,13 +104,13 @@ This endpoint returns time availability (i.e. available shoot start times) for a
 
 ### Query Parameters
 
-| Parameter   | Type       | Description                                                       | Required |
-| ----------- | ---------- | ----------------------------------------------------------------- | -------- |
-| `latitude`  | Number     | Latitude of the shoot location.                                   | Yes      |
-| `longitude` | Number     | Longitude of the shoot location.                                  | Yes      |
-| `shoottype` | String     | Name of the shoottype (see `Shoottypes` endpoints), e.g. "event". | Yes      |
-| `duration`  | Integer    | Length of the shoot in minutes.                                   | Yes      |
-| `date`      | Date (ISO) | Date for which you want to check time availability.               | Yes      |
+| Parameter   | Type       | Description                                                                                    | Required |
+| ----------- | ---------- | ---------------------------------------------------------------------------------------------- | -------- |
+| `latitude`  | Number     | Latitude of the shoot location.                                                                | Yes      |
+| `longitude` | Number     | Longitude of the shoot location.                                                               | Yes      |
+| `shoottype` | String     | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event". | Yes      |
+| `duration`  | Integer    | Length of the shoot in minutes.                                                                | Yes      |
+| `date`      | Date (ISO) | Date for which you want to check time availability.                                            | Yes      |
 
 <aside class="notice">
 All available times within the range of the local date will be returned. However, the format of the returned times is always in UTC for simplicity.
@@ -284,7 +284,7 @@ Broadly, there are two main ways to create a new photoshoot booking, and example
 | ---------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `latitude`             | Number         | Latitude of the shoot location.                                                                                                       | Yes      |
 | `longitude`            | Number         | Longitude of the shoot location.                                                                                                      | Yes      |
-| `shoottype`            | String         | Name of the shoottype (see `Shoottypes` endpoints), e.g. "event".                                                                     | Yes      |
+| `shoottype`            | String         | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event".                                        | Yes      |
 | `start_at`             | Datetime (ISO) | Start time of the shoot in UTC. If this is set to `null`, then Snappr will automatically seek this information from the end-customer. | Yes      |
 | `duration`             | Integer        | Length of the shoot in minutes.                                                                                                       | Yes      |
 | `location_notes`       | String         | Details to help the photographer find the specific location and contact person at the time of the shoot.                              | No       |
@@ -302,7 +302,7 @@ If <code>start_at</code> is set to <code>null</code> the system assumes you want
 </aside>
 
 <aside class="notice">
-Always check <a href="#availability">availability</a> before trying to create a new booking with <code>start_at</code> defined. If you try to make a booking at for combination of location, date/time and shoottype for which there are no available photographers, you will receive a 400 error (see <code>Errors</code> section).
+Always check <a href="#availability">availability</a> before trying to create a new booking with <code>start_at</code> defined. If you try to make a booking at for combination of location, date/time and shoot type for which there are no available photographers, you will receive a 400 error (see <code>Errors</code> section).
 </aside>
 
 ## Get All Bookings
