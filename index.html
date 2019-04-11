@@ -361,7 +361,7 @@ let availability = api.availability.get({
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint returns time availability (i.e. available shoot start times) for a combination of location, date, shoottype and duration.</p>
+<p>This endpoint returns time availability (i.e. available shoot start times) for a combination of location, date, shoot type and duration.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>GET https://api.snappr.co/availability?latitude=<span class="route_param">:latitude</span>&amp;longitude=<span class="route_param">:longitude</span>&amp;shoottype=<span class="route_param">:shoottype</span>&amp;duration=<span class="route_param">:duration</span>&amp;date=<span class="route_param">:date</span></code></p>
 <h3 id='query-parameters'>Query Parameters</h3>
@@ -388,7 +388,7 @@ let availability = api.availability.get({
 <tr>
 <td><code>shoottype</code></td>
 <td>String</td>
-<td>Name of the shoottype (see <code>Shoottypes</code> endpoints), e.g. &quot;event&quot;.</td>
+<td>Name of the shoot type (see <a href="#shoot-types"><code>Shoot types</code></a> endpoints), e.g. &quot;event&quot;.</td>
 <td>Yes</td>
 </tr>
 <tr>
@@ -586,7 +586,7 @@ let bookings = api.bookings.post({
 <tr>
 <td><code>shoottype</code></td>
 <td>String</td>
-<td>Name of the shoottype (see <code>Shoottypes</code> endpoints), e.g. &quot;event&quot;.</td>
+<td>Name of the shoot type (see <a href="#shoot-types"><code>Shoot types</code></a> endpoints), e.g. &quot;event&quot;.</td>
 <td>Yes</td>
 </tr>
 <tr>
@@ -652,7 +652,7 @@ If <code>start_at</code> is set to <code>null</code> the system assumes you want
 </aside>
 
 <aside class="notice">
-Always check <a href="#availability">availability</a> before trying to create a new booking with <code>start_at</code> defined. If you try to make a booking at for combination of location, date/time and shoottype for which there are no available photographers, you will receive a 400 error (see <code>Errors</code> section).
+Always check <a href="#availability">availability</a> before trying to create a new booking with <code>start_at</code> defined. If you try to make a booking at for combination of location, date/time and shoot type for which there are no available photographers, you will receive a 400 error (see <code>Errors</code> section).
 </aside>
 <h2 id='get-all-bookings'>Get All Bookings</h2>
 <blockquote>
