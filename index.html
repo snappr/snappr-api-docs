@@ -209,7 +209,7 @@
     
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -220,7 +220,6 @@
       <img src="images/logo.svg" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="javascript">javascript</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -252,6 +251,9 @@
                   </li>
                   <li>
                     <a href="#get-single-booking" class="toc-h2 toc-link" data-title="Get Single Booking">Get Single Booking</a>
+                  </li>
+                  <li>
+                    <a href="#get-booking-images" class="toc-h2 toc-link" data-title="Get Booking Images">Get Booking Images</a>
                   </li>
               </ul>
           </li>
@@ -286,15 +288,20 @@
         <h1 id='introduction'>Introduction</h1>
 <p>Welcome to the Snappr API! You can use our API to commission and manage photoshoots within the Snappr marketplace network. The API is available only to organizations using the Snappr enterprise Photography Portal. If you do not currently have a Photography Portal account and are interesting in setting one up, find out more <a href="https://www.snappr.co/partner">here</a>.</p>
 
-<p>We have language bindings in Shell and JavaScript. You can view code examples in the panel on the right, and you can switch the programming language of the examples with the tabs on the top-right.</p>
+<p>We have code examples in Shell. You can them in the panel on the right. We will have language bindings for JavaScript very soon.</p>
+
+<!-- We have language bindings in Shell and JavaScript. You can view code examples in the panel on the right, and you can switch the programming language of the examples with the tabs on the top-right. -->
 <h1 id='authentication'>Authentication</h1><pre class="highlight shell tab-shell"><code>curl <span class="s2">"/example-endpoint"</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">snappr</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'snappr-api'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span>
-  <span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span>
-<span class="p">);</span>
 </code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+``` -->
+
 <blockquote>
 <p>Replace the example key above with your API key. This fake key is used in all of the following request examples.</p>
 </blockquote>
@@ -315,19 +322,22 @@ You must replace <code>api_key</code> with your user API key.
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/availability?latitude=34.0522&amp;longitude=-118.2437&amp;shoottype=event&amp;duration=120&amp;date=2018-12-01"</span> <span class="se">\</span>
   -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">snappr</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'snappr-api'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span>
-  <span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span>
-<span class="p">);</span>
-<span class="kd">let</span> <span class="nx">availability</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">availability</span><span class="p">.</span><span class="nx">get</span><span class="p">({</span>
-  <span class="na">latitude</span><span class="p">:</span> <span class="mf">34.0522</span><span class="p">,</span>
-  <span class="na">longitude</span><span class="p">:</span> <span class="o">-</span><span class="mf">118.2437</span><span class="p">,</span>
-  <span class="na">shoottype</span><span class="p">:</span> <span class="s1">'event'</span><span class="p">,</span>
-  <span class="na">duration</span><span class="p">:</span> <span class="mi">120</span><span class="p">,</span>
-  <span class="na">date</span><span class="p">:</span> <span class="s1">'2018-12-01'</span>
-<span class="p">});</span>
 </code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let availability = api.availability.get({
+  latitude: 34.0522,
+  longitude: -118.2437,
+  shoottype: 'event',
+  duration: 120,
+  date: '2018-12-01'
+});
+``` -->
+
 <blockquote>
 <p>Example JSON response:</p>
 </blockquote>
@@ -417,28 +427,31 @@ All available times within the range of the local date will be returned. However
       "customer_company": "Snappr Inc."
     }
   }'</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">snappr</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'snappr-api'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span>
-  <span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span>
-<span class="p">);</span>
-<span class="kd">let</span> <span class="nx">bookings</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">bookings</span><span class="p">.</span><span class="nx">post</span><span class="p">({</span>
-  <span class="na">latitude</span><span class="p">:</span> <span class="mf">34.0522</span><span class="p">,</span>
-  <span class="na">longitude</span><span class="p">:</span> <span class="o">-</span><span class="mf">118.2437</span><span class="p">,</span>
-  <span class="na">shoottype</span><span class="p">:</span> <span class="s1">'event'</span><span class="p">,</span>
-  <span class="na">start_at</span><span class="p">:</span> <span class="s1">'2018-12-01T07:30:00Z'</span><span class="p">,</span>
-  <span class="na">duration</span><span class="p">:</span> <span class="mi">120</span><span class="p">,</span>
-  <span class="na">location_notes</span><span class="p">:</span>
-    <span class="s1">'Location is Emerald Theatre - ring buzzer at main entrance on arrival'</span><span class="p">,</span>
-  <span class="na">style_notes</span><span class="p">:</span>
-    <span class="s1">'Shots of as many members of crowd as possible; shallow depth of field where possible'</span><span class="p">,</span>
-  <span class="na">customer_firstname</span><span class="p">:</span> <span class="s1">'Mary'</span><span class="p">,</span>
-  <span class="na">customer_surname</span><span class="p">:</span> <span class="s1">'Smith'</span><span class="p">,</span>
-  <span class="na">customer_email</span><span class="p">:</span> <span class="s1">'test@snappr.co'</span><span class="p">,</span>
-  <span class="na">customer_mobilephone</span><span class="p">:</span> <span class="s1">'+14153339966'</span><span class="p">,</span>
-  <span class="na">customer_company</span><span class="p">:</span> <span class="s1">'Snappr Inc.'</span>
-<span class="p">});</span>
 </code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.post({
+  latitude: 34.0522,
+  longitude: -118.2437,
+  shoottype: 'event',
+  start_at: '2018-12-01T07:30:00Z',
+  duration: 120,
+  location_notes:
+    'Location is Emerald Theatre - ring buzzer at main entrance on arrival',
+  style_notes:
+    'Shots of as many members of crowd as possible; shallow depth of field where possible',
+  customer_firstname: 'Mary',
+  customer_surname: 'Smith',
+  customer_email: 'test@snappr.co',
+  customer_mobilephone: '+14153339966',
+  customer_company: 'Snappr Inc.'
+});
+``` -->
+
 <blockquote>
 <p>Example JSON response:</p>
 </blockquote>
@@ -486,28 +499,31 @@ All available times within the range of the local date will be returned. However
       "customer_company": "Snappr Inc."
     }
   }'</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">snappr</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'snappr-api'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span>
-  <span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span>
-<span class="p">);</span>
-<span class="kd">let</span> <span class="nx">bookings</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">bookings</span><span class="p">.</span><span class="nx">post</span><span class="p">({</span>
-  <span class="na">latitude</span><span class="p">:</span> <span class="mf">34.0522</span><span class="p">,</span>
-  <span class="na">longitude</span><span class="p">:</span> <span class="o">-</span><span class="mf">118.2437</span><span class="p">,</span>
-  <span class="na">shoottype</span><span class="p">:</span> <span class="s1">'event'</span><span class="p">,</span>
-  <span class="na">start_at</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
-  <span class="na">duration</span><span class="p">:</span> <span class="mi">120</span><span class="p">,</span>
-  <span class="na">location_notes</span><span class="p">:</span>
-    <span class="s1">'Location is Emerald Theatre - ring buzzer at main entrance on arrival'</span><span class="p">,</span>
-  <span class="na">style_notes</span><span class="p">:</span>
-    <span class="s1">'Shots of as many members of crowd as possible; shallow depth of field where possible'</span><span class="p">,</span>
-  <span class="na">customer_firstname</span><span class="p">:</span> <span class="s1">'Mary'</span><span class="p">,</span>
-  <span class="na">customer_surname</span><span class="p">:</span> <span class="s1">'Smith'</span><span class="p">,</span>
-  <span class="na">customer_email</span><span class="p">:</span> <span class="s1">'test@snappr.co'</span><span class="p">,</span>
-  <span class="na">customer_mobilephone</span><span class="p">:</span> <span class="s1">'+14153339966'</span><span class="p">,</span>
-  <span class="na">customer_company</span><span class="p">:</span> <span class="s1">'Snappr Inc.'</span>
-<span class="p">});</span>
 </code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.post({
+  latitude: 34.0522,
+  longitude: -118.2437,
+  shoottype: 'event',
+  start_at: null,
+  duration: 120,
+  location_notes:
+    'Location is Emerald Theatre - ring buzzer at main entrance on arrival',
+  style_notes:
+    'Shots of as many members of crowd as possible; shallow depth of field where possible',
+  customer_firstname: 'Mary',
+  customer_surname: 'Smith',
+  customer_email: 'test@snappr.co',
+  customer_mobilephone: '+14153339966',
+  customer_company: 'Snappr Inc.'
+});
+``` -->
+
 <blockquote>
 <p>Example JSON response:</p>
 </blockquote>
@@ -640,15 +656,18 @@ Always check <a href="#availability">availability</a> before trying to create a 
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/bookings"</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
   -H <span class="s1">'accept-version: 1.0.0'</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">snappr</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'snappr-api'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span>
-  <span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span>
-<span class="p">);</span>
-<span class="kd">let</span> <span class="nx">bookings</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">bookings</span><span class="p">.</span><span class="nx">get</span><span class="p">({</span>
-  <span class="c1">// no params</span>
-<span class="p">});</span>
 </code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.get({
+  // no params
+});
+``` -->
+
 <blockquote>
 <p>Example JSON response:</p>
 </blockquote>
@@ -736,14 +755,19 @@ The API does not currently support booking filters (e.g. filtering by a certain 
 </blockquote>
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928"</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
-  -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">snappr</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'snappr-api'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">bookings</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">bookings</span><span class="p">.</span><span class="nx">get</span><span class="p">({</span>
-  <span class="na">uid</span><span class="p">:</span> <span class="s2">"0ccefa53-b346-4d3e-8dcb-79a914289928"</span><span class="p">;</span>
-<span class="p">});</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span>
 </code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.get({
+  uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
+});
+``` -->
+
 <blockquote>
 <p>Example JSON response:</p>
 </blockquote>
@@ -787,6 +811,96 @@ The API does not currently support booking filters (e.g. filtering by a certain 
 <td>Yes</td>
 </tr>
 </tbody></table>
+<h2 id='get-booking-images'>Get Booking Images</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928/images"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span>
+</code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.getImages({
+  uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
+});
+``` -->
+
+<blockquote>
+<p>Example JSON response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ed10cf86-97f9-4ce6-af6f-a01dfe891114"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZD 001.JPG"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"full_size_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"gallerythumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-img.snappr.co/QlXCPwnEgV7P_RO4AJDLhOsq500=/fit-in/600x0/ed10cf86-97f9-4ce6-af6f-a01dfe891114"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ee9be5f8-84a8-4592-88a0-1781d0c39d0a"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZD 002.JPG"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"full_size_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"gallerythumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-img.snappr.co/rXtW9z6hGdDm3lebP9IPHGo9V5k=/fit-in/600x0/ee9be5f8-84a8-4592-88a0-1781d0c39d0a"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6b6eae3e-ebfb-4776-8a20-2b8087f76418"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZD 003.JPG"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"full_size_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"gallerythumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-img.snappr.co/gXk81aciTVokDvyi2NdWGNluhNg=/fit-in/600x0/6b6eae3e-ebfb-4776-8a20-2b8087f76418"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">5000</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all the images of a specific booking.</p>
+<h3 id='http-request-5'>HTTP Request</h3>
+<p><code>GET https://api.snappr.co/bookings/<span class="route_param">:booking_uid</span>/images</code></p>
+<h3 id='request-parameters-2'>Request Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>booking_uid</code></td>
+<td>String (UUID)</td>
+<td>The identifier of the booking.</td>
+<td>Yes</td>
+</tr>
+</tbody></table>
+<h3 id='query-parameters-3'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>limit</code></td>
+<td>Integer</td>
+<td>Maximum number of images to be returned (maximum of 10000). Defaults to <code>5000</code>.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>offset</code></td>
+<td>Integer</td>
+<td>Offset used for pagination if there are more images than the limit (or more than 10000 bookings if there is no limit). Defaults to <code>0</code>.</td>
+<td>No</td>
+</tr>
+</tbody></table>
 <h1 id='shoot-types'>Shoot Types</h1><h2 id='get-all-shoot-types'>Get All Shoot Types</h2>
 <blockquote>
 <p>Example request:</p>
@@ -794,13 +908,16 @@ The API does not currently support booking filters (e.g. filtering by a certain 
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/shoottypes"</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
   -H <span class="s1">'accept-version: 1.0.0'</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">snappr</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'snappr-api'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">snappr</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span>
-  <span class="s1">'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'</span>
-<span class="p">);</span>
-<span class="kd">let</span> <span class="nx">bookings</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">shoottypes</span><span class="p">.</span><span class="nx">get</span><span class="p">({});</span>
 </code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.shoottypes.get({});
+``` -->
+
 <blockquote>
 <p>Example JSON response:</p>
 </blockquote>
@@ -823,7 +940,7 @@ The API does not currently support booking filters (e.g. filtering by a certain 
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint returns all available Snappr shoot types.</p>
-<h3 id='http-request-5'>HTTP Request</h3>
+<h3 id='http-request-6'>HTTP Request</h3>
 <p><code>GET https://api.snappr.co/shoottypes</code></p>
 <h1 id='custom-webhooks'>Custom Webhooks</h1>
 <blockquote>
@@ -945,7 +1062,6 @@ The API does not currently support booking filters (e.g. filtering by a certain 
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="javascript">javascript</a>
           </div>
       </div>
     </div>
