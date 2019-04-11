@@ -252,8 +252,13 @@
                   <li>
                     <a href="#get-single-booking" class="toc-h2 toc-link" data-title="Get Single Booking">Get Single Booking</a>
                   </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#images" class="toc-h1 toc-link" data-title="Images">Images</a>
+              <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-booking-images" class="toc-h2 toc-link" data-title="Get Booking Images">Get Booking Images</a>
+                    <a href="#get-all-images-for-a-booking" class="toc-h2 toc-link" data-title="Get All Images For a Booking">Get All Images For a Booking</a>
                   </li>
               </ul>
           </li>
@@ -811,7 +816,7 @@ let bookings = api.bookings.get({
 <td>Yes</td>
 </tr>
 </tbody></table>
-<h2 id='get-booking-images'>Get Booking Images</h2>
+<h1 id='images'>Images</h1><h2 id='get-all-images-for-a-booking'>Get All Images For a Booking</h2>
 <blockquote>
 <p>Example request:</p>
 </blockquote>
@@ -838,20 +843,20 @@ let bookings = api.bookings.getImages({
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ed10cf86-97f9-4ce6-af6f-a01dfe891114"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZD 001.JPG"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"full_size_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"gallerythumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-img.snappr.co/QlXCPwnEgV7P_RO4AJDLhOsq500=/fit-in/600x0/ed10cf86-97f9-4ce6-af6f-a01dfe891114"</span><span class="w">
+      </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-img.snappr.co/QlXCPwnEgV7P_RO4AJDLhOsq500=/fit-in/600x0/ed10cf86-97f9-4ce6-af6f-a01dfe891114"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ee9be5f8-84a8-4592-88a0-1781d0c39d0a"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZD 002.JPG"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"full_size_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"gallerythumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-img.snappr.co/rXtW9z6hGdDm3lebP9IPHGo9V5k=/fit-in/600x0/ee9be5f8-84a8-4592-88a0-1781d0c39d0a"</span><span class="w">
+      </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-img.snappr.co/rXtW9z6hGdDm3lebP9IPHGo9V5k=/fit-in/600x0/ee9be5f8-84a8-4592-88a0-1781d0c39d0a"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6b6eae3e-ebfb-4776-8a20-2b8087f76418"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZD 003.JPG"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"full_size_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"gallerythumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-img.snappr.co/gXk81aciTVokDvyi2NdWGNluhNg=/fit-in/600x0/6b6eae3e-ebfb-4776-8a20-2b8087f76418"</span><span class="w">
+      </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-media-snappr.s3.ap-southeast-2.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://dev-img.snappr.co/gXk81aciTVokDvyi2NdWGNluhNg=/fit-in/600x0/6b6eae3e-ebfb-4776-8a20-2b8087f76418"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
@@ -891,7 +896,7 @@ let bookings = api.bookings.getImages({
 <tr>
 <td><code>limit</code></td>
 <td>Integer</td>
-<td>Maximum number of images to be returned (maximum of 10000). Defaults to <code>5000</code>.</td>
+<td>Maximum number of images to be returned (maximum of 10000). Defaults to <code>1000</code>.</td>
 <td>No</td>
 </tr>
 <tr>
