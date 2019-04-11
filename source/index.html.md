@@ -3,7 +3,7 @@ title: Snappr API Documentation
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - javascript
+  # - javascript
 
 toc_footers:
   - <a href='https://www.snappr.co/partner'>Setup an enterprise account</a>
@@ -19,7 +19,9 @@ search: true
 
 Welcome to the Snappr API! You can use our API to commission and manage photoshoots within the Snappr marketplace network. The API is available only to organizations using the Snappr enterprise Photography Portal. If you do not currently have a Photography Portal account and are interesting in setting one up, find out more <a href="https://www.snappr.co/partner">here</a>.
 
-We have language bindings in Shell and JavaScript. You can view code examples in the panel on the right, and you can switch the programming language of the examples with the tabs on the top-right.
+We have code examples in Shell. You can them in the panel on the right. We will have language bindings for JavaScript very soon.
+
+<!-- We have language bindings in Shell and JavaScript. You can view code examples in the panel on the right, and you can switch the programming language of the examples with the tabs on the top-right. -->
 
 # Authentication
 
@@ -28,13 +30,13 @@ curl "/example-endpoint" \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"
 ```
 
-```javascript
+<!-- ```javascript
 const snappr = require('snappr-api');
 
 let api = snappr.authorize(
   'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
 );
-```
+``` -->
 
 > Replace the example key above with your API key. This fake key is used in all of the following request examples.
 
@@ -60,7 +62,7 @@ curl "https://api.snappr.co/availability?latitude=34.0522&longitude=-118.2437&sh
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"
 ```
 
-```javascript
+<!-- ```javascript
 const snappr = require('snappr-api');
 
 let api = snappr.authorize(
@@ -73,7 +75,7 @@ let availability = api.availability.get({
   duration: 120,
   date: '2018-12-01'
 });
-```
+``` -->
 
 > Example JSON response:
 
@@ -143,7 +145,7 @@ curl "https://api.snappr.co/bookings" \
   }'
 ```
 
-```javascript
+<!-- ```javascript
 const snappr = require('snappr-api');
 
 let api = snappr.authorize(
@@ -165,7 +167,7 @@ let bookings = api.bookings.post({
   customer_mobilephone: '+14153339966',
   customer_company: 'Snappr Inc.'
 });
-```
+``` -->
 
 > Example JSON response:
 
@@ -217,7 +219,7 @@ curl "https://api.snappr.co/bookings" \
   }'
 ```
 
-```javascript
+<!-- ```javascript
 const snappr = require('snappr-api');
 
 let api = snappr.authorize(
@@ -239,7 +241,7 @@ let bookings = api.bookings.post({
   customer_mobilephone: '+14153339966',
   customer_company: 'Snappr Inc.'
 });
-```
+``` -->
 
 > Example JSON response:
 
@@ -313,7 +315,7 @@ curl "https://api.snappr.co/bookings" \
   -H 'accept-version: 1.0.0'
 ```
 
-```javascript
+<!-- ```javascript
 const snappr = require('snappr-api');
 
 let api = snappr.authorize(
@@ -322,7 +324,7 @@ let api = snappr.authorize(
 let bookings = api.bookings.get({
   // no params
 });
-```
+``` -->
 
 > Example JSON response:
 
@@ -401,10 +403,10 @@ The API does not currently support booking filters (e.g. filtering by a certain 
 ```shell
 curl "https://api.snappr.co/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928" \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
-  -H 'accept-version: 1.0.0' \
+  -H 'accept-version: 1.0.0'
 ```
 
-```javascript
+<!-- ```javascript
 const snappr = require('snappr-api');
 
 let api = snappr.authorize(
@@ -413,7 +415,7 @@ let api = snappr.authorize(
 let bookings = api.bookings.get({
   uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
 });
-```
+``` -->
 
 > Example JSON response:
 
@@ -462,7 +464,7 @@ curl "https://api.snappr.co/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928/images
   -H 'accept-version: 1.0.0'
 ```
 
-```javascript
+<!-- ```javascript
 const snappr = require('snappr-api');
 
 let api = snappr.authorize(
@@ -471,7 +473,7 @@ let api = snappr.authorize(
 let bookings = api.bookings.getImages({
   uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
 });
-```
+``` -->
 
 > Example JSON response:
 
@@ -516,6 +518,13 @@ This endpoint retrieves all the images of a specific booking.
 | ------------- | ------------- | ------------------------------ | -------- |
 | `booking_uid` | String (UUID) | The identifier of the booking. | Yes      |
 
+### Query Parameters
+
+| Parameter | Type    | Description                                                                                                                             | Required |
+| --------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `limit`   | Integer | Maximum number of images to be returned (maximum of 10000). Defaults to `5000`.                                                         | No       |
+| `offset`  | Integer | Offset used for pagination if there are more images than the limit (or more than 10000 bookings if there is no limit). Defaults to `0`. | No       |
+
 # Shoot Types
 
 ## Get All Shoot Types
@@ -528,14 +537,14 @@ curl "https://api.snappr.co/shoottypes" \
   -H 'accept-version: 1.0.0'
 ```
 
-```javascript
+<!-- ```javascript
 const snappr = require('snappr-api');
 
 let api = snappr.authorize(
   'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
 );
 let bookings = api.shoottypes.get({});
-```
+``` -->
 
 > Example JSON response:
 
