@@ -116,6 +116,56 @@ This endpoint returns time availability (i.e. available shoot start times) for a
 All available times within the range of the local date will be returned. However, the format of the returned times is always in UTC for simplicity.
 </aside>
 
+# Coverage
+
+## Get Coverage
+
+> Example request:
+
+```shell
+curl "https://api.snappr.co/coverage?latitude=34.0522&longitude=-118.2437&shoottype=event" \
+  -H 'accept-version: 1.0.0' \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let availability = api.availability.get({
+  latitude: 34.0522,
+  longitude: -118.2437,
+  shoottype: 'event',
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "latitude": 34.0522,
+  "longitude": -118.2437,
+  "shoottype": "event",
+  "coverage": false
+}
+```
+
+This endpoint returns a boolean with wether or not we have coverage in the `latitude`/`longitude` provided for that `shoottype`.
+
+### HTTP Request
+
+<code>GET https://api.snappr.co/coverage?latitude=<span class="route_param">:latitude</span>&longitude=<span class="route_param">:longitude</span>&shoottype=<span class="route_param">:shoottype</span></code>
+
+### Query Parameters
+
+| Parameter   | Type   | Description                                                                                    | Required |
+| ----------- | ------ | ---------------------------------------------------------------------------------------------- | -------- |
+| `latitude`  | Number | Latitude of the shoot location.                                                                | Yes      |
+| `longitude` | Number | Longitude of the shoot location.                                                               | Yes      |
+| `shoottype` | String | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event". | Yes      |
+
 # Bookings
 
 ## Create New Booking
