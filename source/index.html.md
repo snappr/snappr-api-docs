@@ -19,7 +19,7 @@ search: true
 
 Welcome to the Snappr API! You can use our API to commission and manage photoshoots within the Snappr marketplace network. The API is available only to organizations using the Snappr enterprise Photography Portal. If you do not currently have a Photography Portal account and are interesting in setting one up, find out more <a href="https://www.snappr.co/partner">here</a>.
 
-We have code examples in Shell. You can them in the panel on the right. We will have language bindings for JavaScript very soon.
+We have code examples in Shell, displayed in the panel on the right. We will have language bindings for JavaScript very soon.
 
 <!-- We have language bindings in Shell and JavaScript. You can view code examples in the panel on the right, and you can switch the programming language of the examples with the tabs on the top-right. -->
 
