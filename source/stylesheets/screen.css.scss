@@ -63,7 +63,7 @@ body {
   // font-size: 13px;
   font-size: 15px;
   font-weight: bold;
-
+  box-shadow: 1px 0 0 0 rgba(0, 0, 0, 0.1);
   // language selector for mobile devices
   .lang-selector {
     display: none;
@@ -91,8 +91,10 @@ body {
       // background: $nav-bg;
       background: $search-bg;
       // border-width: 0 0 1px 0;
-      border-width: 0px;
-      border-color: $search-box-border-color;
+
+      border: 1px solid $search-box-border-color;
+      // border-width: 1px;
+      // border-color: $search-box-border-color;
       // padding: 6px 0 6px 20px;
       padding: 6px 0 6px 25px;
       box-sizing: border-box;

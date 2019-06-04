@@ -21,28 +21,28 @@ under the License.
 
 // BACKGROUND COLORS
 ////////////////////
-$nav-bg: #f6f9ff !default;
+$nav-bg: white !default;
 $examples-bg: #2e3336 !default;
 $code-bg: #141b24 !default;
 $code-annotation-bg: #141b24 !default;
-$nav-subitem-bg: #c1c8d4 !default;
-$nav-active-bg: #141b24 !default;
-$nav-active-parent-bg: #c1c8d4 !default; // parent links of the current section
+$nav-subitem-bg: #f6f9ff !default;
+$nav-active-bg: #e8edf5 !default;
+$nav-active-parent-bg: #f6f9ff !default; // parent links of the current section
 $lang-select-border: #000 !default;
 $lang-select-bg: #141b24 !default;
 $lang-select-active-bg: white !default; // feel free to change this to blue or something
 $lang-select-pressed-bg: #111 !default; // color of language tab bg when mouse is pressed
 $main-bg: white !default;
-$aside-notice-bg: #c1c8d4 !default;
+$aside-notice-bg: #e8edf5 !default;
 $aside-warning-bg: #faa4bf !default;
-$aside-success-bg: #c1c8d4 !default;
+$aside-success-bg: #e8edf5 !default;
 $search-notice-bg: #faa4bf !default;
 
 // TEXT COLORS
 ////////////////////
 $main-text: #141b24 !default; // main content text color
 $nav-text: #141b24 !default;
-$nav-active-text: #fff !default;
+$nav-active-text: #141b24 !default;
 $nav-active-parent-text: #141b24 !default; // parent links of the current section
 $lang-select-text: #fff !default; // color of unselected language tab text
 $lang-select-active-text: #141b24 !default; // color of selected language tab text
@@ -89,7 +89,7 @@ $phone-width: $tablet-width - $nav-width !default; // min width before reverting
 // OTHER
 ////////////////////
 $nav-footer-border-color: lightgray !default;
-$search-box-border-color: #818a95 !default;
+$search-box-border-color: #e8edf5 !default;
 
 // SNAPPR NEW
 ////////////////////
