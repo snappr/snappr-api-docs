@@ -76,17 +76,6 @@ $phone-width: $tablet-width - $nav-width !default; // min width before reverting
   font-weight: bold;
 }
 
-@font-face {
-  font-family: 'Tiempos Headline';
-  src: url('/fonts/tiempos-headline-bold.otf');
-}
-
-%display-font {
-  font-family: 'Tiempos Headline', serif;
-  letter-spacing: -0.02em;
-  font-weight: bold;
-}
-
 %code-font {
   font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono',
     'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace,
