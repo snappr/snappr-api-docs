@@ -6,7 +6,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   # - javascript
 
 toc_footers:
-  - <a href='https://www.snappr.co/partner'>Setup an enterprise account</a>
+  - <a href='https://www.snappr.co/for-business'>Setup an enterprise account</a>
   - <a href='https://app.snappr.co/book'>Book a Snappr without the API</a>
 
 includes:
@@ -17,7 +17,7 @@ search: true
 
 # Introduction
 
-Welcome to the Snappr API! You can use our API to commission and manage photoshoots within the Snappr marketplace network. The API is available only to organizations using the Snappr enterprise Photography Portal. If you do not currently have a Photography Portal account and are interesting in setting one up, find out more <a href="https://www.snappr.co/partner">here</a>.
+Welcome to the Snappr API! You can use our API to commission and manage photoshoots within the Snappr marketplace network. The API is available only to organizations using the Snappr enterprise Photography Portal. If you do not currently have a Photography Portal account and are interesting in setting one up, find out more <a href="https://www.snappr.co/for-business">here</a>.
 
 We have code examples in Shell, displayed in the panel on the right. We will have language bindings for JavaScript very soon.
 
