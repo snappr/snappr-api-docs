@@ -22,7 +22,7 @@ Welcome to the Snappr API! You can use our API to commission and manage photosho
 We have code examples in Shell, displayed in the panel on the right. We will have language bindings for JavaScript very soon.
 
 <aside class="notice">
-For testing purpose, we suggest to use Sandbox url: <code>https://sandbox.snappr.co</code>
+For production use, use the base URL <code>https://api.snappr.co</code> as in the examples below. For testing purposes, substitute this for <code>https://sandbox.snappr.co</code>
 </aside>
 <!-- We have language bindings in Shell and JavaScript. You can view code examples in the panel on the right, and you can switch the programming language of the examples with the tabs on the top-right. -->
 
