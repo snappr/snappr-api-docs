@@ -181,7 +181,7 @@ curl "https://api.snappr.co/bookings" \
   -H 'accept-version: 1.0.0' \
   -H "Content-Type: application/json" \
   --data-binary $'{
-    "name": "Emerald Theatre Shoot",
+    "title": "Emerald Theatre Shoot",
     "latitude": 34.0522,
     "longitude": -118.2437,
     "shoottype": "event",
@@ -226,7 +226,7 @@ let bookings = api.bookings.post({
 ```json
 {
   "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
-  "name": "Emerald Theatre Shoot",
+  "title": "Emerald Theatre Shoot",
   "status": "paid",
   "credits": 249,
   "latitude": 34.0522,
@@ -255,7 +255,7 @@ curl "https://api.snappr.co/bookings" \
   -H 'accept-version: 1.0.0' \
   -H "Content-Type: application/json" \
   --data-binary $'{
-    "name": "Emerald Theatre Shoot",
+    "title": "Emerald Theatre Shoot",
     "latitude": 34.0522,
     "longitude": -118.2437,
     "shoottype": "event",
@@ -300,7 +300,7 @@ let bookings = api.bookings.post({
 ```json
 {
   "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
-  "name": "Emerald Theatre Shoot",
+  "title": "Emerald Theatre Shoot",
   "status": "paid_pending_schedule",
   "credits": 249,
   "latitude": 34.0522,
@@ -335,7 +335,7 @@ Broadly, there are two main ways to create a new photoshoot booking, and example
 
 | Parameter              | Type           | Description                                                                                                                           | Required |
 | ---------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `name`                 | String         | Custom shoot name.                                                                                                                    | No       |
+| `title`                | String         | Custom shoot title.                                                                                                                   | No       |
 | `latitude`             | Number         | Latitude of the shoot location.                                                                                                       | Yes      |
 | `longitude`            | Number         | Longitude of the shoot location.                                                                                                      | Yes      |
 | `shoottype`            | String         | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event".                                        | Yes      |
@@ -387,7 +387,7 @@ let bookings = api.bookings.get({
   "results": [
     {
       "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
-      "name": "Emerald Theatre Shoot",
+      "title": "Emerald Theatre Shoot",
       "status": "paid",
       "credits": 249,
       "latitude": 34.0522,
@@ -408,7 +408,7 @@ let bookings = api.bookings.get({
     },
     {
       "uid": "48b095fd-7fc0-41dc-b632-9b032e0a65e6",
-      "name": "Family Shoot",
+      "title": "Family Shoot",
       "status": "paid",
       "credits": 349,
       "latitude": 34.1513,
@@ -478,7 +478,7 @@ let bookings = api.bookings.get({
 ```json
 {
   "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
-  "name": "Emerald Theatre Shoot",
+  "title": "Emerald Theatre Shoot",
   "status": "paid",
   "credits": 249,
   "latitude": 34.0522,
@@ -642,7 +642,7 @@ This endpoint returns all available Snappr shoot types.
   "type": "update",
   "booking": {
     "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
-    "name": "Emerald Theatre Shoot",
+    "title": "Emerald Theatre Shoot",
     "status": "paid",
     "credits": 249,
     "latitude": 34.0522,
