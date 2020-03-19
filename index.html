@@ -493,7 +493,7 @@ All available times within the range of the local date will be returned. However
   -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   --data-binary <span class="s1">$'{
-    "name": "Emerald Theatre Shoot",
+    "title": "Emerald Theatre Shoot",
     "latitude": 34.0522,
     "longitude": -118.2437,
     "shoottype": "event",
@@ -537,7 +537,7 @@ let bookings = api.bookings.post({
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0ccefa53-b346-4d3e-8dcb-79a914289928"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Emerald Theatre Shoot"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Emerald Theatre Shoot"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paid"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"credits"</span><span class="p">:</span><span class="w"> </span><span class="mi">249</span><span class="p">,</span><span class="w">
   </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">34.0522</span><span class="p">,</span><span class="w">
@@ -565,7 +565,7 @@ let bookings = api.bookings.post({
   -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
   --data-binary <span class="s1">$'{
-    "name": "Emerald Theatre Shoot",
+    "title": "Emerald Theatre Shoot",
     "latitude": 34.0522,
     "longitude": -118.2437,
     "shoottype": "event",
@@ -609,7 +609,7 @@ let bookings = api.bookings.post({
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0ccefa53-b346-4d3e-8dcb-79a914289928"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Emerald Theatre Shoot"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Emerald Theatre Shoot"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paid_pending_schedule"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"credits"</span><span class="p">:</span><span class="w"> </span><span class="mi">249</span><span class="p">,</span><span class="w">
   </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">34.0522</span><span class="p">,</span><span class="w">
@@ -648,9 +648,9 @@ let bookings = api.bookings.post({
 </tr>
 </thead><tbody>
 <tr>
-<td><code>name</code></td>
+<td><code>title</code></td>
 <td>String</td>
-<td>Custom shoot name.</td>
+<td>Custom shoot title.</td>
 <td>No</td>
 </tr>
 <tr>
@@ -762,7 +762,7 @@ let bookings = api.bookings.get({
   </span><span class="s2">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0ccefa53-b346-4d3e-8dcb-79a914289928"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Emerald Theatre Shoot"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Emerald Theatre Shoot"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paid"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"credits"</span><span class="p">:</span><span class="w"> </span><span class="mi">249</span><span class="p">,</span><span class="w">
       </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">34.0522</span><span class="p">,</span><span class="w">
@@ -783,7 +783,7 @@ let bookings = api.bookings.get({
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"48b095fd-7fc0-41dc-b632-9b032e0a65e6"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Family Shoot"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Family Shoot"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paid"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"credits"</span><span class="p">:</span><span class="w"> </span><span class="mi">349</span><span class="p">,</span><span class="w">
       </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">34.1513</span><span class="p">,</span><span class="w">
@@ -862,7 +862,7 @@ let bookings = api.bookings.get({
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0ccefa53-b346-4d3e-8dcb-79a914289928"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Emerald Theatre Shoot"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Emerald Theatre Shoot"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paid"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"credits"</span><span class="p">:</span><span class="w"> </span><span class="mi">249</span><span class="p">,</span><span class="w">
   </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">34.0522</span><span class="p">,</span><span class="w">
@@ -1040,7 +1040,7 @@ let bookings = api.shoottypes.get({});
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"update"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"booking"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0ccefa53-b346-4d3e-8dcb-79a914289928"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Emerald Theatre Shoot"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Emerald Theatre Shoot"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paid"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"credits"</span><span class="p">:</span><span class="w"> </span><span class="mi">249</span><span class="p">,</span><span class="w">
     </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">34.0522</span><span class="p">,</span><span class="w">
