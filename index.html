@@ -505,7 +505,8 @@ All available times within the range of the local date will be returned. However
     "customer_surname": "Smith",
     "customer_email": "test@snappr.co",
     "customer_mobilephone": "+14153339966",
-    "customer_company": "Snappr Inc."
+    "customer_company": "Snappr Inc.",
+    "internal_id": "123-ABC"
   }'</span>
 </code></pre>
 <!-- ```javascript
@@ -577,7 +578,8 @@ let bookings = api.bookings.post({
     "customer_surname": "Smith",
     "customer_email": "test@snappr.co",
     "customer_mobilephone": "+14153339966",
-    "customer_company": "Snappr Inc."
+    "customer_company": "Snappr Inc.",
+    "internal_id": "123-ABC"
   }'</span>
 </code></pre>
 <!-- ```javascript
@@ -623,6 +625,7 @@ let bookings = api.bookings.post({
   </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.co"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
@@ -725,6 +728,12 @@ let bookings = api.bookings.post({
 <td>Name of your end-customer&#39;s company.</td>
 <td>No</td>
 </tr>
+<tr>
+<td><code>internal_id</code></td>
+<td>String</td>
+<td>ID for your internal systems. Useful for matching a booking with your internal data.</td>
+<td>No</td>
+</tr>
 </tbody></table>
 
 <aside class="notice">
@@ -777,6 +786,7 @@ let bookings = api.bookings.get({
       </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.co"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
       </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
@@ -877,6 +887,7 @@ let bookings = api.bookings.get({
   </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.co"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
@@ -1055,6 +1066,7 @@ let bookings = api.shoottypes.get({});
     </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.co"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
