@@ -193,7 +193,8 @@ curl "https://api.snappr.co/bookings" \
     "customer_surname": "Smith",
     "customer_email": "test@snappr.co",
     "customer_mobilephone": "+14153339966",
-    "customer_company": "Snappr Inc."
+    "customer_company": "Snappr Inc.",
+    "internal_id": "123-ABC"
   }'
 ```
 
@@ -267,7 +268,8 @@ curl "https://api.snappr.co/bookings" \
     "customer_surname": "Smith",
     "customer_email": "test@snappr.co",
     "customer_mobilephone": "+14153339966",
-    "customer_company": "Snappr Inc."
+    "customer_company": "Snappr Inc.",
+    "internal_id": "123-ABC"
   }'
 ```
 
@@ -314,6 +316,7 @@ let bookings = api.bookings.post({
   "customer_email": "test@snappr.co",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
+  "internal_id": "123-ABC",
   "photographer_name": "Hollie B.",
   "created_at": "2018-09-01T09:12:00Z",
   "updated_at": "2018-09-01T09:12:00Z"
@@ -348,6 +351,7 @@ Broadly, there are two main ways to create a new photoshoot booking, and example
 | `customer_email`       | String (email) | Valid email address of your end-customer.                                                                                             | Yes      |
 | `customer_mobilephone` | String         | Valid mobile phone number of your end-customer.                                                                                       | Yes      |
 | `customer_company`     | String         | Name of your end-customer's company.                                                                                                  | No       |
+| `internal_id`          | String         | ID for your internal systems. Useful for matching a booking with your internal data.                                                  | No       |
 
 <aside class="notice">
 
@@ -402,6 +406,7 @@ let bookings = api.bookings.get({
       "customer_email": "test@snappr.co",
       "customer_mobilephone": "+14153339966",
       "customer_company": "Snappr Inc.",
+      "internal_id": "123-ABC",
       "photographer_name": "Hollie B.",
       "created_at": "2018-09-01T09:12:00Z",
       "updated_at": "2018-09-01T09:12:00Z"
@@ -493,6 +498,7 @@ let bookings = api.bookings.get({
   "customer_email": "test@snappr.co",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
+  "internal_id": "123-ABC",
   "photographer_name": "Hollie B.",
   "created_at": "2018-09-01T09:12:00Z",
   "updated_at": "2018-09-01T09:12:00Z"
@@ -657,6 +663,7 @@ This endpoint returns all available Snappr shoot types.
     "customer_email": "test@snappr.co",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
+    "internal_id": "123-ABC",
     "photographer_name": "Hollie B.",
     "created_at": "2018-09-01T09:12:00Z",
     "updated_at": "2018-09-01T09:12:00Z"
