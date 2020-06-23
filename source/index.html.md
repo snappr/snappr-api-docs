@@ -97,7 +97,8 @@ curl "https://api.snappr.co/coverage" \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"
   -H "Content-Type: application/json" \
   --data-binary $'{
-    "address": "Golden Gate Bridge Welcome Center, Golden Gate Bridge, Coastal Trail, San Francisco, CA, USA"
+    "address": "Golden Gate Bridge Welcome Center, Golden Gate Bridge, Coastal Trail, San Francisco, CA, USA",
+    "shoottype" : "event"
   }'
 ```
 
@@ -108,8 +109,7 @@ let api = snappr.authorize(
   'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
 );
 let availability = api.availability.get({
-  latitude: 34.0522,
-  longitude: -118.2437,
+  address: "Golden Gate Bridge Welcome Center, Golden Gate Bridge, Coastal Trail, San Francisco, CA, USA",
   shoottype: 'event',
 });
 ``` -->
@@ -148,7 +148,7 @@ This endpoint returns Snappr coverage status (boolean) for a given location and 
 
 ## Get Availability
 
-> Example request:
+> Example request when latitude and longitude are provided:
 
 ```shell
 curl "https://api.snappr.co/availability?latitude=34.0522&longitude=-118.2437&shoottype=event&duration=120&date=2018-12-01" \
@@ -190,6 +190,54 @@ let availability = api.availability.get({
 }
 ```
 
+> Example request when address is provided:
+
+```shell
+curl "https://api.snappr.co/availability" \
+  -H 'accept-version: 1.0.0' \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"
+  -H "Content-Type: application/json" \
+    --data-binary $'{
+    "address": "Golden Gate Bridge Welcome Center, Golden Gate Bridge, Coastal Trail, San Francisco, CA, USA",
+    "shoottype": "event",
+    "duration": 120,
+    "date": "2018-12-01"
+  }'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let availability = api.availability.get({
+  address: "Golden Gate Bridge Welcome Center, Golden Gate Bridge, Coastal Trail, San Francisco, CA, USA",
+  shoottype: 'event',
+  duration: 120,
+  date: '2018-12-01'
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "latitude": 37.8077,
+  "longitude": -122.477,
+  "shoottype": "event",
+  "duration": 120,
+  "date": "2018-12-01",
+  "timezone": "America/Los_Angeles",
+  "available_times": [
+    "2018-12-01T07:30:00Z",
+    "2018-12-01T09:30:00Z",
+    "2018-12-01T15:00:00Z",
+    "2018-12-01T15:30:00Z"
+  ]
+}
+```
+
 This endpoint returns time availability (i.e. available shoot start times) for a combination of location, date, shoot type and duration.
 
 ### HTTP Request
@@ -218,7 +266,7 @@ All available times within the range of the local date will be returned. However
 
 ## Create New Booking
 
-> Example request when start_at is provided:
+> Example request when start_at, latitude and, longitude are provided:
 
 ```shell
 curl "https://api.snappr.co/bookings" \
@@ -362,6 +410,80 @@ let bookings = api.bookings.post({
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
   "internal_id": "123-ABC",
+  "photographer_name": "Hollie B.",
+  "created_at": "2018-09-01T09:12:00Z",
+  "updated_at": "2018-09-01T09:12:00Z"
+}
+```
+
+> Example request when address is provided:
+
+```shell
+curl "https://api.snappr.co/bookings" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0' \
+  -H "Content-Type: application/json" \
+  --data-binary $'{
+    "title": "Emerald Theatre Shoot",
+    "address": "Golden Gate Bridge Welcome Center, Golden Gate Bridge, Coastal Trail, San Francisco, CA, USA",
+    "shoottype": "event",
+    "start_at": "2018-12-01T07:30:00Z",
+    "duration": 120,
+    "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+    "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+    "customer_firstname": "Mary",
+    "customer_surname": "Smith",
+    "customer_email": "test@snappr.co",
+    "customer_mobilephone": "+14153339966",
+    "customer_company": "Snappr Inc.",
+    "internal_id": "123-ABC"
+  }'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.post({
+  latitude: 34.0522,
+  longitude: -118.2437,
+  shoottype: 'event',
+  start_at: '2018-12-01T07:30:00Z',
+  duration: 120,
+  location_notes:
+    'Location is Emerald Theatre - ring buzzer at main entrance on arrival',
+  style_notes:
+    'Shots of as many members of crowd as possible; shallow depth of field where possible',
+  customer_firstname: 'Mary',
+  customer_surname: 'Smith',
+  customer_email: 'test@snappr.co',
+  customer_mobilephone: '+14153339966',
+  customer_company: 'Snappr Inc.'
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
+  "title": "Emerald Theatre Shoot",
+  "status": "paid",
+  "credits": 249,
+  "latitude": 37.8077,
+  "longitude": -122.477,
+  "shoottype": "event",
+  "start_at": "2018-12-01T07:30:00Z",
+  "duration": 120,
+  "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+  "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+  "customer_firstname": "Mary",
+  "customer_surname": "Smith",
+  "customer_email": "test@snappr.co",
+  "customer_mobilephone": "+14153339966",
+  "customer_company": "Snappr Inc.",
   "photographer_name": "Hollie B.",
   "created_at": "2018-09-01T09:12:00Z",
   "updated_at": "2018-09-01T09:12:00Z"
