@@ -137,7 +137,7 @@ This endpoint returns Snappr coverage status (boolean) for a given location and 
 | ----------- | ------ | ---------------------------------------------------------------------------------------------- | -------- |
 | `latitude`  | Number | Latitude of the shoot location.                                                                | No\*     |
 | `longitude` | Number | Longitude of the shoot location.                                                               | No\*     |
-| `address`   | String | Address of the shoot location.                                                                 | No\*     |
+| `address`   | String | Address of the shoot location. Must be a Google Maps valid address.                            | No\*     |
 | `shoottype` | String | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event". | Yes      |
 
 <aside class="notice">
@@ -250,7 +250,7 @@ This endpoint returns time availability (i.e. available shoot start times) for a
 | ----------- | ---------- | ---------------------------------------------------------------------------------------------- | -------- |
 | `latitude`  | Number     | Latitude of the shoot location.                                                                | No\*     |
 | `longitude` | Number     | Longitude of the shoot location.                                                               | No\*     |
-| `address`   | String     | Address of the shoot location.                                                                 | No\*     |
+| `address`   | String     | Address of the shoot location. Must be a Google Maps valid address.                            | No\*     |
 | `shoottype` | String     | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event". | Yes      |
 | `duration`  | Integer    | Length of the shoot in minutes.                                                                | Yes      |
 | `date`      | Date (ISO) | Date for which you want to check time availability.                                            | Yes      |
@@ -508,7 +508,7 @@ Broadly, there are two main ways to create a new photoshoot booking, and example
 | `title`                | String         | Custom shoot title.                                                                                                                   | No       |
 | `latitude`             | Number         | Latitude of the shoot location.                                                                                                       | No\*     |
 | `longitude`            | Number         | Longitude of the shoot location.                                                                                                      | No\*     |
-| `address`              | String         | Address of the shoot location.                                                                                                        | No\*     |
+| `address`              | String         | Address of the shoot location. Must be a Google Maps valid address.                                                                   | No\*     |
 | `shoottype`            | String         | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event".                                        | Yes      |
 | `start_at`             | Datetime (ISO) | Start time of the shoot in UTC. If this is set to `null`, then Snappr will automatically seek this information from the end-customer. | Yes      |
 | `duration`             | Integer        | Length of the shoot in minutes.                                                                                                       | Yes      |
