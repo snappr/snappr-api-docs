@@ -135,13 +135,13 @@ This endpoint returns Snappr coverage status (boolean) for a given location and 
 
 | Parameter   | Type   | Description                                                                                    | Required |
 | ----------- | ------ | ---------------------------------------------------------------------------------------------- | -------- |
-| `latitude`  | Number | Latitude of the shoot location.                                                                | No       |
-| `longitude` | Number | Longitude of the shoot location.                                                               | No       |
-| `address`   | String | Address of the shoot location.                                                                 | No       |
+| `latitude`  | Number | Latitude of the shoot location.                                                                | No\*     |
+| `longitude` | Number | Longitude of the shoot location.                                                               | No\*     |
+| `address`   | String | Address of the shoot location.                                                                 | No\*     |
 | `shoottype` | String | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event". | Yes      |
 
 <aside class="notice">
-<code>address</code> is required if <code>latitude</code> or <code>longitude</code> are not provided.
+*One of the following is required: <code>address</code>; or <code>latitude</code> and <code>longitude</code>. If both are provided, only <code>latitude</code> and <code>longitude</code> will be used
 </aside>
 
 # Availability
@@ -248,9 +248,9 @@ This endpoint returns time availability (i.e. available shoot start times) for a
 
 | Parameter   | Type       | Description                                                                                    | Required |
 | ----------- | ---------- | ---------------------------------------------------------------------------------------------- | -------- |
-| `latitude`  | Number     | Latitude of the shoot location.                                                                | No       |
-| `longitude` | Number     | Longitude of the shoot location.                                                               | No       |
-| `address`   | String     | Address of the shoot location.                                                                 | No       |
+| `latitude`  | Number     | Latitude of the shoot location.                                                                | No\*     |
+| `longitude` | Number     | Longitude of the shoot location.                                                               | No\*     |
+| `address`   | String     | Address of the shoot location.                                                                 | No\*     |
 | `shoottype` | String     | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event". | Yes      |
 | `duration`  | Integer    | Length of the shoot in minutes.                                                                | Yes      |
 | `date`      | Date (ISO) | Date for which you want to check time availability.                                            | Yes      |
@@ -259,7 +259,7 @@ This endpoint returns time availability (i.e. available shoot start times) for a
 All available times within the range of the local date will be returned. However, the format of the returned times is always in UTC for simplicity.
 </aside>
 <aside class="notice">
-<code>address</code> is required if <code>latitude</code> or <code>longitude</code> are not provided.
+*One of the following is required: <code>address</code>; or <code>latitude</code> and <code>longitude</code>. If both are provided, only <code>latitude</code> and <code>longitude</code> will be used
 </aside>
 
 # Bookings
@@ -506,9 +506,9 @@ Broadly, there are two main ways to create a new photoshoot booking, and example
 | Parameter              | Type           | Description                                                                                                                           | Required |
 | ---------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `title`                | String         | Custom shoot title.                                                                                                                   | No       |
-| `latitude`             | Number         | Latitude of the shoot location.                                                                                                       | No       |
-| `longitude`            | Number         | Longitude of the shoot location.                                                                                                      | No       |
-| `address`              | String         | Address of the shoot location.                                                                                                        | No       |
+| `latitude`             | Number         | Latitude of the shoot location.                                                                                                       | No\*     |
+| `longitude`            | Number         | Longitude of the shoot location.                                                                                                      | No\*     |
+| `address`              | String         | Address of the shoot location.                                                                                                        | No\*     |
 | `shoottype`            | String         | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event".                                        | Yes      |
 | `start_at`             | Datetime (ISO) | Start time of the shoot in UTC. If this is set to `null`, then Snappr will automatically seek this information from the end-customer. | Yes      |
 | `duration`             | Integer        | Length of the shoot in minutes.                                                                                                       | Yes      |
@@ -532,7 +532,7 @@ Always check <a href="#availability">availability</a> before trying to create a 
 </aside>
 
 <aside class="notice">
-<code>address</code> is required if <code>latitude</code> or <code>longitude</code> are not provided.
+*One of the following is required: <code>address</code>; or <code>latitude</code> and <code>longitude</code>. If both are provided, only <code>latitude</code> and <code>longitude</code> will be used
 </aside>
 
 ## Get All Bookings
