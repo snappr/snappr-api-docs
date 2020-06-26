@@ -57,7 +57,7 @@ You must replace <code>api_key</code> with your user API key.
 
 ## Get Coverage
 
-> Example request:
+> Example request when latitude and longitude are provided:
 
 ```shell
 curl "https://api.snappr.co/coverage?latitude=34.0522&longitude=-118.2437&shoottype=event" \
@@ -89,6 +89,42 @@ let availability = api.availability.get({
 }
 ```
 
+> Example request when address is provided:
+
+```shell
+curl "https://api.snappr.co/coverage" \
+  -H 'accept-version: 1.0.0' \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"
+  -H "Content-Type: application/json" \
+  --data-binary $'{
+    "address": "Golden Gate Bridge Welcome Center, Golden Gate Bridge, Coastal Trail, San Francisco, CA, USA",
+    "shoottype" : "event"
+  }'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let availability = api.availability.get({
+  address: "Golden Gate Bridge Welcome Center, Golden Gate Bridge, Coastal Trail, San Francisco, CA, USA",
+  shoottype: 'event',
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "latitude": 37.8077,
+  "longitude": -122.477,
+  "shoottype": "event",
+  "coverage": false
+}
+```
+
 This endpoint returns Snappr coverage status (boolean) for a given location and shoot type. Coverage status is independent of specific dates or times.
 
 ### HTTP Request
@@ -99,15 +135,20 @@ This endpoint returns Snappr coverage status (boolean) for a given location and 
 
 | Parameter   | Type   | Description                                                                                    | Required |
 | ----------- | ------ | ---------------------------------------------------------------------------------------------- | -------- |
-| `latitude`  | Number | Latitude of the shoot location.                                                                | Yes      |
-| `longitude` | Number | Longitude of the shoot location.                                                               | Yes      |
+| `latitude`  | Number | Latitude of the shoot location.                                                                | No\*     |
+| `longitude` | Number | Longitude of the shoot location.                                                               | No\*     |
+| `address`   | String | Address of the shoot location. Must be a Google Maps valid address.                            | No\*     |
 | `shoottype` | String | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event". | Yes      |
+
+<aside class="notice">
+*One of the following is required: <code>address</code>; or <code>latitude</code> and <code>longitude</code>. If both are provided, only <code>latitude</code> and <code>longitude</code> will be used
+</aside>
 
 # Availability
 
 ## Get Availability
 
-> Example request:
+> Example request when latitude and longitude are provided:
 
 ```shell
 curl "https://api.snappr.co/availability?latitude=34.0522&longitude=-118.2437&shoottype=event&duration=120&date=2018-12-01" \
@@ -149,6 +190,54 @@ let availability = api.availability.get({
 }
 ```
 
+> Example request when address is provided:
+
+```shell
+curl "https://api.snappr.co/availability" \
+  -H 'accept-version: 1.0.0' \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"
+  -H "Content-Type: application/json" \
+    --data-binary $'{
+    "address": "Golden Gate Bridge Welcome Center, Golden Gate Bridge, Coastal Trail, San Francisco, CA, USA",
+    "shoottype": "event",
+    "duration": 120,
+    "date": "2018-12-01"
+  }'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let availability = api.availability.get({
+  address: "Golden Gate Bridge Welcome Center, Golden Gate Bridge, Coastal Trail, San Francisco, CA, USA",
+  shoottype: 'event',
+  duration: 120,
+  date: '2018-12-01'
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "latitude": 37.8077,
+  "longitude": -122.477,
+  "shoottype": "event",
+  "duration": 120,
+  "date": "2018-12-01",
+  "timezone": "America/Los_Angeles",
+  "available_times": [
+    "2018-12-01T07:30:00Z",
+    "2018-12-01T09:30:00Z",
+    "2018-12-01T15:00:00Z",
+    "2018-12-01T15:30:00Z"
+  ]
+}
+```
+
 This endpoint returns time availability (i.e. available shoot start times) for a combination of location, date, shoot type and duration.
 
 ### HTTP Request
@@ -159,8 +248,9 @@ This endpoint returns time availability (i.e. available shoot start times) for a
 
 | Parameter   | Type       | Description                                                                                    | Required |
 | ----------- | ---------- | ---------------------------------------------------------------------------------------------- | -------- |
-| `latitude`  | Number     | Latitude of the shoot location.                                                                | Yes      |
-| `longitude` | Number     | Longitude of the shoot location.                                                               | Yes      |
+| `latitude`  | Number     | Latitude of the shoot location.                                                                | No\*     |
+| `longitude` | Number     | Longitude of the shoot location.                                                               | No\*     |
+| `address`   | String     | Address of the shoot location. Must be a Google Maps valid address.                            | No\*     |
 | `shoottype` | String     | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event". | Yes      |
 | `duration`  | Integer    | Length of the shoot in minutes.                                                                | Yes      |
 | `date`      | Date (ISO) | Date for which you want to check time availability.                                            | Yes      |
@@ -168,12 +258,15 @@ This endpoint returns time availability (i.e. available shoot start times) for a
 <aside class="notice">
 All available times within the range of the local date will be returned. However, the format of the returned times is always in UTC for simplicity.
 </aside>
+<aside class="notice">
+*One of the following is required: <code>address</code>; or <code>latitude</code> and <code>longitude</code>. If both are provided, only <code>latitude</code> and <code>longitude</code> will be used
+</aside>
 
 # Bookings
 
 ## Create New Booking
 
-> Example request when start_at is provided:
+> Example request when start_at, latitude and, longitude are provided:
 
 ```shell
 curl "https://api.snappr.co/bookings" \
@@ -323,6 +416,80 @@ let bookings = api.bookings.post({
 }
 ```
 
+> Example request when address is provided:
+
+```shell
+curl "https://api.snappr.co/bookings" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0' \
+  -H "Content-Type: application/json" \
+  --data-binary $'{
+    "title": "Emerald Theatre Shoot",
+    "address": "Golden Gate Bridge Welcome Center, Golden Gate Bridge, Coastal Trail, San Francisco, CA, USA",
+    "shoottype": "event",
+    "start_at": "2018-12-01T07:30:00Z",
+    "duration": 120,
+    "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+    "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+    "customer_firstname": "Mary",
+    "customer_surname": "Smith",
+    "customer_email": "test@snappr.co",
+    "customer_mobilephone": "+14153339966",
+    "customer_company": "Snappr Inc.",
+    "internal_id": "123-ABC"
+  }'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.post({
+  latitude: 34.0522,
+  longitude: -118.2437,
+  shoottype: 'event',
+  start_at: '2018-12-01T07:30:00Z',
+  duration: 120,
+  location_notes:
+    'Location is Emerald Theatre - ring buzzer at main entrance on arrival',
+  style_notes:
+    'Shots of as many members of crowd as possible; shallow depth of field where possible',
+  customer_firstname: 'Mary',
+  customer_surname: 'Smith',
+  customer_email: 'test@snappr.co',
+  customer_mobilephone: '+14153339966',
+  customer_company: 'Snappr Inc.'
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
+  "title": "Emerald Theatre Shoot",
+  "status": "paid",
+  "credits": 249,
+  "latitude": 37.8077,
+  "longitude": -122.477,
+  "shoottype": "event",
+  "start_at": "2018-12-01T07:30:00Z",
+  "duration": 120,
+  "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+  "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+  "customer_firstname": "Mary",
+  "customer_surname": "Smith",
+  "customer_email": "test@snappr.co",
+  "customer_mobilephone": "+14153339966",
+  "customer_company": "Snappr Inc.",
+  "photographer_name": "Hollie B.",
+  "created_at": "2018-09-01T09:12:00Z",
+  "updated_at": "2018-09-01T09:12:00Z"
+}
+```
+
 This endpoint creates a new photoshoot booking.
 
 Broadly, there are two main ways to create a new photoshoot booking, and examples are provided for each:
@@ -339,8 +506,9 @@ Broadly, there are two main ways to create a new photoshoot booking, and example
 | Parameter              | Type           | Description                                                                                                                           | Required |
 | ---------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | `title`                | String         | Custom shoot title.                                                                                                                   | No       |
-| `latitude`             | Number         | Latitude of the shoot location.                                                                                                       | Yes      |
-| `longitude`            | Number         | Longitude of the shoot location.                                                                                                      | Yes      |
+| `latitude`             | Number         | Latitude of the shoot location.                                                                                                       | No\*     |
+| `longitude`            | Number         | Longitude of the shoot location.                                                                                                      | No\*     |
+| `address`              | String         | Address of the shoot location. Must be a Google Maps valid address.                                                                   | No\*     |
 | `shoottype`            | String         | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event".                                        | Yes      |
 | `start_at`             | Datetime (ISO) | Start time of the shoot in UTC. If this is set to `null`, then Snappr will automatically seek this information from the end-customer. | Yes      |
 | `duration`             | Integer        | Length of the shoot in minutes.                                                                                                       | Yes      |
@@ -361,6 +529,10 @@ If <code>start_at</code> is set to <code>null</code> the system assumes you want
 
 <aside class="notice">
 Always check <a href="#availability">availability</a> before trying to create a new booking with <code>start_at</code> defined. If you try to make a booking at for combination of location, date/time and shoot type for which there are no available photographers, you will receive a 400 error (see <code>Errors</code> section).
+</aside>
+
+<aside class="notice">
+*One of the following is required: <code>address</code>; or <code>latitude</code> and <code>longitude</code>. If both are provided, only <code>latitude</code> and <code>longitude</code> will be used
 </aside>
 
 ## Get All Bookings
