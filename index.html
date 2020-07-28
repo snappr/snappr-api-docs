@@ -293,7 +293,7 @@
           </li>
       </ul>
         <ul class="toc-footer">
-            <li><a href='https://www.snappr.co/for-business'>Setup an enterprise account</a></li>
+            <li><a href='https://www.snappr.com/for-business'>Setup an enterprise account</a></li>
             <li><a href='https://app.snappr.co/book'>Book a Snappr without the API</a></li>
         </ul>
     </div>
@@ -301,12 +301,12 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Snappr API! You can use our API to commission and manage photoshoots within the Snappr marketplace network. The API is available only to organizations using the Snappr enterprise Photography Portal. If you do not currently have a Photography Portal account and are interesting in setting one up, find out more <a href="https://www.snappr.co/for-business">here</a>.</p>
+<p>Welcome to the Snappr API! You can use our API to commission and manage photoshoots within the Snappr marketplace network. The API is available only to organizations using the Snappr enterprise Photography Portal. If you do not currently have a Photography Portal account and are interesting in setting one up, find out more <a href="https://www.snappr.com/for-business">here</a>.</p>
 
 <p>We have code examples in Shell, displayed in the panel on the right. We will have language bindings for JavaScript very soon.</p>
 
 <aside class="notice">
-For production use, use the base URL <code>https://api.snappr.co</code> as in the examples below. For testing purposes, substitute this for <code>https://sandbox.snappr.co</code>
+For production use, use the base URL <code>https://api.snappr.com</code> as in the examples below. For testing purposes, substitute this for <code>https://sandbox.snappr.com</code>
 </aside>
 
 <!-- We have language bindings in Shell and JavaScript. You can view code examples in the panel on the right, and you can switch the programming language of the examples with the tabs on the top-right. -->
@@ -338,7 +338,7 @@ You must replace <code>api_key</code> with your user API key.
 <blockquote>
 <p>Example request when latitude and longitude are provided:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/coverage?latitude=34.0522&amp;longitude=-118.2437&amp;shoottype=event"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/coverage?latitude=34.0522&amp;longitude=-118.2437&amp;shoottype=event"</span> <span class="se">\</span>
   -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span>
 </code></pre>
@@ -368,7 +368,7 @@ let availability = api.availability.get({
 <blockquote>
 <p>Example request when address is provided:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/coverage"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/coverage"</span> <span class="se">\</span>
   -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
@@ -401,7 +401,7 @@ let availability = api.availability.get({
 </span></code></pre>
 <p>This endpoint returns Snappr coverage status (boolean) for a given location and shoot type. Coverage status is independent of specific dates or times.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>GET https://api.snappr.co/coverage?latitude=<span class="route_param">:latitude</span>&amp;longitude=<span class="route_param">:longitude</span>&amp;shoottype=<span class="route_param">:shoottype</span></code></p>
+<p><code>GET https://api.snappr.com/coverage?latitude=<span class="route_param">:latitude</span>&amp;longitude=<span class="route_param">:longitude</span>&amp;shoottype=<span class="route_param">:shoottype</span></code></p>
 <h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
 <tr>
@@ -444,7 +444,7 @@ let availability = api.availability.get({
 <blockquote>
 <p>Example request when latitude and longitude are provided:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/availability?latitude=34.0522&amp;longitude=-118.2437&amp;shoottype=event&amp;duration=120&amp;date=2018-12-01"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/availability?latitude=34.0522&amp;longitude=-118.2437&amp;shoottype=event&amp;duration=120&amp;date=2018-12-01"</span> <span class="se">\</span>
   -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span>
 </code></pre>
@@ -484,7 +484,7 @@ let availability = api.availability.get({
 <blockquote>
 <p>Example request when address is provided:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/availability"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/availability"</span> <span class="se">\</span>
   -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
@@ -529,7 +529,7 @@ let availability = api.availability.get({
 </span></code></pre>
 <p>This endpoint returns time availability (i.e. available shoot start times) for a combination of location, date, shoot type and duration.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET https://api.snappr.co/availability?latitude=<span class="route_param">:latitude</span>&amp;longitude=<span class="route_param">:longitude</span>&amp;shoottype=<span class="route_param">:shoottype</span>&amp;duration=<span class="route_param">:duration</span>&amp;date=<span class="route_param">:date</span></code></p>
+<p><code>GET https://api.snappr.com/availability?latitude=<span class="route_param">:latitude</span>&amp;longitude=<span class="route_param">:longitude</span>&amp;shoottype=<span class="route_param">:shoottype</span>&amp;duration=<span class="route_param">:duration</span>&amp;date=<span class="route_param">:date</span></code></p>
 <h3 id='query-parameters-2'>Query Parameters</h3>
 <table><thead>
 <tr>
@@ -588,7 +588,7 @@ All available times within the range of the local date will be returned. However
 <blockquote>
 <p>Example request when start_at, latitude and, longitude are provided:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/bookings"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/bookings"</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
   -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
@@ -661,7 +661,7 @@ let bookings = api.bookings.post({
 <blockquote>
 <p>Example request when start_at is not provided (end-customer picked date and time):</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/bookings"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/bookings"</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
   -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
@@ -734,7 +734,7 @@ let bookings = api.bookings.post({
 <blockquote>
 <p>Example request when address is provided:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/bookings"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/bookings"</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
   -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
@@ -812,7 +812,7 @@ let bookings = api.bookings.post({
 <li>Provide all shoot details <em>except</em> the start date and time for the shoot (<code>start_at</code> set to <code>null</code>). This will trigger an automatic process to collect the start date and time from your end-customer using the contact details (email and/or mobile phone) provided. End-customers will be able to select from all available dates and times for the shoot location, using a Snappr UI.</li>
 </ol>
 <h3 id='http-request-3'>HTTP Request</h3>
-<p><code>POST https://api.snappr.co/bookings</code></p>
+<p><code>POST https://api.snappr.com/bookings</code></p>
 <h3 id='request-body-parameters'>Request (Body) Parameters</h3>
 <table><thead>
 <tr>
@@ -931,7 +931,7 @@ Always check <a href="#availability">availability</a> before trying to create a 
 <blockquote>
 <p>Example request:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/bookings"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/bookings"</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
   -H <span class="s1">'accept-version: 1.0.0'</span>
 </code></pre>
@@ -1003,7 +1003,7 @@ let bookings = api.bookings.get({
 </span></code></pre>
 <p>This endpoint retrieves all bookings.</p>
 <h3 id='http-request-4'>HTTP Request</h3>
-<p><code>GET https://api.snappr.co/bookings?limit=<span class="route_param">:limit</span>&amp;offset=<span class="route_param">:offset</span></code></p>
+<p><code>GET https://api.snappr.com/bookings?limit=<span class="route_param">:limit</span>&amp;offset=<span class="route_param">:offset</span></code></p>
 <h3 id='query-parameters-3'>Query Parameters</h3>
 <table><thead>
 <tr>
@@ -1034,7 +1034,7 @@ The API does not currently support booking filters (e.g. filtering by a certain 
 <blockquote>
 <p>Example request:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928"</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
   -H <span class="s1">'accept-version: 1.0.0'</span>
 </code></pre>
@@ -1077,7 +1077,7 @@ let bookings = api.bookings.get({
 </span></code></pre>
 <p>This endpoint retrieves a specific booking using the ID of the booking.</p>
 <h3 id='http-request-5'>HTTP Request</h3>
-<p><code>GET https://api.snappr.co/bookings/<span class="route_param">:booking_uid</span></code></p>
+<p><code>GET https://api.snappr.com/bookings/<span class="route_param">:booking_uid</span></code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
 <table><thead>
 <tr>
@@ -1098,7 +1098,7 @@ let bookings = api.bookings.get({
 <blockquote>
 <p>Example request:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928/images"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928/images"</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
   -H <span class="s1">'accept-version: 1.0.0'</span>
 </code></pre>
@@ -1145,7 +1145,7 @@ let bookings = api.bookings.getImages({
 </span></code></pre>
 <p>This endpoint retrieves all the images of a specific booking.</p>
 <h3 id='http-request-6'>HTTP Request</h3>
-<p><code>GET https://api.snappr.co/bookings/<span class="route_param">:booking_uid</span>/images</code></p>
+<p><code>GET https://api.snappr.com/bookings/<span class="route_param">:booking_uid</span>/images</code></p>
 <h3 id='request-parameters-2'>Request Parameters</h3>
 <table><thead>
 <tr>
@@ -1188,7 +1188,7 @@ let bookings = api.bookings.getImages({
 <blockquote>
 <p>Example request:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.co/shoottypes"</span> <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/shoottypes"</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
   -H <span class="s1">'accept-version: 1.0.0'</span>
 </code></pre>
@@ -1224,7 +1224,7 @@ let bookings = api.shoottypes.get({});
 </span></code></pre>
 <p>This endpoint returns all available Snappr shoot types.</p>
 <h3 id='http-request-7'>HTTP Request</h3>
-<p><code>GET https://api.snappr.co/shoottypes</code></p>
+<p><code>GET https://api.snappr.com/shoottypes</code></p>
 <h1 id='custom-webhooks'>Custom Webhooks</h1>
 <blockquote>
 <p>Example JSON payload sent to webhook URL as POST:</p>
