@@ -6,7 +6,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   # - javascript
 
 toc_footers:
-  - <a href='https://www.snappr.co/for-business'>Setup an enterprise account</a>
+  - <a href='https://www.snappr.com/for-business'>Setup an enterprise account</a>
   - <a href='https://app.snappr.co/book'>Book a Snappr without the API</a>
 
 includes:
@@ -17,12 +17,12 @@ search: true
 
 # Introduction
 
-Welcome to the Snappr API! You can use our API to commission and manage photoshoots within the Snappr marketplace network. The API is available only to organizations using the Snappr enterprise Photography Portal. If you do not currently have a Photography Portal account and are interesting in setting one up, find out more <a href="https://www.snappr.co/for-business">here</a>.
+Welcome to the Snappr API! You can use our API to commission and manage photoshoots within the Snappr marketplace network. The API is available only to organizations using the Snappr enterprise Photography Portal. If you do not currently have a Photography Portal account and are interesting in setting one up, find out more <a href="https://www.snappr.com/for-business">here</a>.
 
 We have code examples in Shell, displayed in the panel on the right. We will have language bindings for JavaScript very soon.
 
 <aside class="notice">
-For production use, use the base URL <code>https://api.snappr.co</code> as in the examples below. For testing purposes, substitute this for <code>https://sandbox.snappr.co</code>
+For production use, use the base URL <code>https://api.snappr.com</code> as in the examples below. For testing purposes, substitute this for <code>https://sandbox.snappr.com</code>
 </aside>
 <!-- We have language bindings in Shell and JavaScript. You can view code examples in the panel on the right, and you can switch the programming language of the examples with the tabs on the top-right. -->
 
@@ -60,7 +60,7 @@ You must replace <code>api_key</code> with your user API key.
 > Example request when latitude and longitude are provided:
 
 ```shell
-curl "https://api.snappr.co/coverage?latitude=34.0522&longitude=-118.2437&shoottype=event" \
+curl "https://api.snappr.com/coverage?latitude=34.0522&longitude=-118.2437&shoottype=event" \
   -H 'accept-version: 1.0.0' \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"
 ```
@@ -92,7 +92,7 @@ let availability = api.availability.get({
 > Example request when address is provided:
 
 ```shell
-curl "https://api.snappr.co/coverage" \
+curl "https://api.snappr.com/coverage" \
   -H 'accept-version: 1.0.0' \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"
   -H "Content-Type: application/json" \
@@ -129,7 +129,7 @@ This endpoint returns Snappr coverage status (boolean) for a given location and 
 
 ### HTTP Request
 
-<code>GET https://api.snappr.co/coverage?latitude=<span class="route_param">:latitude</span>&longitude=<span class="route_param">:longitude</span>&shoottype=<span class="route_param">:shoottype</span></code>
+<code>GET https://api.snappr.com/coverage?latitude=<span class="route_param">:latitude</span>&longitude=<span class="route_param">:longitude</span>&shoottype=<span class="route_param">:shoottype</span></code>
 
 ### Query Parameters
 
@@ -151,7 +151,7 @@ This endpoint returns Snappr coverage status (boolean) for a given location and 
 > Example request when latitude and longitude are provided:
 
 ```shell
-curl "https://api.snappr.co/availability?latitude=34.0522&longitude=-118.2437&shoottype=event&duration=120&date=2018-12-01" \
+curl "https://api.snappr.com/availability?latitude=34.0522&longitude=-118.2437&shoottype=event&duration=120&date=2018-12-01" \
   -H 'accept-version: 1.0.0' \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"
 ```
@@ -193,7 +193,7 @@ let availability = api.availability.get({
 > Example request when address is provided:
 
 ```shell
-curl "https://api.snappr.co/availability" \
+curl "https://api.snappr.com/availability" \
   -H 'accept-version: 1.0.0' \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"
   -H "Content-Type: application/json" \
@@ -242,7 +242,7 @@ This endpoint returns time availability (i.e. available shoot start times) for a
 
 ### HTTP Request
 
-<code>GET https://api.snappr.co/availability?latitude=<span class="route_param">:latitude</span>&longitude=<span class="route_param">:longitude</span>&shoottype=<span class="route_param">:shoottype</span>&duration=<span class="route_param">:duration</span>&date=<span class="route_param">:date</span></code>
+<code>GET https://api.snappr.com/availability?latitude=<span class="route_param">:latitude</span>&longitude=<span class="route_param">:longitude</span>&shoottype=<span class="route_param">:shoottype</span>&duration=<span class="route_param">:duration</span>&date=<span class="route_param">:date</span></code>
 
 ### Query Parameters
 
@@ -269,7 +269,7 @@ All available times within the range of the local date will be returned. However
 > Example request when start_at, latitude and, longitude are provided:
 
 ```shell
-curl "https://api.snappr.co/bookings" \
+curl "https://api.snappr.com/bookings" \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
   -H 'accept-version: 1.0.0' \
   -H "Content-Type: application/json" \
@@ -344,7 +344,7 @@ let bookings = api.bookings.post({
 > Example request when start_at is not provided (end-customer picked date and time):
 
 ```shell
-curl "https://api.snappr.co/bookings" \
+curl "https://api.snappr.com/bookings" \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
   -H 'accept-version: 1.0.0' \
   -H "Content-Type: application/json" \
@@ -419,7 +419,7 @@ let bookings = api.bookings.post({
 > Example request when address is provided:
 
 ```shell
-curl "https://api.snappr.co/bookings" \
+curl "https://api.snappr.com/bookings" \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
   -H 'accept-version: 1.0.0' \
   -H "Content-Type: application/json" \
@@ -499,7 +499,7 @@ Broadly, there are two main ways to create a new photoshoot booking, and example
 
 ### HTTP Request
 
-`POST https://api.snappr.co/bookings`
+`POST https://api.snappr.com/bookings`
 
 ### Request (Body) Parameters
 
@@ -540,7 +540,7 @@ Always check <a href="#availability">availability</a> before trying to create a 
 > Example request:
 
 ```shell
-curl "https://api.snappr.co/bookings" \
+curl "https://api.snappr.com/bookings" \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
   -H 'accept-version: 1.0.0'
 ```
@@ -616,7 +616,7 @@ This endpoint retrieves all bookings.
 
 ### HTTP Request
 
-<code>GET https://api.snappr.co/bookings?limit=<span class="route_param">:limit</span>&offset=<span class="route_param">:offset</span></code>
+<code>GET https://api.snappr.com/bookings?limit=<span class="route_param">:limit</span>&offset=<span class="route_param">:offset</span></code>
 
 ### Query Parameters
 
@@ -634,7 +634,7 @@ The API does not currently support booking filters (e.g. filtering by a certain 
 > Example request:
 
 ```shell
-curl "https://api.snappr.co/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928" \
+curl "https://api.snappr.com/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928" \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
   -H 'accept-version: 1.0.0'
 ```
@@ -681,7 +681,7 @@ This endpoint retrieves a specific booking using the ID of the booking.
 
 ### HTTP Request
 
-<code>GET https://api.snappr.co/bookings/<span class="route_param">:booking_uid</span></code>
+<code>GET https://api.snappr.com/bookings/<span class="route_param">:booking_uid</span></code>
 
 ### Request Parameters
 
@@ -696,7 +696,7 @@ This endpoint retrieves a specific booking using the ID of the booking.
 > Example request:
 
 ```shell
-curl "https://api.snappr.co/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928/images" \
+curl "https://api.snappr.com/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928/images" \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
   -H 'accept-version: 1.0.0'
 ```
@@ -747,7 +747,7 @@ This endpoint retrieves all the images of a specific booking.
 
 ### HTTP Request
 
-<code>GET https://api.snappr.co/bookings/<span class="route_param">:booking_uid</span>/images</code>
+<code>GET https://api.snappr.com/bookings/<span class="route_param">:booking_uid</span>/images</code>
 
 ### Request Parameters
 
@@ -769,7 +769,7 @@ This endpoint retrieves all the images of a specific booking.
 > Example request:
 
 ```shell
-curl "https://api.snappr.co/shoottypes" \
+curl "https://api.snappr.com/shoottypes" \
   -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
   -H 'accept-version: 1.0.0'
 ```
@@ -809,7 +809,7 @@ This endpoint returns all available Snappr shoot types.
 
 ### HTTP Request
 
-<code>GET https://api.snappr.co/shoottypes</code>
+<code>GET https://api.snappr.com/shoottypes</code>
 
 # Custom Webhooks
 
