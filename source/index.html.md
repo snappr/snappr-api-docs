@@ -284,7 +284,7 @@ curl "https://api.snappr.com/bookings" \
     "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
     "customer_firstname": "Mary",
     "customer_surname": "Smith",
-    "customer_email": "test@snappr.co",
+    "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
     "internal_id": "123-ABC"
@@ -332,7 +332,7 @@ let bookings = api.bookings.post({
   "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
   "customer_firstname": "Mary",
   "customer_surname": "Smith",
-  "customer_email": "test@snappr.co",
+  "customer_email": "test@snappr.com",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
   "photographer_name": "Hollie B.",
@@ -359,7 +359,7 @@ curl "https://api.snappr.com/bookings" \
     "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
     "customer_firstname": "Mary",
     "customer_surname": "Smith",
-    "customer_email": "test@snappr.co",
+    "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
     "internal_id": "123-ABC"
@@ -406,7 +406,7 @@ let bookings = api.bookings.post({
   "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
   "customer_firstname": "Mary",
   "customer_surname": "Smith",
-  "customer_email": "test@snappr.co",
+  "customer_email": "test@snappr.com",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
   "internal_id": "123-ABC",
@@ -433,7 +433,7 @@ curl "https://api.snappr.com/bookings" \
     "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
     "customer_firstname": "Mary",
     "customer_surname": "Smith",
-    "customer_email": "test@snappr.co",
+    "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
     "internal_id": "123-ABC"
@@ -481,7 +481,7 @@ let bookings = api.bookings.post({
   "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
   "customer_firstname": "Mary",
   "customer_surname": "Smith",
-  "customer_email": "test@snappr.co",
+  "customer_email": "test@snappr.com",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
   "photographer_name": "Hollie B.",
@@ -575,7 +575,7 @@ let bookings = api.bookings.get({
       "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
       "customer_firstname": "Mary",
       "customer_surname": "Smith",
-      "customer_email": "test@snappr.co",
+      "customer_email": "test@snappr.com",
       "customer_mobilephone": "+14153339966",
       "customer_company": "Snappr Inc.",
       "internal_id": "123-ABC",
@@ -597,7 +597,7 @@ let bookings = api.bookings.get({
       "style_notes": "Variety of group shots of the family with different backgrounds",
       "customer_firstname": "John",
       "customer_surname": "Smith",
-      "customer_email": "testing@snappr.co",
+      "customer_email": "testing@snappr.com",
       "customer_mobilephone": "+14153338822",
       "customer_company": null,
       "photographer_name": "Jamie C.",
@@ -667,7 +667,7 @@ let bookings = api.bookings.get({
   "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
   "customer_firstname": "Mary",
   "customer_surname": "Smith",
-  "customer_email": "test@snappr.co",
+  "customer_email": "test@snappr.com",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
   "internal_id": "123-ABC",
@@ -693,7 +693,7 @@ This endpoint retrieves a specific booking using the ID of the booking.
 
 ## Create New Editing Job
 
-> Example request when start_at, latitude and, longitude are provided:
+> Example request when images are provided:
 
 ```shell
 curl "https://api.snappr.com/editing-jobs" \
@@ -702,19 +702,28 @@ curl "https://api.snappr.com/editing-jobs" \
   -H "Content-Type: application/json" \
   --data-binary $'{
     "title": "Emerald Theatre Shoot",
-    "latitude": 34.0522,
-    "longitude": -118.2437,
-    "shoottype": "event",
-    "start_at": "2018-12-01T07:30:00Z",
-    "duration": 120,
-    "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
-    "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+    "type": "event",
     "customer_firstname": "Mary",
     "customer_surname": "Smith",
-    "customer_email": "test@snappr.co",
+    "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
-    "internal_id": "123-ABC"
+    "internal_id": "123-ABC",
+    "preset_id": "1ea37f86-c82d-4267-8773-9a13fd4f1337",
+    "images": [
+      {
+        "file_name": "ZD 001.JPG",
+        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D"
+      },
+      {
+        "file_name": "ZD 002.JPG",
+        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D"
+      },
+      {
+        "file_name": "ZD 003.JPG",
+        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D"
+      },
+    ]
   }'
 ```
 
@@ -749,17 +758,12 @@ let bookings = api.bookings.post({
   "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
   "title": "Emerald Theatre Shoot",
   "status": "paid",
-  "credits": 249,
-  "latitude": 34.0522,
-  "longitude": -118.2437,
-  "shoottype": "event",
-  "start_at": "2018-12-01T07:30:00Z",
-  "duration": 120,
-  "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+  "credits": 9,
+  "type": "event",
   "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
   "customer_firstname": "Mary",
   "customer_surname": "Smith",
-  "customer_email": "test@snappr.co",
+  "customer_email": "test@snappr.com",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
   "photographer_name": "Hollie B.",
@@ -786,7 +790,7 @@ curl "https://api.snappr.com/editing-jobs" \
     "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
     "customer_firstname": "Mary",
     "customer_surname": "Smith",
-    "customer_email": "test@snappr.co",
+    "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
     "internal_id": "123-ABC"
@@ -833,7 +837,7 @@ let bookings = api.bookings.post({
   "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
   "customer_firstname": "Mary",
   "customer_surname": "Smith",
-  "customer_email": "test@snappr.co",
+  "customer_email": "test@snappr.com",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
   "internal_id": "123-ABC",
@@ -860,7 +864,7 @@ curl "https://api.snappr.com/editing-jobs" \
     "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
     "customer_firstname": "Mary",
     "customer_surname": "Smith",
-    "customer_email": "test@snappr.co",
+    "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
     "internal_id": "123-ABC"
@@ -908,7 +912,7 @@ let bookings = api.bookings.post({
   "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
   "customer_firstname": "Mary",
   "customer_surname": "Smith",
-  "customer_email": "test@snappr.co",
+  "customer_email": "test@snappr.com",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
   "photographer_name": "Hollie B.",
@@ -1002,7 +1006,7 @@ let bookings = api.bookings.get({
       "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
       "customer_firstname": "Mary",
       "customer_surname": "Smith",
-      "customer_email": "test@snappr.co",
+      "customer_email": "test@snappr.com",
       "customer_mobilephone": "+14153339966",
       "customer_company": "Snappr Inc.",
       "internal_id": "123-ABC",
@@ -1024,7 +1028,7 @@ let bookings = api.bookings.get({
       "style_notes": "Variety of group shots of the family with different backgrounds",
       "customer_firstname": "John",
       "customer_surname": "Smith",
-      "customer_email": "testing@snappr.co",
+      "customer_email": "testing@snappr.com",
       "customer_mobilephone": "+14153338822",
       "customer_company": null,
       "photographer_name": "Jamie C.",
@@ -1094,7 +1098,7 @@ let editingJobs = api.editingJobs.get({
   "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
   "customer_firstname": "Mary",
   "customer_surname": "Smith",
-  "customer_email": "test@snappr.co",
+  "customer_email": "test@snappr.com",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
   "internal_id": "123-ABC",
@@ -1115,6 +1119,64 @@ This endpoint retrieves a specific editing job using the ID of the editing job.
 | Parameter         | Type          | Description                        | Required |
 | ----------------- | ------------- | ---------------------------------- | -------- |
 | `editing_job_uid` | String (UUID) | The identifier of the editing job. | Yes      |
+
+# Presets
+
+## Get All Presets
+
+> Example request:
+
+```shell
+curl "https://api.snappr.com/presets" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.getPresets({
+  uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "results": [
+    {
+      "uid": "ed10cf86-97f9-4ce6-af6f-a01dfe891114",
+      "name": "Restaurant menu",
+      "description": "In-depth improvements on photos taken by restaurant owners."
+    },
+    {
+      "uid": "ee9be5f8-84a8-4592-88a0-1781d0c39d0a",
+      "name": "Liquor store"
+    }
+  ],
+  "count": 2,
+  "limit": 1000,
+  "offset": 0,
+  "total": 2
+}
+```
+
+This endpoint retrieves all the presets.
+
+### HTTP Request
+
+<code>GET https://api.snappr.com/presets</code>
+
+### Query Parameters
+
+| Parameter | Type    | Description                                                                                                                            | Required |
+| --------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `limit`   | Integer | Maximum number of presets to be returned (maximum of 10000). Defaults to `1000`.                                                       | No       |
+| `offset`  | Integer | Offset used for pagination if there are more presets than the limit (or more than 1000 presets if there is no limit). Defaults to `0`. | No       |
 
 # Images
 
@@ -1259,7 +1321,7 @@ This endpoint returns all available Snappr shoot types.
     "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
     "customer_firstname": "Mary",
     "customer_surname": "Smith",
-    "customer_email": "test@snappr.co",
+    "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
     "internal_id": "123-ABC",
