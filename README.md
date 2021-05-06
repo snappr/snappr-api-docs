@@ -50,6 +50,9 @@ You're going to need:
 4. Initialize and start Slate. You can either do this locally, or with Vagrant:
 
 ```shell
+# either run this to run with Docker
+docker run --rm --name slate -p 4567:4567 -v $(pwd)/source:/srv/slate/source slatedocs/slate serve
+
 # either run this to run locally
 bundle install
 bundle exec middleman server
