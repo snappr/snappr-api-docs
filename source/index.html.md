@@ -689,6 +689,433 @@ This endpoint retrieves a specific booking using the ID of the booking.
 | ------------- | ------------- | ------------------------------ | -------- |
 | `booking_uid` | String (UUID) | The identifier of the booking. | Yes      |
 
+# Editing jobs
+
+## Create New Editing Job
+
+> Example request when start_at, latitude and, longitude are provided:
+
+```shell
+curl "https://api.snappr.com/editing-jobs" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0' \
+  -H "Content-Type: application/json" \
+  --data-binary $'{
+    "title": "Emerald Theatre Shoot",
+    "latitude": 34.0522,
+    "longitude": -118.2437,
+    "shoottype": "event",
+    "start_at": "2018-12-01T07:30:00Z",
+    "duration": 120,
+    "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+    "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+    "customer_firstname": "Mary",
+    "customer_surname": "Smith",
+    "customer_email": "test@snappr.co",
+    "customer_mobilephone": "+14153339966",
+    "customer_company": "Snappr Inc.",
+    "internal_id": "123-ABC"
+  }'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.post({
+  latitude: 34.0522,
+  longitude: -118.2437,
+  shoottype: 'event',
+  start_at: '2018-12-01T07:30:00Z',
+  duration: 120,
+  location_notes:
+    'Location is Emerald Theatre - ring buzzer at main entrance on arrival',
+  style_notes:
+    'Shots of as many members of crowd as possible; shallow depth of field where possible',
+  customer_firstname: 'Mary',
+  customer_surname: 'Smith',
+  customer_email: 'test@snappr.co',
+  customer_mobilephone: '+14153339966',
+  customer_company: 'Snappr Inc.'
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
+  "title": "Emerald Theatre Shoot",
+  "status": "paid",
+  "credits": 249,
+  "latitude": 34.0522,
+  "longitude": -118.2437,
+  "shoottype": "event",
+  "start_at": "2018-12-01T07:30:00Z",
+  "duration": 120,
+  "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+  "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+  "customer_firstname": "Mary",
+  "customer_surname": "Smith",
+  "customer_email": "test@snappr.co",
+  "customer_mobilephone": "+14153339966",
+  "customer_company": "Snappr Inc.",
+  "photographer_name": "Hollie B.",
+  "created_at": "2018-09-01T09:12:00Z",
+  "updated_at": "2018-09-01T09:12:00Z"
+}
+```
+
+> Example request when start_at is not provided (end-customer picked date and time):
+
+```shell
+curl "https://api.snappr.com/editing-jobs" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0' \
+  -H "Content-Type: application/json" \
+  --data-binary $'{
+    "title": "Emerald Theatre Shoot",
+    "latitude": 34.0522,
+    "longitude": -118.2437,
+    "shoottype": "event",
+    "start_at": null,
+    "duration": 120,
+    "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+    "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+    "customer_firstname": "Mary",
+    "customer_surname": "Smith",
+    "customer_email": "test@snappr.co",
+    "customer_mobilephone": "+14153339966",
+    "customer_company": "Snappr Inc.",
+    "internal_id": "123-ABC"
+  }'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.post({
+  latitude: 34.0522,
+  longitude: -118.2437,
+  shoottype: 'event',
+  start_at: null,
+  duration: 120,
+  location_notes:
+    'Location is Emerald Theatre - ring buzzer at main entrance on arrival',
+  style_notes:
+    'Shots of as many members of crowd as possible; shallow depth of field where possible',
+  customer_firstname: 'Mary',
+  customer_surname: 'Smith',
+  customer_email: 'test@snappr.co',
+  customer_mobilephone: '+14153339966',
+  customer_company: 'Snappr Inc.'
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
+  "title": "Emerald Theatre Shoot",
+  "status": "paid_pending_schedule",
+  "credits": 249,
+  "latitude": 34.0522,
+  "longitude": -118.2437,
+  "shoottype": "event",
+  "duration": 120,
+  "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+  "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+  "customer_firstname": "Mary",
+  "customer_surname": "Smith",
+  "customer_email": "test@snappr.co",
+  "customer_mobilephone": "+14153339966",
+  "customer_company": "Snappr Inc.",
+  "internal_id": "123-ABC",
+  "photographer_name": "Hollie B.",
+  "created_at": "2018-09-01T09:12:00Z",
+  "updated_at": "2018-09-01T09:12:00Z"
+}
+```
+
+> Example request when address is provided:
+
+```shell
+curl "https://api.snappr.com/editing-jobs" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0' \
+  -H "Content-Type: application/json" \
+  --data-binary $'{
+    "title": "Emerald Theatre Shoot",
+    "address": "Golden Gate Bridge Welcome Center, Golden Gate Bridge, Coastal Trail, San Francisco, CA, USA",
+    "shoottype": "event",
+    "start_at": "2018-12-01T07:30:00Z",
+    "duration": 120,
+    "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+    "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+    "customer_firstname": "Mary",
+    "customer_surname": "Smith",
+    "customer_email": "test@snappr.co",
+    "customer_mobilephone": "+14153339966",
+    "customer_company": "Snappr Inc.",
+    "internal_id": "123-ABC"
+  }'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.post({
+  latitude: 34.0522,
+  longitude: -118.2437,
+  shoottype: 'event',
+  start_at: '2018-12-01T07:30:00Z',
+  duration: 120,
+  location_notes:
+    'Location is Emerald Theatre - ring buzzer at main entrance on arrival',
+  style_notes:
+    'Shots of as many members of crowd as possible; shallow depth of field where possible',
+  customer_firstname: 'Mary',
+  customer_surname: 'Smith',
+  customer_email: 'test@snappr.co',
+  customer_mobilephone: '+14153339966',
+  customer_company: 'Snappr Inc.'
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
+  "title": "Emerald Theatre Shoot",
+  "status": "paid",
+  "credits": 249,
+  "latitude": 37.8077,
+  "longitude": -122.477,
+  "shoottype": "event",
+  "start_at": "2018-12-01T07:30:00Z",
+  "duration": 120,
+  "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+  "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+  "customer_firstname": "Mary",
+  "customer_surname": "Smith",
+  "customer_email": "test@snappr.co",
+  "customer_mobilephone": "+14153339966",
+  "customer_company": "Snappr Inc.",
+  "photographer_name": "Hollie B.",
+  "created_at": "2018-09-01T09:12:00Z",
+  "updated_at": "2018-09-01T09:12:00Z"
+}
+```
+
+This endpoint creates a new editing job.
+
+Broadly, there are two main ways to create a new editing job, and examples are provided for each:
+
+1. Provide all shoot details _including_ the start date and time for the shoot (`start_at`). With this option, Snappr will not seek any input on shoot details from your end-customer, they will simply be notified if the booking is placed successfully.
+2. Provide all shoot details _except_ the start date and time for the shoot (`start_at` set to `null`). This will trigger an automatic process to collect the start date and time from your end-customer using the contact details (email and/or mobile phone) provided. End-customers will be able to select from all available dates and times for the shoot location, using a Snappr UI.
+
+### HTTP Request
+
+`POST https://api.snappr.com/editing-jobs`
+
+### Request (Body) Parameters
+
+| Parameter              | Type           | Description                                                                                                                           | Required |
+| ---------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `title`                | String         | Custom shoot title.                                                                                                                   | No       |
+| `latitude`             | Number         | Latitude of the shoot location.                                                                                                       | No\*     |
+| `longitude`            | Number         | Longitude of the shoot location.                                                                                                      | No\*     |
+| `address`              | String         | Address of the shoot location. Must be a Google Maps valid address.                                                                   | No\*     |
+| `shoottype`            | String         | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event".                                        | Yes      |
+| `start_at`             | Datetime (ISO) | Start time of the shoot in UTC. If this is set to `null`, then Snappr will automatically seek this information from the end-customer. | Yes      |
+| `duration`             | Integer        | Length of the shoot in minutes.                                                                                                       | Yes      |
+| `location_notes`       | String         | Details to help the photographer find the specific location and contact person at the time of the shoot.                              | No       |
+| `style_notes`          | String         | Instructions, stylistic preferences and other special requests.                                                                       | No       |
+| `customer_firstname`   | String         | First name of your end-customer.                                                                                                      | Yes      |
+| `customer_surname`     | String         | Last name of your end-customer.                                                                                                       | No       |
+| `customer_email`       | String (email) | Valid email address of your end-customer.                                                                                             | Yes      |
+| `customer_mobilephone` | String         | Valid mobile phone number of your end-customer.                                                                                       | Yes      |
+| `customer_company`     | String         | Name of your end-customer's company.                                                                                                  | No       |
+| `internal_id`          | String         | ID for your internal systems. Useful for matching a booking with your internal data.                                                  | No       |
+
+<aside class="notice">
+
+If <code>start_at</code> is set to <code>null</code> the system assumes you want the end-customer to pick the start date and time.
+
+</aside>
+
+<aside class="notice">
+Always check <a href="#availability">availability</a> before trying to create a new booking with <code>start_at</code> defined. If you try to make a booking at for combination of location, date/time and shoot type for which there are no available photographers, you will receive a 400 error (see <code>Errors</code> section).
+</aside>
+
+<aside class="notice">
+*One of the following is required: <code>address</code>; or <code>latitude</code> and <code>longitude</code>. If both are provided, only <code>latitude</code> and <code>longitude</code> will be used
+</aside>
+
+## Get All Editing Jobs
+
+> Example request:
+
+```shell
+curl "https://api.snappr.com/editing-jobs" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.get({
+  // no params
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "results": [
+    {
+      "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
+      "title": "Emerald Theatre Shoot",
+      "status": "paid",
+      "credits": 249,
+      "latitude": 34.0522,
+      "longitude": -118.2437,
+      "shoottype": "event",
+      "start_at": "2018-12-01T07:30:00Z",
+      "duration": 120,
+      "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+      "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+      "customer_firstname": "Mary",
+      "customer_surname": "Smith",
+      "customer_email": "test@snappr.co",
+      "customer_mobilephone": "+14153339966",
+      "customer_company": "Snappr Inc.",
+      "internal_id": "123-ABC",
+      "photographer_name": "Hollie B.",
+      "created_at": "2018-09-01T09:12:00Z",
+      "updated_at": "2018-09-01T09:12:00Z"
+    },
+    {
+      "uid": "48b095fd-7fc0-41dc-b632-9b032e0a65e6",
+      "title": "Family Shoot",
+      "status": "paid",
+      "credits": 349,
+      "latitude": 34.1513,
+      "longitude": -118.2439,
+      "shoottype": "family",
+      "start_at": "2018-12-01T07:30:00Z",
+      "duration": 180,
+      "location_notes": "Meet near the park entance",
+      "style_notes": "Variety of group shots of the family with different backgrounds",
+      "customer_firstname": "John",
+      "customer_surname": "Smith",
+      "customer_email": "testing@snappr.co",
+      "customer_mobilephone": "+14153338822",
+      "customer_company": null,
+      "photographer_name": "Jamie C.",
+      "created_at": "2018-09-01T08:34:00Z",
+      "updated_at": "2018-09-01T08:34:00Z"
+    }
+  ],
+  "count": 2,
+  "limit": 100,
+  "offset": 0,
+  "total": 2
+}
+```
+
+This endpoint retrieves all editing jobs.
+
+### HTTP Request
+
+<code>GET https://api.snappr.com/editing-jobs?limit=<span class="route_param">:limit</span>&offset=<span class="route_param">:offset</span></code>
+
+### Query Parameters
+
+| Parameter | Type    | Description                                                                                                                                     | Required |
+| --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `limit`   | Integer | Maximum number of editing jobs to be returned (maximum of 100). Defaults to `100`.                                                              | No       |
+| `offset`  | Integer | Offset used for pagination if there are more editing jobs than the limit (or more than 100 editing jobs if there is no limit). Defaults to `0`. | No       |
+
+<aside class="notice">
+The API does not currently support editing job filters (e.g. filtering by a certain status), but this is planned for an upcoming release.
+</aside>
+
+## Get Single Editing Job
+
+> Example request:
+
+```shell
+curl "https://api.snappr.com/editing-jobs/0ccefa53-b346-4d3e-8dcb-79a914289928" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let editingJobs = api.editingJobs.get({
+  uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
+  "title": "Emerald Theatre Shoot",
+  "status": "paid",
+  "credits": 249,
+  "latitude": 34.0522,
+  "longitude": -118.2437,
+  "shoottype": "event",
+  "start_at": "2018-12-01T07:30:00Z",
+  "duration": 120,
+  "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+  "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+  "customer_firstname": "Mary",
+  "customer_surname": "Smith",
+  "customer_email": "test@snappr.co",
+  "customer_mobilephone": "+14153339966",
+  "customer_company": "Snappr Inc.",
+  "internal_id": "123-ABC",
+  "photographer_name": "Hollie B.",
+  "created_at": "2018-09-01T09:12:00Z",
+  "updated_at": "2018-09-01T09:12:00Z"
+}
+```
+
+This endpoint retrieves a specific editing job using the ID of the editing job.
+
+### HTTP Request
+
+<code>GET https://api.snappr.com/editing-jobs/<span class="route_param">:editing_job_uid</span></code>
+
+### Request Parameters
+
+| Parameter         | Type          | Description                        | Required |
+| ----------------- | ------------- | ---------------------------------- | -------- |
+| `editing_job_uid` | String (UUID) | The identifier of the editing job. | Yes      |
+
 # Images
 
 ## Get All Images For a Booking
