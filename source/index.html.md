@@ -284,7 +284,7 @@ curl "https://api.snappr.com/bookings" \
     "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
     "customer_firstname": "Mary",
     "customer_surname": "Smith",
-    "customer_email": "test@snappr.co",
+    "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
     "internal_id": "123-ABC"
@@ -332,7 +332,7 @@ let bookings = api.bookings.post({
   "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
   "customer_firstname": "Mary",
   "customer_surname": "Smith",
-  "customer_email": "test@snappr.co",
+  "customer_email": "test@snappr.com",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
   "photographer_name": "Hollie B.",
@@ -359,7 +359,7 @@ curl "https://api.snappr.com/bookings" \
     "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
     "customer_firstname": "Mary",
     "customer_surname": "Smith",
-    "customer_email": "test@snappr.co",
+    "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
     "internal_id": "123-ABC"
@@ -406,7 +406,7 @@ let bookings = api.bookings.post({
   "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
   "customer_firstname": "Mary",
   "customer_surname": "Smith",
-  "customer_email": "test@snappr.co",
+  "customer_email": "test@snappr.com",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
   "internal_id": "123-ABC",
@@ -433,7 +433,7 @@ curl "https://api.snappr.com/bookings" \
     "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
     "customer_firstname": "Mary",
     "customer_surname": "Smith",
-    "customer_email": "test@snappr.co",
+    "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
     "internal_id": "123-ABC"
@@ -481,7 +481,7 @@ let bookings = api.bookings.post({
   "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
   "customer_firstname": "Mary",
   "customer_surname": "Smith",
-  "customer_email": "test@snappr.co",
+  "customer_email": "test@snappr.com",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
   "photographer_name": "Hollie B.",
@@ -575,7 +575,7 @@ let bookings = api.bookings.get({
       "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
       "customer_firstname": "Mary",
       "customer_surname": "Smith",
-      "customer_email": "test@snappr.co",
+      "customer_email": "test@snappr.com",
       "customer_mobilephone": "+14153339966",
       "customer_company": "Snappr Inc.",
       "internal_id": "123-ABC",
@@ -597,7 +597,7 @@ let bookings = api.bookings.get({
       "style_notes": "Variety of group shots of the family with different backgrounds",
       "customer_firstname": "John",
       "customer_surname": "Smith",
-      "customer_email": "testing@snappr.co",
+      "customer_email": "testing@snappr.com",
       "customer_mobilephone": "+14153338822",
       "customer_company": null,
       "photographer_name": "Jamie C.",
@@ -667,7 +667,7 @@ let bookings = api.bookings.get({
   "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
   "customer_firstname": "Mary",
   "customer_surname": "Smith",
-  "customer_email": "test@snappr.co",
+  "customer_email": "test@snappr.com",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
   "internal_id": "123-ABC",
@@ -685,9 +685,385 @@ This endpoint retrieves a specific booking using the ID of the booking.
 
 ### Request Parameters
 
-| Parameter     | Type          | Description                    | Required |
-| ------------- | ------------- | ------------------------------ | -------- |
-| `booking_uid` | String (UUID) | The identifier of the booking. | Yes      |
+| Parameter     | Type   | Description                    | Required |
+| ------------- | ------ | ------------------------------ | -------- |
+| `booking_uid` | String | The identifier of the booking. | Yes      |
+
+# Editing Jobs
+
+<aside class="notice">
+
+The Editing Jobs API is in `beta`. Please contact your account manager if you want to start using it.
+
+</aside>
+
+## Create New Editing Job
+
+<!--
+Possible statuses:
+- creating
+- editing
+- completed
+
+- creating
+- failed
+
+- pending_upload
+- editing
+- completed
+ -->
+
+> Example request when images are provided:
+
+```shell
+curl "https://api.snappr.com/editing-jobs" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0' \
+  -H "Content-Type: application/json" \
+  --data-binary $'{
+    "title": "Restaurant gallery",
+    "type": "food",
+    "internal_id": "123-ABC",
+    "preset_id": "1ea37f86-c82d-4267-8773-9a13fd4f1337",
+    "images": [
+      {
+        "file_name": "ZD 001.JPG",
+        "url_source": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D"
+      },
+      {
+        "file_name": "ZD 002.JPG",
+        "url_source": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D"
+      },
+      {
+        "file_name": "ZD 003.JPG",
+        "url_source": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D"
+      },
+    ]
+  }'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.post({
+  latitude: 34.0522,
+  longitude: -118.2437,
+  shoottype: 'event',
+  start_at: '2018-12-01T07:30:00Z',
+  duration: 120,
+  location_notes:
+    'Location is Emerald Theatre - ring buzzer at main entrance on arrival',
+  style_notes:
+    'Shots of as many members of crowd as possible; shallow depth of field where possible',
+  customer_firstname: 'Mary',
+  customer_surname: 'Smith',
+  customer_email: 'test@snappr.co',
+  customer_mobilephone: '+14153339966',
+  customer_company: 'Snappr Inc.'
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
+  "title": "Restaurant gallery",
+  "status": "creating",
+  "credits": 9,
+  "type": "food",
+  "preset_id": "1ea37f86-c82d-4267-8773-9a13fd4f1337",
+  "created_at": "2018-09-01T09:12:00Z",
+  "updated_at": "2018-09-01T09:12:00Z"
+}
+```
+
+> Example request when images are not provided (third party uploads the images):
+
+```shell
+curl "https://api.snappr.com/editing-jobs" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0' \
+  -H "Content-Type: application/json" \
+  --data-binary $'{
+    "title": "Restaurant gallery",
+    "type": "food",
+    "uploader_firstname": "Mary",
+    "uploader_surname": "Smith",
+    "uploader_email": "test@snappr.com",
+    "uploader_mobilephone": "+14153339966",
+    "uploader_company": "Snappr Inc.",
+    "internal_id": "123-ABC",
+    "preset_id": "1ea37f86-c82d-4267-8773-9a13fd4f1337",
+    "images": null
+  }'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.post({
+  latitude: 34.0522,
+  longitude: -118.2437,
+  shoottype: 'event',
+  start_at: null,
+  duration: 120,
+  location_notes:
+    'Location is Emerald Theatre - ring buzzer at main entrance on arrival',
+  style_notes:
+    'Shots of as many members of crowd as possible; shallow depth of field where possible',
+  customer_firstname: 'Mary',
+  customer_surname: 'Smith',
+  customer_email: 'test@snappr.co',
+  customer_mobilephone: '+14153339966',
+  customer_company: 'Snappr Inc.'
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
+  "title": "Restaurant gallery",
+  "status": "pending_upload",
+  "type": "food",
+  "preset_id": "1ea37f86-c82d-4267-8773-9a13fd4f1337",
+  "uploader_firstname": "Mary",
+  "uploader_surname": "Smith",
+  "uploader_email": "test@snappr.com",
+  "uploader_mobilephone": "+14153339966",
+  "uploader_company": "Snappr Inc.",
+  "internal_id": "123-ABC",
+  "created_at": "2018-09-01T09:12:00Z",
+  "updated_at": "2018-09-01T09:12:00Z"
+}
+```
+
+This endpoint creates a new editing job.
+
+Broadly, there are two main ways to create a new editing job, and examples are provided for each:
+
+1. Provide all editing job details _including_ the source images (`images`).
+2. Provide all editing job details _except_ the source images (`images` set to `null`). This will trigger an automatic process to collect the images from your third party uploader using the contact details (email and/or mobile phone) provided.
+
+### HTTP Request
+
+`POST https://api.snappr.com/editing-jobs`
+
+### Request (Body) Parameters
+
+| Parameter              | Type                   | Description                                                                                                                      | Required for method 1 | Required for method 2 |
+| ---------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------- | --------------------- | --------------------- |
+| `title`                | String                 | Custom editing job title.                                                                                                        | No                    | No                    |
+| `type`                 | String                 | Name of the editing job type (see <a href="#editing-job-types">`Editing job types`</a> endpoints), e.g. "event".                 | Yes                   | Yes                   |
+| `images`               | Array of Image objects | Array of source images. If it is set to `null` then Snappr will automatically seek this information from a third party uploader. | Yes                   | Yes (`null`)          |
+| `images[].file_name`   | String                 | Name of the source image.                                                                                                        | No                    | No                    |
+| `images[].url_source`  | URL                    | URL of the source image.                                                                                                         | Yes                   | No                    |
+| `uploader_firstname`   | String                 | First name of third party uploader.                                                                                              | No                    | Yes                   |
+| `uploader_surname`     | String                 | Last name of third party uploader.                                                                                               | No                    | No                    |
+| `uploader_email`       | String (email)         | Valid email address of third party uploader.                                                                                     | No                    | Yes                   |
+| `uploader_mobilephone` | String                 | Valid mobile phone number of third party uploader.                                                                               | No                    | No                    |
+| `uploader_company`     | String                 | Name of third party uploader's company.                                                                                          | No                    | No                    |
+| `internal_id`          | String                 | ID for your internal systems. Useful for matching an editing job with your internal data.                                        | No                    | No                    |
+
+<aside class="notice">
+
+If <code>images</code> is set to <code>null</code> the system assumes you want a third party uploader to upload the images.
+
+</aside>
+
+## Get All Editing Jobs
+
+> Example request:
+
+```shell
+curl "https://api.snappr.com/editing-jobs" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.get({
+  // no params
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "results": [
+    {
+      "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
+      "title": "Restaurant gallery",
+      "status": "paid",
+      "credits": 9,
+      "type": "food",
+      "uploader_firstname": "Mary",
+      "uploader_surname": "Smith",
+      "uploader_email": "test@snappr.com",
+      "uploader_mobilephone": "+14153339966",
+      "uploader_company": "Snappr Inc.",
+      "internal_id": "123-ABC",
+      "created_at": "2018-09-01T09:12:00Z",
+      "updated_at": "2018-09-01T09:12:00Z"
+    },
+    {
+      "uid": "48b095fd-7fc0-41dc-b632-9b032e0a65e6",
+      "title": "Car Shoot",
+      "status": "completed",
+      "credits": 11,
+      "type": "automotive",
+      "created_at": "2018-09-01T08:34:00Z",
+      "updated_at": "2018-09-01T08:34:00Z"
+    }
+  ],
+  "count": 2,
+  "limit": 100,
+  "offset": 0,
+  "total": 2
+}
+```
+
+This endpoint retrieves all editing jobs.
+
+### HTTP Request
+
+<code>GET https://api.snappr.com/editing-jobs?limit=<span class="route_param">:limit</span>&offset=<span class="route_param">:offset</span></code>
+
+### Query Parameters
+
+| Parameter | Type    | Description                                                                                                                                     | Required |
+| --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `limit`   | Integer | Maximum number of editing jobs to be returned (maximum of 100). Defaults to `100`.                                                              | No       |
+| `offset`  | Integer | Offset used for pagination if there are more editing jobs than the limit (or more than 100 editing jobs if there is no limit). Defaults to `0`. | No       |
+
+<aside class="notice">
+The API does not currently support editing job filters (e.g. filtering by a certain status), but this is planned for an upcoming release.
+</aside>
+
+## Get Single Editing Job
+
+> Example request:
+
+```shell
+curl "https://api.snappr.com/editing-jobs/0ccefa53-b346-4d3e-8dcb-79a914289928" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let editingJobs = api.editingJobs.get({
+  uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
+  "title": "Restaurant gallery",
+  "status": "paid",
+  "credits": 9,
+  "type": "food",
+  "uploader_firstname": "Mary",
+  "uploader_surname": "Smith",
+  "uploader_email": "test@snappr.com",
+  "uploader_mobilephone": "+14153339966",
+  "uploader_company": "Snappr Inc.",
+  "internal_id": "123-ABC",
+  "created_at": "2018-09-01T09:12:00Z",
+  "updated_at": "2018-09-01T09:12:00Z"
+},
+```
+
+This endpoint retrieves a specific editing job using the ID of the editing job.
+
+### HTTP Request
+
+<code>GET https://api.snappr.com/editing-jobs/<span class="route_param">:editing_job_uid</span></code>
+
+### Request Parameters
+
+| Parameter         | Type   | Description                        | Required |
+| ----------------- | ------ | ---------------------------------- | -------- |
+| `editing_job_uid` | String | The identifier of the editing job. | Yes      |
+
+# Presets
+
+## Get All Presets
+
+> Example request:
+
+```shell
+curl "https://api.snappr.com/presets" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.getPresets({
+  uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "results": [
+    {
+      "uid": "ed10cf86-97f9-4ce6-af6f-a01dfe891114",
+      "name": "Restaurant menu",
+      "description": "In-depth improvements on photos taken by restaurant owners."
+    },
+    {
+      "uid": "ee9be5f8-84a8-4592-88a0-1781d0c39d0a",
+      "name": "Liquor store"
+    }
+  ],
+  "count": 2,
+  "limit": 1000,
+  "offset": 0,
+  "total": 2
+}
+```
+
+This endpoint retrieves all the presets.
+
+### HTTP Request
+
+<code>GET https://api.snappr.com/presets</code>
+
+### Query Parameters
+
+| Parameter | Type    | Description                                                                                                                            | Required |
+| --------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `limit`   | Integer | Maximum number of presets to be returned (maximum of 10000). Defaults to `1000`.                                                       | No       |
+| `offset`  | Integer | Offset used for pagination if there are more presets than the limit (or more than 1000 presets if there is no limit). Defaults to `0`. | No       |
 
 # Images
 
@@ -751,9 +1127,101 @@ This endpoint retrieves all the images of a specific booking.
 
 ### Request Parameters
 
-| Parameter     | Type          | Description                    | Required |
-| ------------- | ------------- | ------------------------------ | -------- |
-| `booking_uid` | String (UUID) | The identifier of the booking. | Yes      |
+| Parameter     | Type   | Description                    | Required |
+| ------------- | ------ | ------------------------------ | -------- |
+| `booking_uid` | String | The identifier of the booking. | Yes      |
+
+### Query Parameters
+
+| Parameter | Type    | Description                                                                                                                          | Required |
+| --------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `limit`   | Integer | Maximum number of images to be returned (maximum of 10000). Defaults to `1000`.                                                      | No       |
+| `offset`  | Integer | Offset used for pagination if there are more images than the limit (or more than 1000 images if there is no limit). Defaults to `0`. | No       |
+
+## Get All Images For an Editing Job
+
+> Example request:
+
+```shell
+curl "https://api.snappr.com/editing-jobs/0ccefa53-b346-4d3e-8dcb-79a914289928/images" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let editingJobs = api.editingJobs.getImages({
+  uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "results": [
+    {
+      "uid": "ed10cf86-97f9-4ce6-af6f-a01dfe891114",
+      "source": {
+        "file_name": "ZD 001.JPG",
+        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D",
+        "url_thumb": "https://img.snappr.co/QlXCPwnEgV7P_RO4AJDLhOsq500=/fit-in/600x0/ed10cf86-97f9-4ce6-af6f-a01dfe891114"
+      },
+      "final": {
+        "file_name": "ZD 001.JPG",
+        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D",
+        "url_thumb": "https://img.snappr.co/QlXCPwnEgV7P_RO4AJDLhOsq500=/fit-in/600x0/ed10cf86-97f9-4ce6-af6f-a01dfe891114"
+      }
+    },
+    {
+      "uid": "ee9be5f8-84a8-4592-88a0-1781d0c39d0a",
+      "source": {
+        "file_name": "ZD 002.JPG",
+        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D",
+        "url_thumb": "https://img.snappr.co/rXtW9z6hGdDm3lebP9IPHGo9V5k=/fit-in/600x0/ee9be5f8-84a8-4592-88a0-1781d0c39d0a"
+      },
+      "final": {
+        "file_name": "ZD 002.JPG",
+        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D",
+        "url_thumb": "https://img.snappr.co/rXtW9z6hGdDm3lebP9IPHGo9V5k=/fit-in/600x0/ee9be5f8-84a8-4592-88a0-1781d0c39d0a"
+      }
+    },
+    {
+      "uid": "6b6eae3e-ebfb-4776-8a20-2b8087f76418",
+      "source": {
+        "file_name": "ZD 003.JPG",
+        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D",
+        "url_thumb": "https://img.snappr.co/gXk81aciTVokDvyi2NdWGNluhNg=/fit-in/600x0/6b6eae3e-ebfb-4776-8a20-2b8087f76418"
+      },
+      "final": {
+        "file_name": "ZD 003.JPG",
+        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D",
+        "url_thumb": "https://img.snappr.co/gXk81aciTVokDvyi2NdWGNluhNg=/fit-in/600x0/6b6eae3e-ebfb-4776-8a20-2b8087f76418"
+      }
+    }
+  ],
+  "count": 3,
+  "limit": 1000,
+  "offset": 0,
+  "total": 3
+}
+```
+
+This endpoint retrieves all the images of a specific editing job.
+
+### HTTP Request
+
+<code>GET https://api.snappr.com/editing-jobs/<span class="route_param">:editing_job_uid</span>/images</code>
+
+### Request Parameters
+
+| Parameter         | Type   | Description                        | Required |
+| ----------------- | ------ | ---------------------------------- | -------- |
+| `editing_job_uid` | String | The identifier of the editing job. | Yes      |
 
 ### Query Parameters
 
@@ -811,6 +1279,55 @@ This endpoint returns all available Snappr shoot types.
 
 <code>GET https://api.snappr.com/shoottypes</code>
 
+# Editing Job Types
+
+## Get All Shoot Types
+
+> Example request:
+
+```shell
+curl "https://api.snappr.com/editing-job-types" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.shoottypes.get({});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "results": [
+    {
+      "name": "food",
+      "display_name": "Food"
+    },
+    {
+      "name": "real-estate",
+      "display_name": "Real Estate"
+    },
+    ...
+  ],
+  "count": 10,
+  "limit": 100,
+  "offset": 0,
+  "total": 10
+}
+```
+
+This endpoint returns all available Snappr editing job types.
+
+### HTTP Request
+
+<code>GET https://api.snappr.com/shoottypes</code>
+
 # Custom Webhooks
 
 > Example JSON payload sent to webhook URL as POST:
@@ -832,7 +1349,7 @@ This endpoint returns all available Snappr shoot types.
     "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
     "customer_firstname": "Mary",
     "customer_surname": "Smith",
-    "customer_email": "test@snappr.co",
+    "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
     "internal_id": "123-ABC",
