@@ -265,10 +265,35 @@
               </ul>
           </li>
           <li>
+            <a href="#editing-jobs" class="toc-h1 toc-link" data-title="Editing Jobs">Editing Jobs</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-new-editing-job" class="toc-h2 toc-link" data-title="Create New Editing Job">Create New Editing Job</a>
+                  </li>
+                  <li>
+                    <a href="#get-all-editing-jobs" class="toc-h2 toc-link" data-title="Get All Editing Jobs">Get All Editing Jobs</a>
+                  </li>
+                  <li>
+                    <a href="#get-single-editing-job" class="toc-h2 toc-link" data-title="Get Single Editing Job">Get Single Editing Job</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#presets" class="toc-h1 toc-link" data-title="Presets">Presets</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-all-presets" class="toc-h2 toc-link" data-title="Get All Presets">Get All Presets</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#images" class="toc-h1 toc-link" data-title="Images">Images</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#get-all-images-for-a-booking" class="toc-h2 toc-link" data-title="Get All Images For a Booking">Get All Images For a Booking</a>
+                  </li>
+                  <li>
+                    <a href="#get-all-images-for-an-editing-job" class="toc-h2 toc-link" data-title="Get All Images For an Editing Job">Get All Images For an Editing Job</a>
                   </li>
               </ul>
           </li>
@@ -277,6 +302,14 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#get-all-shoot-types" class="toc-h2 toc-link" data-title="Get All Shoot Types">Get All Shoot Types</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#editing-job-types" class="toc-h1 toc-link" data-title="Editing Job Types">Editing Job Types</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-all-shoot-types-2" class="toc-h2 toc-link" data-title="Get All Shoot Types">Get All Shoot Types</a>
                   </li>
               </ul>
           </li>
@@ -603,7 +636,7 @@ All available times within the range of the local date will be returned. However
     "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
     "customer_firstname": "Mary",
     "customer_surname": "Smith",
-    "customer_email": "test@snappr.co",
+    "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
     "internal_id": "123-ABC"
@@ -650,7 +683,7 @@ let bookings = api.bookings.post({
   </span><span class="s2">"style_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Shots of as many members of crowd as possible; shallow depth of field where possible"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mary"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.co"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.com"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
   </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
@@ -676,7 +709,7 @@ let bookings = api.bookings.post({
     "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
     "customer_firstname": "Mary",
     "customer_surname": "Smith",
-    "customer_email": "test@snappr.co",
+    "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
     "internal_id": "123-ABC"
@@ -722,7 +755,7 @@ let bookings = api.bookings.post({
   </span><span class="s2">"style_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Shots of as many members of crowd as possible; shallow depth of field where possible"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mary"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.co"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.com"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
   </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
@@ -748,7 +781,7 @@ let bookings = api.bookings.post({
     "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
     "customer_firstname": "Mary",
     "customer_surname": "Smith",
-    "customer_email": "test@snappr.co",
+    "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
     "internal_id": "123-ABC"
@@ -795,7 +828,7 @@ let bookings = api.bookings.post({
   </span><span class="s2">"style_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Shots of as many members of crowd as possible; shallow depth of field where possible"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mary"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.co"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.com"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
   </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
@@ -965,7 +998,7 @@ let bookings = api.bookings.get({
       </span><span class="s2">"style_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Shots of as many members of crowd as possible; shallow depth of field where possible"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mary"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.co"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.com"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
       </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
@@ -987,7 +1020,7 @@ let bookings = api.bookings.get({
       </span><span class="s2">"style_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Variety of group shots of the family with different backgrounds"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testing@snappr.co"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testing@snappr.com"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153338822"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jamie C."</span><span class="p">,</span><span class="w">
@@ -1066,7 +1099,7 @@ let bookings = api.bookings.get({
   </span><span class="s2">"style_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Shots of as many members of crowd as possible; shallow depth of field where possible"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mary"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.co"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.com"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
   </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
@@ -1089,9 +1122,469 @@ let bookings = api.bookings.get({
 </thead><tbody>
 <tr>
 <td><code>booking_uid</code></td>
-<td>String (UUID)</td>
+<td>String</td>
 <td>The identifier of the booking.</td>
 <td>Yes</td>
+</tr>
+</tbody></table>
+<h1 id='editing-jobs'>Editing Jobs</h1>
+<aside class="notice">
+
+The Editing Jobs API is in `beta`. Please contact your account manager if you want to start using it.
+
+</aside>
+<h2 id='create-new-editing-job'>Create New Editing Job</h2>
+<!--
+Possible statuses:
+- creating
+- editing
+- completed
+
+- creating
+- failed
+
+- pending_upload
+- editing
+- completed
+ -->
+
+<blockquote>
+<p>Example request when images are provided:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/editing-jobs"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  --data-binary <span class="s1">$'{
+    "title": "Restaurant gallery",
+    "type": "food",
+    "internal_id": "123-ABC",
+    "preset_id": "1ea37f86-c82d-4267-8773-9a13fd4f1337",
+    "images": [
+      {
+        "file_name": "ZD 001.JPG",
+        "url_source": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D"
+      },
+      {
+        "file_name": "ZD 002.JPG",
+        "url_source": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D"
+      },
+      {
+        "file_name": "ZD 003.JPG",
+        "url_source": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D"
+      },
+    ]
+  }'</span>
+</code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.post({
+  latitude: 34.0522,
+  longitude: -118.2437,
+  shoottype: 'event',
+  start_at: '2018-12-01T07:30:00Z',
+  duration: 120,
+  location_notes:
+    'Location is Emerald Theatre - ring buzzer at main entrance on arrival',
+  style_notes:
+    'Shots of as many members of crowd as possible; shallow depth of field where possible',
+  customer_firstname: 'Mary',
+  customer_surname: 'Smith',
+  customer_email: 'test@snappr.co',
+  customer_mobilephone: '+14153339966',
+  customer_company: 'Snappr Inc.'
+});
+``` -->
+
+<blockquote>
+<p>Example JSON response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0ccefa53-b346-4d3e-8dcb-79a914289928"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Restaurant gallery"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"creating"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"credits"</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"food"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"preset_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1ea37f86-c82d-4267-8773-9a13fd4f1337"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Example request when images are not provided (third party uploads the images):</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/editing-jobs"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  --data-binary <span class="s1">$'{
+    "title": "Restaurant gallery",
+    "type": "food",
+    "uploader_firstname": "Mary",
+    "uploader_surname": "Smith",
+    "uploader_email": "test@snappr.com",
+    "uploader_mobilephone": "+14153339966",
+    "uploader_company": "Snappr Inc.",
+    "internal_id": "123-ABC",
+    "preset_id": "1ea37f86-c82d-4267-8773-9a13fd4f1337",
+    "images": null
+  }'</span>
+</code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.post({
+  latitude: 34.0522,
+  longitude: -118.2437,
+  shoottype: 'event',
+  start_at: null,
+  duration: 120,
+  location_notes:
+    'Location is Emerald Theatre - ring buzzer at main entrance on arrival',
+  style_notes:
+    'Shots of as many members of crowd as possible; shallow depth of field where possible',
+  customer_firstname: 'Mary',
+  customer_surname: 'Smith',
+  customer_email: 'test@snappr.co',
+  customer_mobilephone: '+14153339966',
+  customer_company: 'Snappr Inc.'
+});
+``` -->
+
+<blockquote>
+<p>Example JSON response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0ccefa53-b346-4d3e-8dcb-79a914289928"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Restaurant gallery"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending_upload"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"food"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"preset_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1ea37f86-c82d-4267-8773-9a13fd4f1337"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uploader_firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mary"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uploader_surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uploader_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uploader_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uploader_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint creates a new editing job.</p>
+
+<p>Broadly, there are two main ways to create a new editing job, and examples are provided for each:</p>
+
+<ol>
+<li>Provide all editing job details <em>including</em> the source images (<code>images</code>).</li>
+<li>Provide all editing job details <em>except</em> the source images (<code>images</code> set to <code>null</code>). This will trigger an automatic process to collect the images from your third party uploader using the contact details (email and/or mobile phone) provided.</li>
+</ol>
+<h3 id='http-request-6'>HTTP Request</h3>
+<p><code>POST https://api.snappr.com/editing-jobs</code></p>
+<h3 id='request-body-parameters-2'>Request (Body) Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required for method 1</th>
+<th>Required for method 2</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>title</code></td>
+<td>String</td>
+<td>Custom editing job title.</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>String</td>
+<td>Name of the editing job type (see <a href="#editing-job-types"><code>Editing job types</code></a> endpoints), e.g. &quot;event&quot;.</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>images</code></td>
+<td>Array of Image objects</td>
+<td>Array of source images. If it is set to <code>null</code> then Snappr will automatically seek this information from a third party uploader.</td>
+<td>Yes</td>
+<td>Yes (<code>null</code>)</td>
+</tr>
+<tr>
+<td><code>images[].file_name</code></td>
+<td>String</td>
+<td>Name of the source image.</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>images[].url_source</code></td>
+<td>URL</td>
+<td>URL of the source image.</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>uploader_firstname</code></td>
+<td>String</td>
+<td>First name of third party uploader.</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>uploader_surname</code></td>
+<td>String</td>
+<td>Last name of third party uploader.</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>uploader_email</code></td>
+<td>String (email)</td>
+<td>Valid email address of third party uploader.</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>uploader_mobilephone</code></td>
+<td>String</td>
+<td>Valid mobile phone number of third party uploader.</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>uploader_company</code></td>
+<td>String</td>
+<td>Name of third party uploader&#39;s company.</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>internal_id</code></td>
+<td>String</td>
+<td>ID for your internal systems. Useful for matching an editing job with your internal data.</td>
+<td>No</td>
+<td>No</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+
+If <code>images</code> is set to <code>null</code> the system assumes you want a third party uploader to upload the images.
+
+</aside>
+<h2 id='get-all-editing-jobs'>Get All Editing Jobs</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/editing-jobs"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span>
+</code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.get({
+  // no params
+});
+``` -->
+
+<blockquote>
+<p>Example JSON response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0ccefa53-b346-4d3e-8dcb-79a914289928"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Restaurant gallery"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paid"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"credits"</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"food"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"uploader_firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mary"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"uploader_surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"uploader_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.com"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"uploader_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"uploader_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"48b095fd-7fc0-41dc-b632-9b032e0a65e6"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Car Shoot"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"credits"</span><span class="p">:</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"automotive"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T08:34:00Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T08:34:00Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all editing jobs.</p>
+<h3 id='http-request-7'>HTTP Request</h3>
+<p><code>GET https://api.snappr.com/editing-jobs?limit=<span class="route_param">:limit</span>&amp;offset=<span class="route_param">:offset</span></code></p>
+<h3 id='query-parameters-4'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>limit</code></td>
+<td>Integer</td>
+<td>Maximum number of editing jobs to be returned (maximum of 100). Defaults to <code>100</code>.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>offset</code></td>
+<td>Integer</td>
+<td>Offset used for pagination if there are more editing jobs than the limit (or more than 100 editing jobs if there is no limit). Defaults to <code>0</code>.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+The API does not currently support editing job filters (e.g. filtering by a certain status), but this is planned for an upcoming release.
+</aside>
+<h2 id='get-single-editing-job'>Get Single Editing Job</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/editing-jobs/0ccefa53-b346-4d3e-8dcb-79a914289928"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span>
+</code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let editingJobs = api.editingJobs.get({
+  uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
+});
+``` -->
+
+<blockquote>
+<p>Example JSON response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0ccefa53-b346-4d3e-8dcb-79a914289928"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Restaurant gallery"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paid"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"credits"</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"food"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uploader_firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mary"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uploader_surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uploader_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uploader_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"uploader_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
+</span><span class="p">},</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves a specific editing job using the ID of the editing job.</p>
+<h3 id='http-request-8'>HTTP Request</h3>
+<p><code>GET https://api.snappr.com/editing-jobs/<span class="route_param">:editing_job_uid</span></code></p>
+<h3 id='request-parameters-2'>Request Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>editing_job_uid</code></td>
+<td>String</td>
+<td>The identifier of the editing job.</td>
+<td>Yes</td>
+</tr>
+</tbody></table>
+<h1 id='presets'>Presets</h1><h2 id='get-all-presets'>Get All Presets</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/presets"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span>
+</code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.getPresets({
+  uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
+});
+``` -->
+
+<blockquote>
+<p>Example JSON response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ed10cf86-97f9-4ce6-af6f-a01dfe891114"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Restaurant menu"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"In-depth improvements on photos taken by restaurant owners."</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ee9be5f8-84a8-4592-88a0-1781d0c39d0a"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Liquor store"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all the presets.</p>
+<h3 id='http-request-9'>HTTP Request</h3>
+<p><code>GET https://api.snappr.com/presets</code></p>
+<h3 id='query-parameters-5'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>limit</code></td>
+<td>Integer</td>
+<td>Maximum number of presets to be returned (maximum of 10000). Defaults to <code>1000</code>.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>offset</code></td>
+<td>Integer</td>
+<td>Offset used for pagination if there are more presets than the limit (or more than 1000 presets if there is no limit). Defaults to <code>0</code>.</td>
+<td>No</td>
 </tr>
 </tbody></table>
 <h1 id='images'>Images</h1><h2 id='get-all-images-for-a-booking'>Get All Images For a Booking</h2>
@@ -1144,9 +1637,9 @@ let bookings = api.bookings.getImages({
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves all the images of a specific booking.</p>
-<h3 id='http-request-6'>HTTP Request</h3>
+<h3 id='http-request-10'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/bookings/<span class="route_param">:booking_uid</span>/images</code></p>
-<h3 id='request-parameters-2'>Request Parameters</h3>
+<h3 id='request-parameters-3'>Request Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1157,12 +1650,123 @@ let bookings = api.bookings.getImages({
 </thead><tbody>
 <tr>
 <td><code>booking_uid</code></td>
-<td>String (UUID)</td>
+<td>String</td>
 <td>The identifier of the booking.</td>
 <td>Yes</td>
 </tr>
 </tbody></table>
-<h3 id='query-parameters-4'>Query Parameters</h3>
+<h3 id='query-parameters-6'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>limit</code></td>
+<td>Integer</td>
+<td>Maximum number of images to be returned (maximum of 10000). Defaults to <code>1000</code>.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>offset</code></td>
+<td>Integer</td>
+<td>Offset used for pagination if there are more images than the limit (or more than 1000 images if there is no limit). Defaults to <code>0</code>.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='get-all-images-for-an-editing-job'>Get All Images For an Editing Job</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/editing-jobs/0ccefa53-b346-4d3e-8dcb-79a914289928/images"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span>
+</code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let editingJobs = api.editingJobs.getImages({
+  uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
+});
+``` -->
+
+<blockquote>
+<p>Example JSON response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ed10cf86-97f9-4ce6-af6f-a01dfe891114"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZD 001.JPG"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://img.snappr.co/QlXCPwnEgV7P_RO4AJDLhOsq500=/fit-in/600x0/ed10cf86-97f9-4ce6-af6f-a01dfe891114"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"final"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZD 001.JPG"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://img.snappr.co/QlXCPwnEgV7P_RO4AJDLhOsq500=/fit-in/600x0/ed10cf86-97f9-4ce6-af6f-a01dfe891114"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ee9be5f8-84a8-4592-88a0-1781d0c39d0a"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZD 002.JPG"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://img.snappr.co/rXtW9z6hGdDm3lebP9IPHGo9V5k=/fit-in/600x0/ee9be5f8-84a8-4592-88a0-1781d0c39d0a"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"final"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZD 002.JPG"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://img.snappr.co/rXtW9z6hGdDm3lebP9IPHGo9V5k=/fit-in/600x0/ee9be5f8-84a8-4592-88a0-1781d0c39d0a"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6b6eae3e-ebfb-4776-8a20-2b8087f76418"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZD 003.JPG"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://img.snappr.co/gXk81aciTVokDvyi2NdWGNluhNg=/fit-in/600x0/6b6eae3e-ebfb-4776-8a20-2b8087f76418"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"final"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZD 003.JPG"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://img.snappr.co/gXk81aciTVokDvyi2NdWGNluhNg=/fit-in/600x0/6b6eae3e-ebfb-4776-8a20-2b8087f76418"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all the images of a specific editing job.</p>
+<h3 id='http-request-11'>HTTP Request</h3>
+<p><code>GET https://api.snappr.com/editing-jobs/<span class="route_param">:editing_job_uid</span>/images</code></p>
+<h3 id='request-parameters-4'>Request Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>editing_job_uid</code></td>
+<td>String</td>
+<td>The identifier of the editing job.</td>
+<td>Yes</td>
+</tr>
+</tbody></table>
+<h3 id='query-parameters-7'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1223,7 +1827,48 @@ let bookings = api.shoottypes.get({});
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint returns all available Snappr shoot types.</p>
-<h3 id='http-request-7'>HTTP Request</h3>
+<h3 id='http-request-12'>HTTP Request</h3>
+<p><code>GET https://api.snappr.com/shoottypes</code></p>
+<h1 id='editing-job-types'>Editing Job Types</h1><h2 id='get-all-shoot-types-2'>Get All Shoot Types</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/editing-job-types"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span>
+</code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.shoottypes.get({});
+``` -->
+
+<blockquote>
+<p>Example JSON response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"food"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Food"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"real-estate"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"display_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Real Estate"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint returns all available Snappr editing job types.</p>
+<h3 id='http-request-13'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/shoottypes</code></p>
 <h1 id='custom-webhooks'>Custom Webhooks</h1>
 <blockquote>
@@ -1245,7 +1890,7 @@ let bookings = api.shoottypes.get({});
     </span><span class="s2">"style_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Shots of as many members of crowd as possible; shallow depth of field where possible"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"customer_firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mary"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"customer_surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.co"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.com"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
     </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
