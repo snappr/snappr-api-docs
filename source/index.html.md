@@ -685,11 +685,17 @@ This endpoint retrieves a specific booking using the ID of the booking.
 
 ### Request Parameters
 
-| Parameter     | Type          | Description                    | Required |
-| ------------- | ------------- | ------------------------------ | -------- |
-| `booking_uid` | String (UUID) | The identifier of the booking. | Yes      |
+| Parameter     | Type   | Description                    | Required |
+| ------------- | ------ | ------------------------------ | -------- |
+| `booking_uid` | String | The identifier of the booking. | Yes      |
 
-# Editing jobs
+# Editing Jobs
+
+<aside class="notice">
+
+The Editing Jobs API is in `beta`. Please contact your account manager if you want to start using it.
+
+</aside>
 
 ## Create New Editing Job
 
@@ -771,24 +777,7 @@ let bookings = api.bookings.post({
   "type": "food",
   "preset_id": "1ea37f86-c82d-4267-8773-9a13fd4f1337",
   "created_at": "2018-09-01T09:12:00Z",
-  "updated_at": "2018-09-01T09:12:00Z",
-  "images": [
-    {
-      "uid": "74e7c938-f998-465f-adcf-88a1de9c77ba",
-      "file_name": "ZD 001.JPG",
-      "url_source": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D"
-    },
-    {
-      "uid": "2bd70966-c264-4ee2-a5ed-f0740120fcbc",
-      "file_name": "ZD 002.JPG",
-      "url_source": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D"
-    },
-    {
-      "uid": "a28e7b6f-afa8-4bff-b7b0-a64ac895d20e",
-      "file_name": "ZD 003.JPG",
-      "url_source": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D"
-    }
-  ]
+  "updated_at": "2018-09-01T09:12:00Z"
 }
 ```
 
@@ -870,28 +859,24 @@ Broadly, there are two main ways to create a new editing job, and examples are p
 
 ### Request (Body) Parameters
 
-| Parameter              | Type                   | Description                                                                                                                        | Required |
-| ---------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `title`                | String                 | Custom editing job title.                                                                                                          | No       |
-| `type`                 | String                 | Name of the editing job type (see <a href="#editing-job-types">`Editing job types`</a> endpoints), e.g. "event".                   | Yes      |
-| `images`               | Array of Image objects | Array of source images. If it is set to `null` then Snappr will automatically seek this information from the third party uploader. | Yes      |
-| `images[].file_name`   | String                 | Name of the source image.                                                                                                          | No       |
-| `images[].url_source`  | URL                    | URL of the source image.                                                                                                           | Yes      |
-| `uploader_firstname`   | String                 | First name of third party uploader.                                                                                                | Yes      |
-| `uploader_surname`     | String                 | Last name of third party uploader.                                                                                                 | No       |
-| `uploader_email`       | String (email)         | Valid email address of third party uploader.                                                                                       | Yes      |
-| `uploader_mobilephone` | String                 | Valid mobile phone number of third party uploader.                                                                                 | No       |
-| `uploader_company`     | String                 | Name of third party uploader's company.                                                                                            | No       |
-| `internal_id`          | String                 | ID for your internal systems. Useful for matching a booking with your internal data.                                               | No       |
+| Parameter              | Type                   | Description                                                                                                                      | Required for method 1 | Required for method 2 |
+| ---------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------- | --------------------- | --------------------- |
+| `title`                | String                 | Custom editing job title.                                                                                                        | No                    | No                    |
+| `type`                 | String                 | Name of the editing job type (see <a href="#editing-job-types">`Editing job types`</a> endpoints), e.g. "event".                 | Yes                   | Yes                   |
+| `images`               | Array of Image objects | Array of source images. If it is set to `null` then Snappr will automatically seek this information from a third party uploader. | Yes                   | Yes (`null`)          |
+| `images[].file_name`   | String                 | Name of the source image.                                                                                                        | No                    | No                    |
+| `images[].url_source`  | URL                    | URL of the source image.                                                                                                         | Yes                   | No                    |
+| `uploader_firstname`   | String                 | First name of third party uploader.                                                                                              | No                    | Yes                   |
+| `uploader_surname`     | String                 | Last name of third party uploader.                                                                                               | No                    | No                    |
+| `uploader_email`       | String (email)         | Valid email address of third party uploader.                                                                                     | No                    | Yes                   |
+| `uploader_mobilephone` | String                 | Valid mobile phone number of third party uploader.                                                                               | No                    | No                    |
+| `uploader_company`     | String                 | Name of third party uploader's company.                                                                                          | No                    | No                    |
+| `internal_id`          | String                 | ID for your internal systems. Useful for matching an editing job with your internal data.                                        | No                    | No                    |
 
 <aside class="notice">
 
-If <code>images</code> is set to <code>null</code> the system assumes you want the end-customer to upload the pictures.
+If <code>images</code> is set to <code>null</code> the system assumes you want a third party uploader to upload the images.
 
-</aside>
-
-<aside class="notice">
-*One of the following is required: <code>address</code>; or <code>latitude</code> and <code>longitude</code>. If both are provided, only <code>latitude</code> and <code>longitude</code> will be used
 </aside>
 
 ## Get All Editing Jobs
@@ -1018,9 +1003,9 @@ This endpoint retrieves a specific editing job using the ID of the editing job.
 
 ### Request Parameters
 
-| Parameter         | Type          | Description                        | Required |
-| ----------------- | ------------- | ---------------------------------- | -------- |
-| `editing_job_uid` | String (UUID) | The identifier of the editing job. | Yes      |
+| Parameter         | Type   | Description                        | Required |
+| ----------------- | ------ | ---------------------------------- | -------- |
+| `editing_job_uid` | String | The identifier of the editing job. | Yes      |
 
 # Presets
 
@@ -1142,9 +1127,9 @@ This endpoint retrieves all the images of a specific booking.
 
 ### Request Parameters
 
-| Parameter     | Type          | Description                    | Required |
-| ------------- | ------------- | ------------------------------ | -------- |
-| `booking_uid` | String (UUID) | The identifier of the booking. | Yes      |
+| Parameter     | Type   | Description                    | Required |
+| ------------- | ------ | ------------------------------ | -------- |
+| `booking_uid` | String | The identifier of the booking. | Yes      |
 
 ### Query Parameters
 
@@ -1234,9 +1219,9 @@ This endpoint retrieves all the images of a specific editing job.
 
 ### Request Parameters
 
-| Parameter         | Type          | Description                        | Required |
-| ----------------- | ------------- | ---------------------------------- | -------- |
-| `editing_job_uid` | String (UUID) | The identifier of the editing job. | Yes      |
+| Parameter         | Type   | Description                        | Required |
+| ----------------- | ------ | ---------------------------------- | -------- |
+| `editing_job_uid` | String | The identifier of the editing job. | Yes      |
 
 ### Query Parameters
 
