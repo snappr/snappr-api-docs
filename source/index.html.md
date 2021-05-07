@@ -693,6 +693,20 @@ This endpoint retrieves a specific booking using the ID of the booking.
 
 ## Create New Editing Job
 
+<!--
+Possible statuses:
+- creating
+- editing
+- completed
+
+- creating
+- failed
+
+- pending_upload
+- editing
+- completed
+ -->
+
 > Example request when images are provided:
 
 ```shell
@@ -703,25 +717,20 @@ curl "https://api.snappr.com/editing-jobs" \
   --data-binary $'{
     "title": "Emerald Theatre Shoot",
     "type": "event",
-    "customer_firstname": "Mary",
-    "customer_surname": "Smith",
-    "customer_email": "test@snappr.com",
-    "customer_mobilephone": "+14153339966",
-    "customer_company": "Snappr Inc.",
     "internal_id": "123-ABC",
     "preset_id": "1ea37f86-c82d-4267-8773-9a13fd4f1337",
     "images": [
       {
         "file_name": "ZD 001.JPG",
-        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D"
+        "url_source": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D"
       },
       {
         "file_name": "ZD 002.JPG",
-        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D"
+        "url_source": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D"
       },
       {
         "file_name": "ZD 003.JPG",
-        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D"
+        "url_source": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D"
       },
     ]
   }'
@@ -757,22 +766,37 @@ let bookings = api.bookings.post({
 {
   "uid": "0ccefa53-b346-4d3e-8dcb-79a914289928",
   "title": "Emerald Theatre Shoot",
-  "status": "paid",
+  "status": "creating",
   "credits": 9,
   "type": "event",
-  "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
   "customer_firstname": "Mary",
   "customer_surname": "Smith",
   "customer_email": "test@snappr.com",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
-  "photographer_name": "Hollie B.",
   "created_at": "2018-09-01T09:12:00Z",
-  "updated_at": "2018-09-01T09:12:00Z"
+  "updated_at": "2018-09-01T09:12:00Z",
+  "images": [
+    {
+      "uid": "74e7c938-f998-465f-adcf-88a1de9c77ba",
+      "file_name": "ZD 001.JPG",
+      "url_source": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D"
+    },
+    {
+      "uid": "2bd70966-c264-4ee2-a5ed-f0740120fcbc",
+      "file_name": "ZD 002.JPG",
+      "url_source": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D"
+    },
+    {
+      "uid": "a28e7b6f-afa8-4bff-b7b0-a64ac895d20e",
+      "file_name": "ZD 003.JPG",
+      "url_source": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D"
+    }
+  ]
 }
 ```
 
-> Example request when start_at is not provided (end-customer picked date and time):
+> Example request when images are not provided (third party uploads the images):
 
 ```shell
 curl "https://api.snappr.com/editing-jobs" \
@@ -781,19 +805,15 @@ curl "https://api.snappr.com/editing-jobs" \
   -H "Content-Type: application/json" \
   --data-binary $'{
     "title": "Emerald Theatre Shoot",
-    "latitude": 34.0522,
-    "longitude": -118.2437,
-    "shoottype": "event",
-    "start_at": null,
-    "duration": 120,
-    "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
-    "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
-    "customer_firstname": "Mary",
-    "customer_surname": "Smith",
-    "customer_email": "test@snappr.com",
-    "customer_mobilephone": "+14153339966",
-    "customer_company": "Snappr Inc.",
-    "internal_id": "123-ABC"
+    "type": "event",
+    "uploader_firstname": "Mary",
+    "uploader_surname": "Smith",
+    "uploader_email": "test@snappr.com",
+    "uploader_mobilephone": "+14153339966",
+    "uploader_company": "Snappr Inc.",
+    "internal_id": "123-ABC",
+    "preset_id": "1ea37f86-c82d-4267-8773-9a13fd4f1337",
+    "images": null
   }'
 ```
 
@@ -1243,6 +1263,98 @@ This endpoint retrieves all the images of a specific booking.
 | Parameter     | Type          | Description                    | Required |
 | ------------- | ------------- | ------------------------------ | -------- |
 | `booking_uid` | String (UUID) | The identifier of the booking. | Yes      |
+
+### Query Parameters
+
+| Parameter | Type    | Description                                                                                                                          | Required |
+| --------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `limit`   | Integer | Maximum number of images to be returned (maximum of 10000). Defaults to `1000`.                                                      | No       |
+| `offset`  | Integer | Offset used for pagination if there are more images than the limit (or more than 1000 images if there is no limit). Defaults to `0`. | No       |
+
+## Get All Images For an Editing Job
+
+> Example request:
+
+```shell
+curl "https://api.snappr.com/editing-jobs/0ccefa53-b346-4d3e-8dcb-79a914289928/images" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0'
+```
+
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let editingJobs = api.editingJobs.getImages({
+  uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
+});
+``` -->
+
+> Example JSON response:
+
+```json
+{
+  "results": [
+    {
+      "uid": "ed10cf86-97f9-4ce6-af6f-a01dfe891114",
+      "source": {
+        "file_name": "ZD 001.JPG",
+        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D",
+        "url_thumb": "https://img.snappr.co/QlXCPwnEgV7P_RO4AJDLhOsq500=/fit-in/600x0/ed10cf86-97f9-4ce6-af6f-a01dfe891114"
+      },
+      "final": {
+        "file_name": "ZD 001.JPG",
+        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D",
+        "url_thumb": "https://img.snappr.co/QlXCPwnEgV7P_RO4AJDLhOsq500=/fit-in/600x0/ed10cf86-97f9-4ce6-af6f-a01dfe891114"
+      }
+    },
+    {
+      "uid": "ee9be5f8-84a8-4592-88a0-1781d0c39d0a",
+      "source": {
+        "file_name": "ZD 002.JPG",
+        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D",
+        "url_thumb": "https://img.snappr.co/rXtW9z6hGdDm3lebP9IPHGo9V5k=/fit-in/600x0/ee9be5f8-84a8-4592-88a0-1781d0c39d0a"
+      },
+      "final": {
+        "file_name": "ZD 002.JPG",
+        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D",
+        "url_thumb": "https://img.snappr.co/rXtW9z6hGdDm3lebP9IPHGo9V5k=/fit-in/600x0/ee9be5f8-84a8-4592-88a0-1781d0c39d0a"
+      }
+    },
+    {
+      "uid": "6b6eae3e-ebfb-4776-8a20-2b8087f76418",
+      "source": {
+        "file_name": "ZD 003.JPG",
+        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D",
+        "url_thumb": "https://img.snappr.co/gXk81aciTVokDvyi2NdWGNluhNg=/fit-in/600x0/6b6eae3e-ebfb-4776-8a20-2b8087f76418"
+      },
+      "final": {
+        "file_name": "ZD 003.JPG",
+        "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D",
+        "url_thumb": "https://img.snappr.co/gXk81aciTVokDvyi2NdWGNluhNg=/fit-in/600x0/6b6eae3e-ebfb-4776-8a20-2b8087f76418"
+      }
+    }
+  ],
+  "count": 3,
+  "limit": 1000,
+  "offset": 0,
+  "total": 3
+}
+```
+
+This endpoint retrieves all the images of a specific editing job.
+
+### HTTP Request
+
+<code>GET https://api.snappr.com/editing-jobs/<span class="route_param">:editing_job_uid</span>/images</code>
+
+### Request Parameters
+
+| Parameter         | Type          | Description                        | Required |
+| ----------------- | ------------- | ---------------------------------- | -------- |
+| `editing_job_uid` | String (UUID) | The identifier of the editing job. | Yes      |
 
 ### Query Parameters
 
