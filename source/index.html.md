@@ -872,6 +872,7 @@ Broadly, there are two main ways to create a new editing job, and examples are p
 | `uploader_mobilephone` | String                 | Valid mobile phone number of third party uploader.                                                                               | No                    | No                    |
 | `uploader_company`     | String                 | Name of third party uploader's company.                                                                                          | No                    | No                    |
 | `internal_id`          | String                 | ID for your internal systems. Useful for matching an editing job with your internal data.                                        | No                    | No                    |
+| `preset_id`            | String                 | ID of your preset. New presets need to be created in the GUI.                                                                                                               | Yes                    | Yes                    |
 
 <aside class="notice">
 
