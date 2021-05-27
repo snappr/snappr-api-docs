@@ -1282,7 +1282,7 @@ This endpoint returns all available Snappr shoot types.
 
 # Editing Job Types
 
-## Get All Shoot Types
+## Get All Editing Job Types
 
 > Example request:
 
@@ -1327,7 +1327,7 @@ This endpoint returns all available Snappr editing job types.
 
 ### HTTP Request
 
-<code>GET https://api.snappr.com/shoottypes</code>
+<code>GET https://api.snappr.com/editing-job-types</code>
 
 # Custom Webhooks
 
