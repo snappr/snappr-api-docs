@@ -6,8 +6,9 @@ language_tabs: # must be one of https://git.io/vQNgJ
   # - javascript
 
 toc_footers:
-  - <a href='https://www.snappr.com/for-business'>Setup an enterprise account</a>
-  - <a href='https://app.snappr.co/book'>Book a Snappr without the API</a>
+  - <a href='https://www.snappr.com/enterprise'>More about Snappr for Enterprise</a>
+  - <a href='https://www.snappr.com/enterprise#contact-us'>Sign up for an Enteprise account</a>
+  - <a href='https://app.snappr.co/book'>Book a regular Snappr photoshoot</a>
 
 includes:
   - errors
@@ -17,14 +18,60 @@ search: true
 
 # Introduction
 
-Welcome to the Snappr API! You can use our API to commission and manage photoshoots within the Snappr marketplace network. The API is available only to organizations using the Snappr enterprise Photography Portal. If you do not currently have a Photography Portal account and are interesting in setting one up, find out more <a href="https://www.snappr.com/for-business">here</a>.
+The Snappr API is your universal API for commissioning and handling visual content.
+
+<%= image_tag "images/snappr_api.JPG" %>
+
+For example, you can use the Snappr API for the following:
+
+1. **On-demand photography:** Commission photoshoots with Snappr network photographers across 90% of the English-speaking world.
+2. **Editing services:** Commission photo editing services according to pre-defined specifications, with two different types of service available:
+    1. Fully automated: Our fastest editing service, producing near-instant results.
+    2. Human-augmented editing services: Our most premium editing service, backed by the world's best professional photo editors.
+3. **Image handling:** Retrieve and handle images from photoshoots and editing jobs.
+
+In future releases, you will also be able to use the Snappr API for the following:
+
+1. **On-demand videography:** Commission video shoots with Snappr network videographers.
+2. **Referrals:** Refer your customers to recommended on-demand photography or videography products.
+3. **Asset distribution:** Trigger sharing of images or videos, or push assets to third-party destinations.
+4. **Prints:** Use images to order various customized print products.
+5. **Stock photography:** Retrieve stock photos according to pre-defined specifications.
+
+The Snappr API is available only to **Snappr For Enterprise** customers. If you do not currently have a Snappr for Enterprise account and are interesting in setting one up, find out more <a href="https://www.snappr.com/enterprise">here</a>.
 
 We have code examples in Shell, displayed in the panel on the right. We will have language bindings for JavaScript very soon.
 
-<aside class="notice">
-For production use, use the base URL <code>https://api.snappr.com</code> as in the examples below. For testing purposes, substitute this for <code>https://sandbox.snappr.com</code>
-</aside>
+
 <!-- We have language bindings in Shell and JavaScript. You can view code examples in the panel on the right, and you can switch the programming language of the examples with the tabs on the top-right. -->
+
+# Environments
+
+> Illustrative Production request:
+
+```shell
+curl "https://api.snappr.com/endpoint" \
+  -H ...
+  -H ...
+```
+
+> Illustrative Sandbox (testing) request:
+
+```shell
+curl "https://sandbox.snappr.com/endpoint" \
+  -H ...
+  -H ...
+```
+
+We provide both a Production environment for real-world use and a Sandbox environment for testing purposes.
+
+For Production use, use the base URL <code>https://api.snappr.com</code> as in the examples throughout the documentation.
+
+For Sandbox use, substitute the base URL for <code>https://sandbox.snappr.com</code>.
+
+<aside class="notice">
+Sandbox endpoints return dummy data, not data from your account. For Sandbox endpoints with a write action (e.g. <code>create</code> endpoints), changes made via those endpoints will not be reflected in subsequent Sandbox requests.
+</aside>
 
 # Authentication
 
