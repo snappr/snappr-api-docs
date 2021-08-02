@@ -232,6 +232,9 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
+            <a href="#environments" class="toc-h1 toc-link" data-title="Environments">Environments</a>
+          </li>
+          <li>
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
           </li>
           <li>
@@ -326,23 +329,72 @@
           </li>
       </ul>
         <ul class="toc-footer">
-            <li><a href='https://www.snappr.com/for-business'>Setup an enterprise account</a></li>
-            <li><a href='https://app.snappr.co/book'>Book a Snappr without the API</a></li>
+            <li><a href='https://www.snappr.com/enterprise'>More about Snappr for Enterprise</a></li>
+            <li><a href='https://www.snappr.com/enterprise#contact-us'>Sign up for an Enteprise account</a></li>
+            <li><a href='https://app.snappr.co/book'>Book a regular Snappr photoshoot</a></li>
+          <li style="font-weight: normal;">© 2021, Snappr Inc.</li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Snappr API! You can use our API to commission and manage photoshoots within the Snappr marketplace network. The API is available only to organizations using the Snappr enterprise Photography Portal. If you do not currently have a Photography Portal account and are interesting in setting one up, find out more <a href="https://www.snappr.com/for-business">here</a>.</p>
+<p>The Snappr API is your universal API for commissioning and handling visual content.</p>
+
+<p><img src="images/snappr_api.JPG" alt="Snappr api" /></p>
+
+<p>For example, you can use the Snappr API for the following:</p>
+
+<ol>
+<li><strong>On-demand photography:</strong> Commission photoshoots with Snappr network photographers across 90% of the English-speaking world.</li>
+<li><strong>Editing services:</strong> Commission photo editing services according to pre-defined specifications, with two different types of service available:
+
+<ol>
+<li>Fully automated: Our fastest editing service, producing near-instant results.</li>
+<li>Human-augmented editing services: Our most premium editing service, backed by the world&#39;s best professional photo editors.</li>
+</ol></li>
+<li><strong>Image handling:</strong> Retrieve and handle images from photoshoots and editing jobs.</li>
+</ol>
+
+<p>In future releases, you will also be able to use the Snappr API for the following:</p>
+
+<ol>
+<li><strong>On-demand videography:</strong> Commission video shoots with Snappr network videographers.</li>
+<li><strong>Referrals:</strong> Refer your customers to recommended on-demand photography or videography products.</li>
+<li><strong>Asset distribution:</strong> Trigger sharing of images or videos, or push assets to third-party destinations.</li>
+<li><strong>Prints:</strong> Use images to order various customized print products.</li>
+<li><strong>Stock photography:</strong> Retrieve stock photos according to pre-defined specifications.</li>
+</ol>
+
+<p>The Snappr API is available only to <strong>Snappr For Enterprise</strong> customers. If you do not currently have a Snappr for Enterprise account and are interesting in setting one up, find out more <a href="https://www.snappr.com/enterprise">here</a>.</p>
 
 <p>We have code examples in Shell, displayed in the panel on the right. We will have language bindings for JavaScript very soon.</p>
 
-<aside class="notice">
-For production use, use the base URL <code>https://api.snappr.com</code> as in the examples below. For testing purposes, substitute this for <code>https://sandbox.snappr.com</code>
-</aside>
-
 <!-- We have language bindings in Shell and JavaScript. You can view code examples in the panel on the right, and you can switch the programming language of the examples with the tabs on the top-right. -->
+<h1 id='environments'>Environments</h1>
+<blockquote>
+<p>Illustrative Production request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/endpoint"</span> <span class="se">\</span>
+  -H ...
+  -H ...
+</code></pre>
+<blockquote>
+<p>Illustrative Sandbox (testing) request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://sandbox.snappr.com/endpoint"</span> <span class="se">\</span>
+  -H ...
+  -H ...
+</code></pre>
+<p>We provide both a Production environment for real-world use and a Sandbox environment for testing purposes.</p>
+
+<p>For Production use, use the base URL <code>https://api.snappr.com</code> as in the examples throughout the documentation.</p>
+
+<p>For Sandbox use, substitute the base URL for <code>https://sandbox.snappr.com</code>.</p>
+
+<aside class="notice">
+Sandbox endpoints return dummy data, not data from your account. For Sandbox endpoints with a write action (e.g. <code>create</code> endpoints), changes made via those endpoints will not be reflected in subsequent Sandbox requests.
+</aside>
 <h1 id='authentication'>Authentication</h1><pre class="highlight shell tab-shell"><code>curl <span class="s2">"/example-endpoint"</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span>
 </code></pre>
