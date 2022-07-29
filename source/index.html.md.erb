@@ -186,7 +186,7 @@ This endpoint returns Snappr coverage status (boolean) for a given location and 
 | `longitude`      | Number | Longitude of the shoot location.                                                                           | No\*     |
 | `address`        | String | Address of the shoot location. Must be a Google Maps valid address.                                        | No\*     |
 | `shoottype`      | String | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event".             | Yes      |
-| `provider_id`    | String | The identifier of the photographer, you can use this to get the coverage of your preferred Snappr provider.| No       |
+| `creator_id`     | String | The identifier of the photographer, you can use this to get the coverage of your preferred Snappr provider.| No       |
 
 <aside class="notice">
 *One of the following is required: <code>address</code>; or <code>latitude</code> and <code>longitude</code>. If both are provided, only <code>latitude</code> and <code>longitude</code> will be used
@@ -302,7 +302,7 @@ This endpoint returns time availability (i.e. available shoot start times) for a
 | `shoottype`      | String     | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event".             | Yes      |
 | `duration`       | Integer    | Length of the shoot in minutes.                                                                            | Yes      |
 | `date`           | Date (ISO) | Date for which you want to check time availability.                                                        | Yes      |
-| `provider_id`    | String     | The identifier of the photographer, you can use this to get the coverage of your preferred Snappr provider.| No       |
+| `creator_id`     | String     | The identifier of the photographer, you can use this to get the coverage of your preferred Snappr provider.| No       |
 
 <aside class="notice">
 All available times within the range of the local date will be returned. However, the format of the returned times is always in UTC for simplicity.
@@ -384,8 +384,8 @@ let bookings = api.bookings.post({
   "customer_email": "test@snappr.com",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
-  "provider_name": "Hollie B.",
-  "provider_id": "69a66cb2-dcb2-4803-9d23-f7894e443e68",
+  "creator_name": "Hollie B.",
+  "creator_id": "69a66cb2-dcb2-4803-9d23-f7894e443e68",
   "created_at": "2018-09-01T09:12:00Z",
   "updated_at": "2018-09-01T09:12:00Z"
 }
@@ -534,8 +534,8 @@ let bookings = api.bookings.post({
   "customer_email": "test@snappr.com",
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
-  "provider_name": "Hollie B.",
-  "provider_id": "69a66cb2-dcb2-4803-9d23-f7894e443e68",
+  "creator_name": "Hollie B.",
+  "creator_id": "69a66cb2-dcb2-4803-9d23-f7894e443e68",
   "created_at": "2018-09-01T09:12:00Z",
   "updated_at": "2018-09-01T09:12:00Z"
 }
@@ -571,7 +571,7 @@ Broadly, there are two main ways to create a new photoshoot booking, and example
 | `customer_mobilephone` | String         | Valid mobile phone number of your end-customer.                                                                                       | Yes      |
 | `customer_company`     | String         | Name of your end-customer's company.                                                                                                  | No       |
 | `internal_id`          | String         | ID for your internal systems. Useful for matching a booking with your internal data.                                                  | No       |
-| `provider_id`          | String         | The identifier of the photographer, you can use this to get the coverage of your preferred Snappr provider.                           | No       |
+| `creator_id`           | String         | The identifier of the photographer, you can use this to get the coverage of your preferred Snappr provider.                           | No       |
 e
 <aside class="notice">
 
@@ -632,8 +632,8 @@ let bookings = api.bookings.get({
       "customer_mobilephone": "+14153339966",
       "customer_company": "Snappr Inc.",
       "internal_id": "123-ABC",
-      "provider_name": "Hollie B.",
-      "provider_id": "69a66cb2-dcb2-4803-9d23-f7894e443e68",
+      "creator_name": "Hollie B.",
+      "creator_id": "69a66cb2-dcb2-4803-9d23-f7894e443e68",
       "created_at": "2018-09-01T09:12:00Z",
       "updated_at": "2018-09-01T09:12:00Z"
     },
@@ -654,8 +654,8 @@ let bookings = api.bookings.get({
       "customer_email": "testing@snappr.com",
       "customer_mobilephone": "+14153338822",
       "customer_company": null,
-      "provider_name": "Jamie C.",
-      "provider_id": "69a66cb2-dcb2-4803-9d23-f7894e443e68",
+      "creator_name": "Jamie C.",
+      "creator_id": "69a66cb2-dcb2-4803-9d23-f7894e443e68",
       "created_at": "2018-09-01T08:34:00Z",
       "updated_at": "2018-09-01T08:34:00Z"
     }
@@ -726,8 +726,8 @@ let bookings = api.bookings.get({
   "customer_mobilephone": "+14153339966",
   "customer_company": "Snappr Inc.",
   "internal_id": "123-ABC",
-  "provider_name": "Hollie B.",
-  "provider_id": "69a66cb2-dcb2-4803-9d23-f7894e443e68",
+  "creator_name": "Hollie B.",
+  "creator_id": "69a66cb2-dcb2-4803-9d23-f7894e443e68",
   "created_at": "2018-09-01T09:12:00Z",
   "updated_at": "2018-09-01T09:12:00Z"
 }
@@ -1410,8 +1410,8 @@ This endpoint returns all available Snappr editing job types.
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
     "internal_id": "123-ABC",
-    "provider_name": "Hollie B.",
-    "provider_id": "69a66cb2-dcb2-4803-9d23-f7894e443e68",
+    "creator_name": "Hollie B.",
+    "creator_id": "69a66cb2-dcb2-4803-9d23-f7894e443e68",
     "created_at": "2018-09-01T09:12:00Z",
     "updated_at": "2018-09-01T09:12:00Z"
   }
