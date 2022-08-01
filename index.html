@@ -520,6 +520,12 @@ let availability = api.availability.get({
 <td>Name of the shoot type (see <a href="#shoot-types"><code>Shoot types</code></a> endpoints), e.g. &quot;event&quot;.</td>
 <td>Yes</td>
 </tr>
+<tr>
+<td><code>creator_id</code></td>
+<td>String</td>
+<td>The identifier of the creator. You can use this parameter to check if a specific creator has coverage for your desired location.</td>
+<td>No</td>
+</tr>
 </tbody></table>
 
 <aside class="notice">
@@ -660,6 +666,12 @@ let availability = api.availability.get({
 <td>Date for which you want to check time availability.</td>
 <td>Yes</td>
 </tr>
+<tr>
+<td><code>creator_id</code></td>
+<td>String</td>
+<td>The identifier of the creator. You can use this to get the availability of a specific Snappr creator.</td>
+<td>No</td>
+</tr>
 </tbody></table>
 
 <aside class="notice">
@@ -738,7 +750,8 @@ let bookings = api.bookings.post({
   </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.com"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creator_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creator_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"69a66cb2-dcb2-4803-9d23-f7894e443e68"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -811,7 +824,6 @@ let bookings = api.bookings.post({
   </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
   </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
   </span><span class="s2">"scheduling_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.snappr.co/scheduling/0ccefa53-b346-4d3e-8dcb-79a914289928?token=33899eb920006f7780ef5756a2b91688c840183f7e238827bce2b7cf289202c9"</span><span class="w">
@@ -884,7 +896,8 @@ let bookings = api.bookings.post({
   </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.com"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creator_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creator_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"69a66cb2-dcb2-4803-9d23-f7894e443e68"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -998,13 +1011,20 @@ let bookings = api.bookings.post({
 <td>ID for your internal systems. Useful for matching a booking with your internal data.</td>
 <td>No</td>
 </tr>
+<tr>
+<td><code>creator_id</code></td>
+<td>String</td>
+<td>The identifier of the creator. You can use this to assign this booking to a specific Snappr creator.</td>
+<td>No</td>
+</tr>
 </tbody></table>
 
-<aside class="notice">
+<p>e
+<aside class="notice"></p>
 
-If <code>start_at</code> is set to <code>null</code> the system assumes you want the end-customer to pick the start date and time, the response will include a <code>scheduling_url</code> that can be used by the end-customer to pick an appropiate date and time
+<p>If <code>start_at</code> is set to <code>null</code> the system assumes you want the end-customer to pick the start date and time, the response will include a <code>scheduling_url</code> that can be used by the end-customer to pick an appropiate date and time</p>
 
-</aside>
+<p></aside></p>
 
 <aside class="notice">
 Always check <a href="#availability">availability</a> before trying to create a new booking with <code>start_at</code> defined. If you try to make a booking at for combination of location, date/time and shoot type for which there are no available photographers, you will receive a 400 error (see <code>Errors</code> section).
@@ -1055,7 +1075,8 @@ let bookings = api.bookings.get({
       </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
       </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"creator_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"creator_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"69a66cb2-dcb2-4803-9d23-f7894e443e68"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
     </span><span class="p">},</span><span class="w">
@@ -1076,7 +1097,8 @@ let bookings = api.bookings.get({
       </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testing@snappr.com"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153338822"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jamie C."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"creator_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jamie C."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"creator_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"69a66cb2-dcb2-4803-9d23-f7894e443e68"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T08:34:00Z"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T08:34:00Z"</span><span class="w">
     </span><span class="p">}</span><span class="w">
@@ -1156,7 +1178,8 @@ let bookings = api.bookings.get({
   </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
   </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creator_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creator_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"69a66cb2-dcb2-4803-9d23-f7894e443e68"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -1954,7 +1977,8 @@ let bookings = api.shoottypes.get({});
     </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Snappr Inc."</span><span class="p">,</span><span class="w">
     </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"photographer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"creator_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"creator_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"69a66cb2-dcb2-4803-9d23-f7894e443e68"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
   </span><span class="p">}</span><span class="w">
