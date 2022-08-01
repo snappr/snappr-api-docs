@@ -186,7 +186,7 @@ This endpoint returns Snappr coverage status (boolean) for a given location and 
 | `longitude`      | Number | Longitude of the shoot location.                                                                                                  | No\*     |
 | `address`        | String | Address of the shoot location. Must be a Google Maps valid address.                                                               | No\*     |
 | `shoottype`      | String | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event".                                    | Yes      |
-| `creator_id`     | String | The identifier of the creator. You can use this parameter to check if a spescfic creator has coverage for your desired location.  | No       |
+| `creator_id`     | String | The identifier of the creator. You can use this parameter to check if a specific creator has coverage for your desired location.  | No       |
 
 <aside class="notice">
 *One of the following is required: <code>address</code>; or <code>latitude</code> and <code>longitude</code>. If both are provided, only <code>latitude</code> and <code>longitude</code> will be used
@@ -302,7 +302,7 @@ This endpoint returns time availability (i.e. available shoot start times) for a
 | `shoottype`      | String     | Name of the shoot type (see <a href="#shoot-types">`Shoot types`</a> endpoints), e.g. "event".             | Yes      |
 | `duration`       | Integer    | Length of the shoot in minutes.                                                                            | Yes      |
 | `date`           | Date (ISO) | Date for which you want to check time availability.                                                        | Yes      |
-| `creator_id`     | String     | The identifier of the creator. You can use this to get the availability of a spescfic Snappr creator.      | No       |
+| `creator_id`     | String     | The identifier of the creator. You can use this to get the availability of a specific Snappr creator.      | No       |
 
 <aside class="notice">
 All available times within the range of the local date will be returned. However, the format of the returned times is always in UTC for simplicity.
@@ -571,7 +571,7 @@ Broadly, there are two main ways to create a new photoshoot booking, and example
 | `customer_mobilephone` | String         | Valid mobile phone number of your end-customer.                                                                                       | Yes      |
 | `customer_company`     | String         | Name of your end-customer's company.                                                                                                  | No       |
 | `internal_id`          | String         | ID for your internal systems. Useful for matching a booking with your internal data.                                                  | No       |
-| `creator_id`           | String         | The identifier of the creator. You can use this to assign this booking to a spescific Snappr creator.                                 | No       |
+| `creator_id`           | String         | The identifier of the creator. You can use this to assign this booking to a specific Snappr creator.                                  | No       |
 e
 <aside class="notice">
 
