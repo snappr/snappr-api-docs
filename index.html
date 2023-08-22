@@ -301,6 +301,14 @@
               </ul>
           </li>
           <li>
+            <a href="#videos" class="toc-h1 toc-link" data-title="Videos">Videos</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-all-videos-for-a-booking" class="toc-h2 toc-link" data-title="Get All Videos For a Booking">Get All Videos For a Booking</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#shoot-types" class="toc-h1 toc-link" data-title="Shoot Types">Shoot Types</a>
               <ul class="toc-list-h2">
                   <li>
@@ -1877,6 +1885,93 @@ let editingJobs = api.editingJobs.getImages({
 <td>No</td>
 </tr>
 </tbody></table>
+<h1 id='videos'>Videos</h1><h2 id='get-all-videos-for-a-booking'>Get All Videos For a Booking</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/bookings/0ccefa53-b346-4d3e-8dcb-79a914289928/videos"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span>
+</code></pre>
+<!-- ```javascript
+const snappr = require('snappr-api');
+
+let api = snappr.authorize(
+  'zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z'
+);
+let bookings = api.bookings.getVideos({
+  uid: '0ccefa53-b346-4d3e-8dcb-79a914289928'
+});
+``` -->
+
+<blockquote>
+<p>Example JSON response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ed10cf86-97f9-4ce6-af6f-a01dfe891114"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZD 001.MP4"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ed10cf86-97f9-4ce6-af6f-a01dfe891114?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D"</span><span class="p">,</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ee9be5f8-84a8-4592-88a0-1781d0c39d0a"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZD 002.MP4"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/ee9be5f8-84a8-4592-88a0-1781d0c39d0a?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D"</span><span class="p">,</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6b6eae3e-ebfb-4776-8a20-2b8087f76418"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ZD 003.MP4"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/6b6eae3e-ebfb-4776-8a20-2b8087f76418?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=cqgRr6oJDYYMxkGm2M34MKDnArM%3D"</span><span class="p">,</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all the Videos of a specific booking.</p>
+<h3 id='http-request-12'>HTTP Request</h3>
+<p><code>GET https://api.snappr.com/bookings/<span class="route_param">:booking_uid</span>/videos</code></p>
+<h3 id='request-parameters-5'>Request Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>booking_uid</code></td>
+<td>String</td>
+<td>The identifier of the booking.</td>
+<td>Yes</td>
+</tr>
+</tbody></table>
+<h3 id='query-parameters-8'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>limit</code></td>
+<td>Integer</td>
+<td>Maximum number of videos to be returned (maximum of 10000). Defaults to <code>1000</code>.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>offset</code></td>
+<td>Integer</td>
+<td>Offset used for pagination if there are more videos than the limit (or more than 1000 videos if there is no limit). Defaults to <code>0</code>.</td>
+<td>No</td>
+</tr>
+</tbody></table>
 <h1 id='shoot-types'>Shoot Types</h1><h2 id='get-all-shoot-types'>Get All Shoot Types</h2>
 <blockquote>
 <p>Example request:</p>
@@ -1916,7 +2011,7 @@ let bookings = api.shoottypes.get({});
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint returns all available Snappr shoot types.</p>
-<h3 id='http-request-12'>HTTP Request</h3>
+<h3 id='http-request-13'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/shoottypes</code></p>
 <h1 id='editing-job-types'>Editing Job Types</h1><h2 id='get-all-editing-job-types'>Get All Editing Job Types</h2>
 <blockquote>
@@ -1957,7 +2052,7 @@ let bookings = api.shoottypes.get({});
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint returns all available Snappr editing job types.</p>
-<h3 id='http-request-13'>HTTP Request</h3>
+<h3 id='http-request-14'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/editing-job-types</code></p>
 <h1 id='custom-webhooks'>Custom Webhooks</h1>
 <blockquote>
