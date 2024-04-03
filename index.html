@@ -711,7 +711,8 @@ All available times within the range of the local date will be returned. However
     "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
-    "internal_id": "123-ABC"
+    "internal_id": "123-ABC",
+    "tags":  ["tag1", "tag2", "tag3"]
   }'</span>
 </code></pre>
 <!-- ```javascript
@@ -762,7 +763,8 @@ let bookings = api.bookings.post({
   </span><span class="s2">"creator_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"69a66cb2-dcb2-4803-9d23-f7894e443e68"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"creator_profile_image_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://snappr.imgix.net/d7f5be08-e189-4c9b-bdb5-172111560d9d?auto=format&amp;w=300&amp;h=300&amp;fit=facearea&amp;facepad=2&amp;s=3dd41a8404ba86d78d54adad40fd9108"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tags"</span><span class="p">:</span><span class="w">  </span><span class="p">[</span><span class="s2">"tag1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tag2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tag3"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
@@ -786,7 +788,8 @@ let bookings = api.bookings.post({
     "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
-    "internal_id": "123-ABC"
+    "internal_id": "123-ABC",
+    "tags":  ["tag1", "tag2", "tag3"]
   }'</span>
 </code></pre>
 <!-- ```javascript
@@ -835,7 +838,8 @@ let bookings = api.bookings.post({
   </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123-ABC"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
-  </span><span class="s2">"scheduling_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.snappr.co/scheduling/0ccefa53-b346-4d3e-8dcb-79a914289928?token=33899eb920006f7780ef5756a2b91688c840183f7e238827bce2b7cf289202c9"</span><span class="w">
+  </span><span class="s2">"scheduling_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.snappr.co/scheduling/0ccefa53-b346-4d3e-8dcb-79a914289928?token=33899eb920006f7780ef5756a2b91688c840183f7e238827bce2b7cf289202c9"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tags"</span><span class="p">:</span><span class="w">  </span><span class="p">[</span><span class="s2">"tag1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tag2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tag3"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
@@ -858,7 +862,8 @@ let bookings = api.bookings.post({
     "customer_email": "test@snappr.com",
     "customer_mobilephone": "+14153339966",
     "customer_company": "Snappr Inc.",
-    "internal_id": "123-ABC"
+    "internal_id": "123-ABC",
+    "tags":  ["tag1", "tag2", "tag3"]
   }'</span>
 </code></pre>
 <!-- ```javascript
@@ -909,7 +914,8 @@ let bookings = api.bookings.post({
   </span><span class="s2">"creator_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"69a66cb2-dcb2-4803-9d23-f7894e443e68"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"creator_profile_image_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://snappr.imgix.net/d7f5be08-e189-4c9b-bdb5-172111560d9d?auto=format&amp;w=300&amp;h=300&amp;fit=facearea&amp;facepad=2&amp;s=3dd41a8404ba86d78d54adad40fd9108"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tags"</span><span class="p">:</span><span class="w">  </span><span class="p">[</span><span class="s2">"tag1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tag2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tag3"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint creates a new photoshoot booking.</p>
@@ -1027,14 +1033,19 @@ let bookings = api.bookings.post({
 <td>The identifier of the creator. You can use this to assign this booking to a specific Snappr creator.</td>
 <td>No</td>
 </tr>
+<tr>
+<td><code>tags</code></td>
+<td>Array String</td>
+<td>An array of strings containing tags used to identify bookings within the Snappr portal, also utilized for creating reports. (Limit chars 255)</td>
+<td>No</td>
+</tr>
 </tbody></table>
 
-<p>e
-<aside class="notice"></p>
+<aside class="notice">
 
-<p>If <code>start_at</code> is set to <code>null</code> the system assumes you want the end-customer to pick the start date and time, the response will include a <code>scheduling_url</code> that can be used by the end-customer to pick an appropiate date and time</p>
+If <code>start_at</code> is set to <code>null</code> the system assumes you want the end-customer to pick the start date and time, the response will include a <code>scheduling_url</code> that can be used by the end-customer to pick an appropiate date and time
 
-<p></aside></p>
+</aside>
 
 <aside class="notice">
 Always check <a href="#availability">availability</a> before trying to create a new booking with <code>start_at</code> defined. If you try to make a booking at for combination of location, date/time and shoot type for which there are no available photographers, you will receive a 400 error (see <code>Errors</code> section).
