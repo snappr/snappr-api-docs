@@ -15,7 +15,7 @@ jobs:
           ruby-version: "2.6.10"
       - name: Build
         run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
+          gem install bundler -v 2.4.22
+          bundle _2.4.22_ install --jobs 4 --retry 3
       - name: Deploy
         run: ./deploy.sh
