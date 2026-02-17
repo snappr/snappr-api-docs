@@ -40,10 +40,8 @@ under the License.
     <link
     href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700&display=swap"
     rel="stylesheet" />
-    <link rel="icon" type="image/png" sizes="192x192" href="//asset.snappr.co/image/favicon/android-icon-192x192.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="//asset.snappr.co/image/favicon/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="96x96" href="//asset.snappr.co/image/favicon/favicon-96x96.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="//asset.snappr.co/image/favicon/favicon-16x16.png" />
+    <link rel="icon" type="image/svg+xml" href="<%= image_path('favicon.svg') %>" />
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= image_path('favicon-32x32.png') %>" />
 
     <% if current_page.data.search %>
       <%= javascript_include_tag  "all" %>
@@ -62,6 +60,9 @@ under the License.
     </a>
     <div class="toc-wrapper">
       <%= image_tag "logo.svg", class: 'logo' %>
+      <div class="logo-text">
+        The API for visual content
+      </div>
       <% if language_tabs.any? %>
         <div class="lang-selector">
           <% language_tabs.each do |lang| %>

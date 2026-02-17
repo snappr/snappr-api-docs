@@ -1,7 +1,7 @@
 @charset "utf-8";
-@import 'normalize';
-@import 'variables';
-@import 'icon-font';
+@import "normalize";
+@import "variables";
+@import "icon-font";
 // @import 'rtl'; // uncomment to switch to RTL format
 
 /*
@@ -77,9 +77,11 @@ body {
   .logo {
     display: block;
     max-width: 80%;
-    margin-bottom: $logo-margin;
-    // Snappr...
     padding: 10%;
+  }
+
+  .logo-text {
+    text-align: center;
   }
 
   & > .search {
@@ -335,7 +337,7 @@ body {
   }
 
   &:after {
-    content: '';
+    content: "";
     clear: both;
     display: block;
   }
@@ -354,7 +356,7 @@ body {
   z-index: 30;
 
   &:after {
-    content: '';
+    content: "";
     display: block;
     clear: both;
   }
