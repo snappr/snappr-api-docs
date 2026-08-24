@@ -299,6 +299,9 @@
                   <li>
                     <a href="#get-all-images-for-an-editing-job" class="toc-h2 toc-link" data-title="Get All Images For an Editing Job">Get All Images For an Editing Job</a>
                   </li>
+                  <li>
+                    <a href="#get-all-images-for-a-magic-job" class="toc-h2 toc-link" data-title="Get All Images For a Magic Job">Get All Images For a Magic Job</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1897,6 +1900,99 @@ let editingJobs = api.editingJobs.getImages({
 <td>No</td>
 </tr>
 </tbody></table>
+<h2 id='get-all-images-for-a-magic-job'>Get All Images For a Magic Job</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/magic-jobs/9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e/images"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span>
+</code></pre>
+<blockquote>
+<p>Example JSON response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4d9b2e6f-8a1c-4f3e-9b5d-7c0a2e4f6b8d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12. Insalata della Casa (Groß).jpg"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"menu_item_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12. Insalata della Casa (Groß)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_item_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"content_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image/jpeg"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/4d9b2e6f-8a1c-4f3e-9b5d-7c0a2e4f6b8d?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=IqGcYjJZXM7%2FSX%2BoHQk4mccB3FA%3D"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://img.snappr.co/QlXCPwnEgV7P_RO4AJDLhOsq500=/fit-in/600x0/4d9b2e6f-8a1c-4f3e-9b5d-7c0a2e4f6b8d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-17T16:25:30Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a8c3f1e5-6b9d-4a2c-8e7f-3d5b1c9a4e6f"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7. Pizza Diavola.jpg"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"menu_item_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7. Pizza Diavola"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_item_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f"</span><span class="p">,</span><span class="w"> </span><span class="s2">"c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"content_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image/jpeg"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/a8c3f1e5-6b9d-4a2c-8e7f-3d5b1c9a4e6f?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://img.snappr.co/rXtW9z6hGdDm3lebP9IPHGo9V5k=/fit-in/600x0/a8c3f1e5-6b9d-4a2c-8e7f-3d5b1c9a4e6f"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-17T16:25:30Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all the images of a specific magic job.</p>
+
+<p>Each result is one delivered image for one menu item. <code>source_item_ids</code> contains the menu item&#39;s identifier(s) in your own catalog, as scraped from the source platform — usually a single element, but some platforms list the same dish under several menus or sections, so the array can carry multiple ids; the image applies to all of them. Treat these ids as opaque strings — never validate or parse their shape. The response always reflects the current complete set of images for the job, across all of its delivery batches: if Snappr replaces an image after delivery, the item keeps its <code>uid</code> (the stable handle for diffing) while its <code>source_item_ids</code> and URLs may change.</p>
+
+<aside class="notice">
+
+You receive the `magic_job_uid` in the magic job `images_delivered` webhook event — see <a href="#custom-webhooks">Custom Webhooks</a>. `url_original` and `url_thumb` are signed URLs that expire at `url_expires_at`; calling this endpoint again returns freshly signed URLs.
+
+</aside>
+<h3 id='http-request-12'>HTTP Request</h3>
+<p><code>GET https://api.snappr.com/magic-jobs/<span class="route_param">:magic_job_uid</span>/images</code></p>
+<h3 id='request-parameters-5'>Request Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>magic_job_uid</code></td>
+<td>String</td>
+<td>The identifier of the magic job.</td>
+<td>Yes</td>
+</tr>
+</tbody></table>
+<h3 id='query-parameters-8'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>limit</code></td>
+<td>Integer</td>
+<td>Maximum number of images to be returned (maximum of 10000). Defaults to <code>1000</code>.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>offset</code></td>
+<td>Integer</td>
+<td>Offset used for pagination if there are more images than the limit (or more than 1000 images if there is no limit). Defaults to <code>0</code>.</td>
+<td>No</td>
+</tr>
+</tbody></table>
 <h1 id='videos'>Videos</h1><h2 id='get-all-videos-for-a-booking'>Get All Videos For a Booking</h2>
 <blockquote>
 <p>Example request:</p>
@@ -1944,9 +2040,9 @@ let bookings = api.bookings.getVideos({
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves all the Videos of a specific booking.</p>
-<h3 id='http-request-12'>HTTP Request</h3>
+<h3 id='http-request-13'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/bookings/<span class="route_param">:booking_uid</span>/videos</code></p>
-<h3 id='request-parameters-5'>Request Parameters</h3>
+<h3 id='request-parameters-6'>Request Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1962,7 +2058,7 @@ let bookings = api.bookings.getVideos({
 <td>Yes</td>
 </tr>
 </tbody></table>
-<h3 id='query-parameters-8'>Query Parameters</h3>
+<h3 id='query-parameters-9'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -2023,7 +2119,7 @@ let bookings = api.shoottypes.get({});
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint returns all available Snappr shoot types.</p>
-<h3 id='http-request-13'>HTTP Request</h3>
+<h3 id='http-request-14'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/shoottypes</code></p>
 <h1 id='editing-job-types'>Editing Job Types</h1><h2 id='get-all-editing-job-types'>Get All Editing Job Types</h2>
 <blockquote>
@@ -2064,11 +2160,11 @@ let bookings = api.shoottypes.get({});
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint returns all available Snappr editing job types.</p>
-<h3 id='http-request-14'>HTTP Request</h3>
+<h3 id='http-request-15'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/editing-job-types</code></p>
 <h1 id='custom-webhooks'>Custom Webhooks</h1>
 <blockquote>
-<p>Example JSON payload sent to webhook URL as POST:</p>
+<p>Example JSON payload sent to webhook URL as POST — booking event:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"update"</span><span class="p">,</span><span class="w">
@@ -2099,13 +2195,39 @@ let bookings = api.shoottypes.get({});
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>You can set a custom webhook URL in the Snappr Photography Portal GUI. If the custom webhook URL is set, we will POST to that URL every time a booking is created or updated.</p>
+<blockquote>
+<p>Example JSON payload sent to webhook URL as POST — magic job images_delivered event:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"images_delivered"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"magic_job"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"menu"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"delivery_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f5b8d2a6-3c1e-4f7a-9d0b-6e2c8a4f1b3d"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-15T16:25:30Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"restaurant_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pizzeria Fontana"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"restaurant_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Musterstraße 12, 10115 Berlin, Germany"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"source_platform"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uber-eats"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"source_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d7f2a9c4-5e1b-4a8d-b6c3-0f9e2d4a7b1c"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.ubereats.com/store/pizzeria-fontana/1fVqZmF0aVBpenphRm9udGFuYQ"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>You can set a custom webhook URL in the Snappr Photography Portal GUI. If the custom webhook URL is set, we will POST to that URL every time a booking is created or updated, and every time a magic job delivers a batch of images (an <code>images_delivered</code> event). A magic job can deliver several batches over time, so multiple <code>images_delivered</code> events may arrive for the same <code>magic_job.uid</code>, each with a different <code>delivery_uid</code>. The recommended approach is to treat every delivery the same way: retrieve the job&#39;s full image set via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a> and replace anything you have already stored for that job — the endpoint always returns the current complete set.</p>
+
+<aside class="notice">
+
+All event families share this URL. Dispatch on which resource key is present in the payload (`booking`, `magic_job`) and ignore event types or payload shapes you don't recognize — new ones may be added at any time.
+
+</aside>
 <h3 id='setting-url'>Setting URL</h3>
 <p>Click on the &#39;API&#39; link in the top-right drop-down menu in your Photography Portal, or go to the following URL:</p>
 
 <p><code>https://app.snappr.com/enterprise/api/webhook</code></p>
 
-<p>Go to the &#39;Custom Webhook&#39; section and click the &#39;Edit&#39; button in the URL field. Type in the receiving URL of your choice, then click the &#39;Save&#39; button. If you entered a valid URL, that endpoint will now start receiving all booking updates.</p>
+<p>Go to the &#39;Custom Webhook&#39; section and click the &#39;Edit&#39; button in the URL field. Type in the receiving URL of your choice, then click the &#39;Save&#39; button. If you entered a valid URL, that endpoint will now start receiving all booking and magic job events.</p>
 
 <!-- <aside class="warning">Remember to be good to your mother.</aside> -->
 <h1 id='errors'>Errors</h1>
