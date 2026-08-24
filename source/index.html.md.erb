@@ -1353,7 +1353,7 @@ Each result is one delivered image for one menu item. `source_item_ids` contains
 
 <aside class="notice">
 
-You receive the `magic_job_uid` in the magic job completion webhook — see <a href="#custom-webhooks">Custom Webhooks</a>. `url_original` and `url_thumb` are signed URLs that expire at `url_expires_at`; calling this endpoint again returns freshly signed URLs.
+You receive the `magic_job_uid` in the magic job `images_delivered` webhook event — see <a href="#custom-webhooks">Custom Webhooks</a>. `url_original` and `url_thumb` are signed URLs that expire at `url_expires_at`; calling this endpoint again returns freshly signed URLs.
 
 </aside>
 
@@ -1578,11 +1578,11 @@ This endpoint returns all available Snappr editing job types.
 }
 ```
 
-> Example JSON payload sent to webhook URL as POST — magic job completion:
+> Example JSON payload sent to webhook URL as POST — magic job images_delivered event:
 
 ```json
 {
-  "type": "completed",
+  "type": "images_delivered",
   "magic_job": {
     "uid": "9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e",
     "type": "menu",
@@ -1599,7 +1599,7 @@ This endpoint returns all available Snappr editing job types.
 }
 ```
 
-You can set a custom webhook URL in the Snappr Photography Portal GUI. If the custom webhook URL is set, we will POST to that URL every time a booking is created or updated, and every time a magic job completes a delivery. A magic job can deliver several batches over time, so multiple `completed` events may arrive for the same `magic_job.uid`, each with a different `delivery_uid`. The recommended approach is to treat every completion the same way: retrieve the job's full image set via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a> and replace anything you have already stored for that job — the endpoint always returns the current complete set.
+You can set a custom webhook URL in the Snappr Photography Portal GUI. If the custom webhook URL is set, we will POST to that URL every time a booking is created or updated, and every time a magic job delivers a batch of images (an `images_delivered` event). A magic job can deliver several batches over time, so multiple `images_delivered` events may arrive for the same `magic_job.uid`, each with a different `delivery_uid`. The recommended approach is to treat every delivery the same way: retrieve the job's full image set via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a> and replace anything you have already stored for that job — the endpoint always returns the current complete set.
 
 <aside class="notice">
 
