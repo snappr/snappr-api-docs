@@ -1319,7 +1319,7 @@ curl "https://api.snappr.com/magic-jobs/9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e/ima
       "uid": "4d9b2e6f-8a1c-4f3e-9b5d-7c0a2e4f6b8d",
       "file_name": "12. Insalata della Casa (Groß).jpg",
       "menu_item_name": "12. Insalata della Casa (Groß)",
-      "source_item_ids": ["e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b"],
+      "internal_ids": ["e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b"],
       "width": 1024,
       "height": 1024,
       "content_type": "image/jpeg",
@@ -1331,7 +1331,7 @@ curl "https://api.snappr.com/magic-jobs/9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e/ima
       "uid": "a8c3f1e5-6b9d-4a2c-8e7f-3d5b1c9a4e6f",
       "file_name": "7. Pizza Diavola.jpg",
       "menu_item_name": "7. Pizza Diavola",
-      "source_item_ids": ["b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f", "c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b"],
+      "internal_ids": ["b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f", "c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b"],
       "width": 1024,
       "height": 1024,
       "content_type": "image/jpeg",
@@ -1349,7 +1349,7 @@ curl "https://api.snappr.com/magic-jobs/9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e/ima
 
 This endpoint retrieves all the images of a specific magic job.
 
-Each result is one delivered image for one menu item. `source_item_ids` contains the menu item's identifier(s) in your own catalog, as scraped from the source platform — usually a single element, but some platforms list the same dish under several menus or sections, so the array can carry multiple ids; the image applies to all of them. Treat these ids as opaque strings — never validate or parse their shape. The response always reflects the current complete set of images for the job, across all of its delivery batches: if Snappr replaces an image after delivery, the item keeps its `uid` (the stable handle for diffing) while its `source_item_ids` and URLs may change.
+Each result is one delivered image for one menu item. `internal_ids` contains the menu item's identifier(s) in your own catalog, as scraped from the source platform — usually a single element, but some platforms list the same dish under several menus or sections, so the array can carry multiple ids; the image applies to all of them. Treat these ids as opaque strings — never validate or parse their shape. The response always reflects the current complete set of images for the job, across all of its delivery batches: if Snappr replaces an image after delivery, the item keeps its `uid` (the stable handle for diffing) while its `internal_ids` and URLs may change.
 
 <aside class="notice">
 
@@ -1592,7 +1592,7 @@ This endpoint returns all available Snappr editing job types.
     "restaurant_name": "Pizzeria Fontana",
     "restaurant_address": "Musterstraße 12, 10115 Berlin, Germany",
     "source_platform": "uber-eats",
-    "source_id": "d7f2a9c4-5e1b-4a8d-b6c3-0f9e2d4a7b1c",
+    "internal_id": "d7f2a9c4-5e1b-4a8d-b6c3-0f9e2d4a7b1c",
     "source_url": "https://www.ubereats.com/store/pizzeria-fontana/1fVqZmF0aVBpenphRm9udGFuYQ",
     "images_count": 23
   }
