@@ -269,6 +269,20 @@
               </ul>
           </li>
           <li>
+            <a href="#magic-jobs" class="toc-h1 toc-link" data-title="Magic Jobs">Magic Jobs</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-new-magic-job" class="toc-h2 toc-link" data-title="Create New Magic Job">Create New Magic Job</a>
+                  </li>
+                  <li>
+                    <a href="#get-all-magic-jobs" class="toc-h2 toc-link" data-title="Get All Magic Jobs">Get All Magic Jobs</a>
+                  </li>
+                  <li>
+                    <a href="#get-single-magic-job" class="toc-h2 toc-link" data-title="Get Single Magic Job">Get Single Magic Job</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#editing-jobs" class="toc-h1 toc-link" data-title="Editing Jobs">Editing Jobs</a>
               <ul class="toc-list-h2">
                   <li>
@@ -1232,6 +1246,210 @@ let bookings = api.bookings.get({
 <td>Yes</td>
 </tr>
 </tbody></table>
+<h1 id='magic-jobs'>Magic Jobs</h1>
+<p>Magic Jobs produce AI-generated images for a business from a few identifiers. You tell us the type of job and the business details; Snappr uses the images already on the business&#39;s listing as the reference, generates the full image set, and runs it through an extensive quality-assurance and iteration process so the results accurately reflect what was requested. When images are ready we notify your webhook (see <a href="#custom-webhooks">Custom Webhooks</a>) and you retrieve them via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a>.</p>
+
+<aside class="notice">
+
+Magic Jobs are available to Enterprise accounts. Contact your account manager to enable them on your API key.
+
+</aside>
+<h2 id='create-new-magic-job'>Create New Magic Job</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/magic-jobs"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  --data-binary <span class="s1">$'{
+    "type": "menu",
+    "restaurant_name": "Sample Bistro",
+    "restaurant_address": "123 Example Street, Sampletown, CA 90000, USA",
+    "internal_id": "st-7qk2mx9pl4"
+  }'</span>
+</code></pre>
+<blockquote>
+<p>Example JSON response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"menu"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"created"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"restaurant_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Bistro"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"restaurant_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 Example Street, Sampletown, CA 90000, USA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"source_platform"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"st-7qk2mx9pl4"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-12T09:12:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-12T09:12:00Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint creates a new magic job. The job is returned with status <code>created</code> and a <code>201</code> status code; Snappr then locates the business&#39;s listing, generates the images and delivers them in one or more batches. Each delivery triggers an <code>images_delivered</code> event on your webhook (see <a href="#custom-webhooks">Custom Webhooks</a>).</p>
+<h3 id='http-request-6'>HTTP Request</h3>
+<p><code>POST https://api.snappr.com/magic-jobs</code></p>
+<h3 id='request-body-parameters-2'>Request (Body) Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>type</code></td>
+<td>String</td>
+<td>Type of magic job. Currently supported values: <code>menu</code>.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>restaurant_name</code></td>
+<td>String</td>
+<td>Name of the restaurant as it appears on your platform.</td>
+<td>Yes*</td>
+</tr>
+<tr>
+<td><code>restaurant_address</code></td>
+<td>String</td>
+<td>Full address of the restaurant as a single string.</td>
+<td>Yes*</td>
+</tr>
+<tr>
+<td><code>internal_id</code></td>
+<td>String</td>
+<td>ID for your internal systems. Useful for matching a magic job with your internal data.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>source_url</code></td>
+<td>URL</td>
+<td>URL of the restaurant&#39;s store page on your platform. If omitted, Snappr locates the store page from <code>restaurant_name</code>, <code>restaurant_address</code> and <code>internal_id</code> when provided.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+*Required when <code>type</code> is <code>menu</code>.
+</aside>
+<h2 id='get-all-magic-jobs'>Get All Magic Jobs</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/magic-jobs"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span>
+</code></pre>
+<blockquote>
+<p>Example JSON response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"menu"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-15T16:25:30Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"restaurant_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Bistro"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"restaurant_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 Example Street, Sampletown, CA 90000, USA"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_platform"</span><span class="p">:</span><span class="w"> </span><span class="s2">"restaurant-app"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.restaurant-app.example/store/Zk8pQ2mN7xL4"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"st-7qk2mx9pl4"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-12T09:12:00Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-15T16:25:30Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3e7d9a2c-5b1f-4c8e-a6d0-2f4b6c8e1a3d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"menu"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"in_progress"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"restaurant_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Example Trattoria"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"restaurant_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"45 Sample Avenue, Sampletown, CA 90000, USA"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_platform"</span><span class="p">:</span><span class="w"> </span><span class="s2">"restaurant-app"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.restaurant-app.example/store/Hq3wN8vT2kLp"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"st-4hn8vz2qr7"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-14T11:05:00Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-15T08:40:00Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all magic jobs created under your account.</p>
+<h3 id='http-request-7'>HTTP Request</h3>
+<p><code>GET https://api.snappr.com/magic-jobs?limit=<span class="route_param">:limit</span>&amp;offset=<span class="route_param">:offset</span></code></p>
+<h3 id='query-parameters-4'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>limit</code></td>
+<td>Integer</td>
+<td>Maximum number of magic jobs to be returned (maximum of 100). Defaults to <code>100</code>.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>offset</code></td>
+<td>Integer</td>
+<td>Offset used for pagination if there are more magic jobs than the limit (or more than 100 magic jobs if there is no limit). Defaults to <code>0</code>.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+<h2 id='get-single-magic-job'>Get Single Magic Job</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/magic-jobs/9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span>
+</code></pre>
+<blockquote>
+<p>Example JSON response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"menu"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"completed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-15T16:25:30Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"restaurant_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Bistro"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"restaurant_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 Example Street, Sampletown, CA 90000, USA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"source_platform"</span><span class="p">:</span><span class="w"> </span><span class="s2">"restaurant-app"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.restaurant-app.example/store/Zk8pQ2mN7xL4"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"st-7qk2mx9pl4"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-12T09:12:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-15T16:25:30Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves a specific magic job using the ID of the magic job. A magic job moves through the statuses <code>created</code>, <code>in_progress</code>, <code>completed</code> and <code>failed</code>. It stays <code>in_progress</code> while further image deliveries are still expected and becomes <code>completed</code> once all of its images have been delivered, at which point <code>completed_at</code> and <code>images_count</code> are populated. If a job is <code>failed</code>, your account manager will follow up with you. Retrieve the job&#39;s images via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a>.</p>
+<h3 id='http-request-8'>HTTP Request</h3>
+<p><code>GET https://api.snappr.com/magic-jobs/<span class="route_param">:magic_job_uid</span></code></p>
+<h3 id='request-parameters-2'>Request Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>magic_job_uid</code></td>
+<td>String</td>
+<td>The identifier of the magic job.</td>
+<td>Yes</td>
+</tr>
+</tbody></table>
 <h1 id='editing-jobs'>Editing Jobs</h1>
 <aside class="notice">
 
@@ -1390,9 +1608,9 @@ let bookings = api.bookings.post({
 <li>Provide all editing job details <em>including</em> the source images (<code>images</code>).</li>
 <li>Provide all editing job details <em>except</em> the source images (<code>images</code> set to <code>null</code>). This will trigger an automatic process to collect the images from your third party uploader using the contact details (email and/or mobile phone) provided.</li>
 </ol>
-<h3 id='http-request-6'>HTTP Request</h3>
+<h3 id='http-request-9'>HTTP Request</h3>
 <p><code>POST https://api.snappr.com/editing-jobs</code></p>
-<h3 id='request-body-parameters-2'>Request (Body) Parameters</h3>
+<h3 id='request-body-parameters-3'>Request (Body) Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1549,9 +1767,9 @@ let bookings = api.bookings.get({
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves all editing jobs.</p>
-<h3 id='http-request-7'>HTTP Request</h3>
+<h3 id='http-request-10'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/editing-jobs?limit=<span class="route_param">:limit</span>&amp;offset=<span class="route_param">:offset</span></code></p>
-<h3 id='query-parameters-4'>Query Parameters</h3>
+<h3 id='query-parameters-5'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1616,9 +1834,9 @@ let editingJobs = api.editingJobs.get({
 </span><span class="p">},</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves a specific editing job using the ID of the editing job.</p>
-<h3 id='http-request-8'>HTTP Request</h3>
+<h3 id='http-request-11'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/editing-jobs/<span class="route_param">:editing_job_uid</span></code></p>
-<h3 id='request-parameters-2'>Request Parameters</h3>
+<h3 id='request-parameters-3'>Request Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1675,9 +1893,9 @@ let bookings = api.bookings.getPresets({
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves all the presets.</p>
-<h3 id='http-request-9'>HTTP Request</h3>
+<h3 id='http-request-12'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/presets</code></p>
-<h3 id='query-parameters-5'>Query Parameters</h3>
+<h3 id='query-parameters-6'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1749,9 +1967,9 @@ let bookings = api.bookings.getImages({
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves all the images of a specific booking.</p>
-<h3 id='http-request-10'>HTTP Request</h3>
+<h3 id='http-request-13'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/bookings/<span class="route_param">:booking_uid</span>/images</code></p>
-<h3 id='request-parameters-3'>Request Parameters</h3>
+<h3 id='request-parameters-4'>Request Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1767,7 +1985,7 @@ let bookings = api.bookings.getImages({
 <td>Yes</td>
 </tr>
 </tbody></table>
-<h3 id='query-parameters-6'>Query Parameters</h3>
+<h3 id='query-parameters-7'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1860,9 +2078,9 @@ let editingJobs = api.editingJobs.getImages({
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves all the images of a specific editing job.</p>
-<h3 id='http-request-11'>HTTP Request</h3>
+<h3 id='http-request-14'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/editing-jobs/<span class="route_param">:editing_job_uid</span>/images</code></p>
-<h3 id='request-parameters-4'>Request Parameters</h3>
+<h3 id='request-parameters-5'>Request Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1878,7 +2096,7 @@ let editingJobs = api.editingJobs.getImages({
 <td>Yes</td>
 </tr>
 </tbody></table>
-<h3 id='query-parameters-7'>Query Parameters</h3>
+<h3 id='query-parameters-8'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1953,9 +2171,9 @@ let editingJobs = api.editingJobs.getImages({
 You receive the `magic_job_uid` in the magic job `images_delivered` webhook event — see <a href="#custom-webhooks">Custom Webhooks</a>. `url_original` and `url_thumb` are signed URLs that expire at `url_expires_at`; calling this endpoint again returns freshly signed URLs.
 
 </aside>
-<h3 id='http-request-12'>HTTP Request</h3>
+<h3 id='http-request-15'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/magic-jobs/<span class="route_param">:magic_job_uid</span>/images</code></p>
-<h3 id='request-parameters-5'>Request Parameters</h3>
+<h3 id='request-parameters-6'>Request Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1971,7 +2189,7 @@ You receive the `magic_job_uid` in the magic job `images_delivered` webhook even
 <td>Yes</td>
 </tr>
 </tbody></table>
-<h3 id='query-parameters-8'>Query Parameters</h3>
+<h3 id='query-parameters-9'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -2040,9 +2258,9 @@ let bookings = api.bookings.getVideos({
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves all the Videos of a specific booking.</p>
-<h3 id='http-request-13'>HTTP Request</h3>
+<h3 id='http-request-16'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/bookings/<span class="route_param">:booking_uid</span>/videos</code></p>
-<h3 id='request-parameters-6'>Request Parameters</h3>
+<h3 id='request-parameters-7'>Request Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -2058,7 +2276,7 @@ let bookings = api.bookings.getVideos({
 <td>Yes</td>
 </tr>
 </tbody></table>
-<h3 id='query-parameters-9'>Query Parameters</h3>
+<h3 id='query-parameters-10'>Query Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -2119,7 +2337,7 @@ let bookings = api.shoottypes.get({});
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint returns all available Snappr shoot types.</p>
-<h3 id='http-request-14'>HTTP Request</h3>
+<h3 id='http-request-17'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/shoottypes</code></p>
 <h1 id='editing-job-types'>Editing Job Types</h1><h2 id='get-all-editing-job-types'>Get All Editing Job Types</h2>
 <blockquote>
@@ -2160,7 +2378,7 @@ let bookings = api.shoottypes.get({});
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint returns all available Snappr editing job types.</p>
-<h3 id='http-request-15'>HTTP Request</h3>
+<h3 id='http-request-18'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/editing-job-types</code></p>
 <h1 id='custom-webhooks'>Custom Webhooks</h1>
 <blockquote>
