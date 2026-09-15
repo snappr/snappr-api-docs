@@ -758,6 +758,175 @@ This endpoint retrieves a specific booking using the ID of the booking.
 | ------------- | ------ | ------------------------------ | -------- |
 | `booking_uid` | String | The identifier of the booking. | Yes      |
 
+# Magic Jobs
+
+Magic Jobs produce AI-generated images for a business from a few identifiers. You tell us the type of job and the business details; Snappr uses the images already on the business's listing as the reference, generates the full image set, and runs it through an extensive quality-assurance and iteration process so the results accurately reflect what was requested. When images are ready we notify your webhook (see <a href="#custom-webhooks">Custom Webhooks</a>) and you retrieve them via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a>.
+
+<aside class="notice">
+
+Magic Jobs are available to Enterprise accounts. Contact your account manager to enable them on your API key.
+
+</aside>
+
+## Create New Magic Job
+
+> Example request:
+
+```shell
+curl "https://api.snappr.com/magic-jobs" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0' \
+  -H "Content-Type: application/json" \
+  --data-binary $'{
+    "type": "menu",
+    "restaurant_name": "Sample Bistro",
+    "restaurant_address": "123 Example Street, Sampletown, CA 90000, USA",
+    "internal_id": "st-7qk2mx9pl4"
+  }'
+```
+
+> Example JSON response:
+
+```json
+{
+  "uid": "9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e",
+  "type": "menu",
+  "status": "created",
+  "completed_at": null,
+  "restaurant_name": "Sample Bistro",
+  "restaurant_address": "123 Example Street, Sampletown, CA 90000, USA",
+  "source_platform": null,
+  "source_url": null,
+  "internal_id": "st-7qk2mx9pl4",
+  "created_at": "2026-08-12T09:12:00Z",
+  "updated_at": "2026-08-12T09:12:00Z"
+}
+```
+
+This endpoint creates a new magic job. The job is returned with status `created` and a `201` status code; Snappr then locates the business's listing, generates the images and delivers them in one or more batches. Each delivery triggers an `images_delivered` event on your webhook (see <a href="#custom-webhooks">Custom Webhooks</a>).
+
+### HTTP Request
+
+`POST https://api.snappr.com/magic-jobs`
+
+### Request (Body) Parameters
+
+| Parameter            | Type   | Description                                                                                                                                                                  | Required |
+| -------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `type`               | String | Type of magic job. Currently supported values: `menu`.                                                                                                                       | Yes      |
+| `restaurant_name`    | String | Name of the restaurant as it appears on your platform.                                                                                                                       | Yes\*    |
+| `restaurant_address` | String | Full address of the restaurant as a single string.                                                                                                                           | Yes\*    |
+| `internal_id`        | String | ID for your internal systems. Useful for matching a magic job with your internal data.                                                                                       | No       |
+| `source_url`         | URL    | URL of the restaurant's store page on your platform. If omitted, Snappr locates the store page from `restaurant_name`, `restaurant_address` and `internal_id` when provided. | No       |
+
+<aside class="notice">
+*Required when <code>type</code> is <code>menu</code>.
+</aside>
+
+## Get All Magic Jobs
+
+> Example request:
+
+```shell
+curl "https://api.snappr.com/magic-jobs" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0'
+```
+
+> Example JSON response:
+
+```json
+{
+  "results": [
+    {
+      "uid": "9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e",
+      "type": "menu",
+      "status": "completed",
+      "completed_at": "2026-08-15T16:25:30Z",
+      "restaurant_name": "Sample Bistro",
+      "restaurant_address": "123 Example Street, Sampletown, CA 90000, USA",
+      "source_platform": "restaurant-app",
+      "source_url": "https://www.restaurant-app.example/store/Zk8pQ2mN7xL4",
+      "internal_id": "st-7qk2mx9pl4",
+      "images_count": 23,
+      "created_at": "2026-08-12T09:12:00Z",
+      "updated_at": "2026-08-15T16:25:30Z"
+    },
+    {
+      "uid": "3e7d9a2c-5b1f-4c8e-a6d0-2f4b6c8e1a3d",
+      "type": "menu",
+      "status": "in_progress",
+      "completed_at": null,
+      "restaurant_name": "Example Trattoria",
+      "restaurant_address": "45 Sample Avenue, Sampletown, CA 90000, USA",
+      "source_platform": "restaurant-app",
+      "source_url": "https://www.restaurant-app.example/store/Hq3wN8vT2kLp",
+      "internal_id": "st-4hn8vz2qr7",
+      "created_at": "2026-08-14T11:05:00Z",
+      "updated_at": "2026-08-15T08:40:00Z"
+    }
+  ],
+  "count": 2,
+  "limit": 100,
+  "offset": 0,
+  "total": 2
+}
+```
+
+This endpoint retrieves all magic jobs created under your account.
+
+### HTTP Request
+
+<code>GET https://api.snappr.com/magic-jobs?limit=<span class="route_param">:limit</span>&offset=<span class="route_param">:offset</span></code>
+
+### Query Parameters
+
+| Parameter | Type    | Description                                                                                                                                 | Required |
+| --------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `limit`   | Integer | Maximum number of magic jobs to be returned (maximum of 100). Defaults to `100`.                                                            | No       |
+| `offset`  | Integer | Offset used for pagination if there are more magic jobs than the limit (or more than 100 magic jobs if there is no limit). Defaults to `0`. | No       |
+
+## Get Single Magic Job
+
+> Example request:
+
+```shell
+curl "https://api.snappr.com/magic-jobs/9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0'
+```
+
+> Example JSON response:
+
+```json
+{
+  "uid": "9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e",
+  "type": "menu",
+  "status": "completed",
+  "completed_at": "2026-08-15T16:25:30Z",
+  "restaurant_name": "Sample Bistro",
+  "restaurant_address": "123 Example Street, Sampletown, CA 90000, USA",
+  "source_platform": "restaurant-app",
+  "source_url": "https://www.restaurant-app.example/store/Zk8pQ2mN7xL4",
+  "internal_id": "st-7qk2mx9pl4",
+  "images_count": 23,
+  "created_at": "2026-08-12T09:12:00Z",
+  "updated_at": "2026-08-15T16:25:30Z"
+}
+```
+
+This endpoint retrieves a specific magic job using the ID of the magic job. A magic job moves through the statuses `created`, `in_progress`, `completed` and `failed`. It stays `in_progress` while further image deliveries are still expected and becomes `completed` once all of its images have been delivered, at which point `completed_at` and `images_count` are populated. If a job is `failed`, your account manager will follow up with you. Retrieve the job's images via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a>.
+
+### HTTP Request
+
+<code>GET https://api.snappr.com/magic-jobs/<span class="route_param">:magic_job_uid</span></code>
+
+### Request Parameters
+
+| Parameter       | Type   | Description                      | Required |
+| --------------- | ------ | -------------------------------- | -------- |
+| `magic_job_uid` | String | The identifier of the magic job. | Yes      |
+
 # Editing Jobs
 
 <aside class="notice">
