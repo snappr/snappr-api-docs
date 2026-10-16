@@ -56,3 +56,10 @@ set :port, 4567
 helpers do
   require './lib/toc_data.rb'
 end
+
+after_build do
+  require 'json'
+  require 'yaml'
+  spec = YAML.safe_load(File.read(File.join(config[:source], 'openapi.yaml')))
+  File.write(File.join(config[:build_dir], 'openapi.json'), JSON.pretty_generate(spec) + "\n")
+end
