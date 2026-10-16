@@ -1,0 +1,1492 @@
+openapi: 3.1.0
+info:
+  title: Snappr API
+  version: 1.0.0
+  summary: Commission photoshoots, editing jobs and Magic Jobs, and retrieve the resulting images and videos.
+  description: |
+    The Snappr API is available to Snappr for Enterprise customers. It lets you check coverage and
+    availability, create and track photoshoot bookings, editing jobs and Magic Jobs, and download
+    the delivered images and videos.
+
+    Human-readable documentation: https://docs.snappr.com
+
+    Every list endpoint returns the same envelope: `results`, `count` (items in this page),
+    `limit`, `offset` and `total` (items across all pages). Page through with `limit` and `offset`.
+
+    Errors are JSON objects with a machine-readable `code` (see the `Error` schema).
+  contact:
+    name: Snappr Enterprise Support
+    email: enterprise-support@snappr.com
+    url: https://www.snappr.com/enterprise
+  termsOfService: https://www.snappr.com/terms
+externalDocs:
+  description: Snappr API documentation
+  url: https://docs.snappr.com
+servers:
+  - url: https://api.snappr.com
+    description: Production
+  - url: https://sandbox.snappr.com
+    description: Sandbox. Returns dummy data; write actions are not persisted. Use your sandbox API key.
+security:
+  - bearerAuth: []
+tags:
+  - name: Coverage
+    description: Whether Snappr covers a location and shoot type.
+  - name: Availability
+    description: Bookable shoot start times.
+  - name: Bookings
+    description: Photoshoot bookings.
+  - name: Magic Jobs
+    description: Available to Enterprise accounts. Contact your account manager to enable Magic Jobs on your API key.
+  - name: Editing Jobs
+    description: In beta. Contact your account manager to start using it.
+  - name: Presets
+    description: Editing presets configured for your account.
+  - name: Images
+    description: Delivered images for bookings, editing jobs and Magic Jobs.
+  - name: Videos
+    description: Delivered videos for bookings.
+  - name: Shoot Types
+    description: Shoot types accepted by the API.
+  - name: Editing Job Types
+    description: Editing job types accepted by the API.
+paths:
+  /coverage:
+    get:
+      tags: [Coverage]
+      operationId: getCoverage
+      summary: Check coverage for a location
+      description: |
+        Returns whether Snappr has photographer coverage for a location and shoot type. Coverage is
+        independent of specific dates or times; use `getAvailability` for bookable start times.
+
+        Provide either `latitude` and `longitude`, or `address`. If both are provided, only
+        `latitude` and `longitude` are used.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+        - $ref: '#/components/parameters/Latitude'
+        - $ref: '#/components/parameters/Longitude'
+        - $ref: '#/components/parameters/Address'
+        - name: shoottype
+          in: query
+          required: false
+          description: Shoot type `name` (see `listShootTypes`), e.g. `event`. When omitted, coverage is checked across all shoot types.
+          schema:
+            type: string
+          example: event
+        - name: creator_id
+          in: query
+          required: false
+          description: Check whether this specific creator covers the location.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Coverage status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Coverage'
+              example:
+                latitude: 34.0522
+                longitude: -118.2437
+                shoottype: event
+                coverage: false
+                available_providers: 0
+                available_specialist_providers: 0
+                available_related_specialist_providers: 0
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /availability:
+    get:
+      tags: [Availability]
+      operationId: getAvailability
+      summary: List available shoot start times
+      description: |
+        Returns available shoot start times for a location, local date, shoot type and duration.
+        All times within the local date are returned, formatted in UTC.
+
+        Provide either `latitude` and `longitude`, or `address`. If both are provided, only
+        `latitude` and `longitude` are used. Always check availability before creating a booking
+        with `start_at` set.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+        - $ref: '#/components/parameters/Latitude'
+        - $ref: '#/components/parameters/Longitude'
+        - $ref: '#/components/parameters/Address'
+        - name: shoottype
+          in: query
+          required: true
+          description: Shoot type `name` (see `listShootTypes`), e.g. `event`.
+          schema:
+            type: string
+          example: event
+        - name: duration
+          in: query
+          required: true
+          description: Length of the shoot in minutes.
+          schema:
+            type: integer
+          example: 120
+        - name: date
+          in: query
+          required: true
+          description: Local date (`YYYY-MM-DD`) to check.
+          schema:
+            type: string
+            format: date
+          example: '2018-12-01'
+        - name: days_span
+          in: query
+          required: false
+          description: Number of consecutive days, starting at `date`, to return availability for.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 1
+        - name: creator_id
+          in: query
+          required: false
+          description: Return availability for this specific creator only.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Available start times.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Availability'
+              example:
+                latitude: 34.0522
+                longitude: -118.2437
+                shoottype: event
+                duration: 120
+                date: '2018-12-01'
+                timezone: America/Los_Angeles
+                available_times:
+                  - '2018-12-01T07:30:00Z'
+                  - '2018-12-01T09:30:00Z'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /bookings:
+    post:
+      tags: [Bookings]
+      operationId: createBooking
+      summary: Create a photoshoot booking
+      description: |
+        Creates a photoshoot booking. There are two ways to create one:
+
+        1. Provide all details including `start_at`. The end-customer is notified once the booking is placed.
+        2. Set `start_at` to `null`. Snappr contacts the end-customer (email and/or mobile phone) to pick a
+           date and time, and the response includes a `scheduling_url` they can use. `start_at` cannot be
+           `null` when `creator_id` is set.
+
+        Provide either `latitude` and `longitude`, or `address`. If both are provided, only `latitude` and
+        `longitude` are used. Booking a time with no available photographer returns a `400` with code
+        `NotAvailable`; an account without enough credits gets `402` `InsufficientCredits`.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingCreate'
+            example:
+              title: Emerald Theatre Shoot
+              latitude: 34.0522
+              longitude: -118.2437
+              shoottype: event
+              start_at: '2018-12-01T07:30:00Z'
+              duration: 120
+              location_notes: Location is Emerald Theatre - ring buzzer at main entrance on arrival
+              style_notes: Shots of as many members of crowd as possible; shallow depth of field where possible
+              customer_firstname: Mary
+              customer_surname: Smith
+              customer_email: test@snappr.com
+              customer_mobilephone: '+14153339966'
+              customer_company: Snappr Inc.
+              internal_id: 123-ABC
+              tags: [tag1, tag2, tag3]
+      responses:
+        '201':
+          description: Booking created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingCreated'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    get:
+      tags: [Bookings]
+      operationId: listBookings
+      summary: List bookings
+      description: Lists your account's bookings, most recently updated first.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of bookings to return.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 5000
+            default: 30
+        - $ref: '#/components/parameters/Offset'
+        - name: status
+          in: query
+          required: false
+          description: Only return bookings with this status, e.g. `paid` or `completed`.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A page of bookings.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Page'
+                  - type: object
+                    required: [results]
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Booking'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /bookings/{booking_uid}:
+    get:
+      tags: [Bookings]
+      operationId: getBooking
+      summary: Get a booking
+      description: Retrieves one booking by its `uid`.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+        - $ref: '#/components/parameters/BookingUid'
+      responses:
+        '200':
+          description: The booking.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Booking'
+                  - type: object
+                    properties:
+                      gallery_zip_url:
+                        type: string
+                        format: uri
+                        description: Link to download the delivered gallery as a ZIP. Only returned for accounts with gallery ZIP downloads enabled.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /bookings/{booking_uid}/images:
+    get:
+      tags: [Images]
+      operationId: listBookingImages
+      summary: List a booking's images
+      description: Lists the delivered images of a booking. The booking must have status `completed`; otherwise the request fails with `400` code `BadRequest`.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+        - $ref: '#/components/parameters/BookingUid'
+        - $ref: '#/components/parameters/MediaLimit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A page of images.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Page'
+                  - type: object
+                    required: [results]
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/BookingImage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /bookings/{booking_uid}/videos:
+    get:
+      tags: [Videos]
+      operationId: listBookingVideos
+      summary: List a booking's videos
+      description: Lists the delivered videos of a booking. The booking must have status `completed`; otherwise the request fails with `400` code `BadRequest`.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+        - $ref: '#/components/parameters/BookingUid'
+        - $ref: '#/components/parameters/MediaLimit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A page of videos.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Page'
+                  - type: object
+                    required: [results]
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/BookingVideo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /magic-jobs:
+    post:
+      tags: [Magic Jobs]
+      operationId: createMagicJob
+      summary: Create a Magic Job
+      description: |
+        Creates a Magic Job. It is returned with status `created`; Snappr then locates the business's
+        listing, generates the images and delivers them in one or more batches. Each delivery triggers an
+        `images_delivered` webhook event.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MagicJobCreate'
+            example:
+              type: menu
+              restaurant_name: Sample Bistro
+              restaurant_address: 123 Example Street, Sampletown, CA 90000, USA
+              internal_id: st-7qk2mx9pl4
+      responses:
+        '201':
+          description: Magic Job created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MagicJob'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    get:
+      tags: [Magic Jobs]
+      operationId: listMagicJobs
+      summary: List Magic Jobs
+      description: Lists the Magic Jobs created under your account.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of Magic Jobs to return.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 100
+            default: 100
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A page of Magic Jobs.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Page'
+                  - type: object
+                    required: [results]
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/MagicJob'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /magic-jobs/{magic_job_uid}:
+    get:
+      tags: [Magic Jobs]
+      operationId: getMagicJob
+      summary: Get a Magic Job
+      description: |
+        Retrieves one Magic Job. A job moves through `created`, `in_progress`, `completed` and `failed`.
+        It stays `in_progress` while further deliveries are expected and becomes `completed` once all
+        images are delivered, at which point `completed_at` and `images_count` are populated. Failed
+        jobs are followed up by your account manager.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+        - $ref: '#/components/parameters/MagicJobUid'
+      responses:
+        '200':
+          description: The Magic Job.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MagicJob'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /magic-jobs/{magic_job_uid}/images:
+    get:
+      tags: [Images]
+      operationId: listMagicJobImages
+      summary: List a Magic Job's images
+      description: |
+        Lists the current complete set of delivered images for a Magic Job, across all delivery batches.
+        Each result is one image for one menu item. If Snappr replaces an image after delivery it keeps
+        its `uid` (the stable handle for diffing) while `internal_ids` and URLs may change. URLs are
+        signed and expire at `url_expires_at`; call again for freshly signed URLs.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+        - $ref: '#/components/parameters/MagicJobUid'
+        - $ref: '#/components/parameters/MediaLimit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A page of images.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Page'
+                  - type: object
+                    required: [results]
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/MagicJobImage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /editing-jobs:
+    post:
+      tags: [Editing Jobs]
+      operationId: createEditingJob
+      summary: Create an editing job
+      description: |
+        Creates an editing job. There are two ways to create one:
+
+        1. Provide the source `images`.
+        2. Set `images` to `null` and provide `uploader_firstname` and `uploader_email`. Snappr contacts
+           the third-party uploader to collect the images.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditingJobCreate'
+            example:
+              title: Restaurant gallery
+              type: food
+              internal_id: 123-ABC
+              preset_id: 1ea37f86-c82d-4267-8773-9a13fd4f1337
+              images:
+                - file_name: ZD 001.JPG
+                  url_source: https://example.com/source/zd-001.jpg
+      responses:
+        '200':
+          description: Editing job created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditingJob'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '402':
+          $ref: '#/components/responses/InsufficientCredits'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    get:
+      tags: [Editing Jobs]
+      operationId: listEditingJobs
+      summary: List editing jobs
+      description: Lists your account's editing jobs.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of editing jobs to return.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 5000
+            default: 30
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A page of editing jobs.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Page'
+                  - type: object
+                    required: [results]
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/EditingJob'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /editing-jobs/{editing_job_uid}:
+    get:
+      tags: [Editing Jobs]
+      operationId: getEditingJob
+      summary: Get an editing job
+      description: Retrieves one editing job by its `uid`. An unknown `uid` returns `400`.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+        - $ref: '#/components/parameters/EditingJobUid'
+      responses:
+        '200':
+          description: The editing job.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditingJob'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /editing-jobs/{editing_job_uid}/images:
+    get:
+      tags: [Images]
+      operationId: listEditingJobImages
+      summary: List an editing job's images
+      description: Lists each source image of an editing job with its edited (`final`) version. `final` URLs are `null` until editing is done. An unknown job, or a job with no images, returns `400`.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+        - $ref: '#/components/parameters/EditingJobUid'
+        - $ref: '#/components/parameters/MediaLimit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A page of image pairs.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Page'
+                  - type: object
+                    required: [results]
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/EditingJobImage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /presets:
+    get:
+      tags: [Presets]
+      operationId: listPresets
+      summary: List editing presets
+      description: Lists the editing presets available to your account. Presets are created in the Snappr portal; pass a preset `uid` as `preset_id` when creating an editing job.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of presets to return.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 5000
+            default: 100
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A page of presets.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Page'
+                  - type: object
+                    required: [results]
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Preset'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /shoottypes:
+    get:
+      tags: [Shoot Types]
+      operationId: listShootTypes
+      summary: List shoot types
+      description: Lists all Snappr shoot types. Use a result's `name` as `shoottype` elsewhere in the API.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+        - $ref: '#/components/parameters/TypeLimit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A page of shoot types.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Page'
+                  - type: object
+                    required: [results]
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/NamedType'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /editing-job-types:
+    get:
+      tags: [Editing Job Types]
+      operationId: listEditingJobTypes
+      summary: List editing job types
+      description: Lists the editing job types. Use a result's `name` as `type` when creating an editing job.
+      parameters:
+        - $ref: '#/components/parameters/AcceptVersion'
+        - $ref: '#/components/parameters/TypeLimit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A page of editing job types.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Page'
+                  - type: object
+                    required: [results]
+                    properties:
+                      results:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/NamedType'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+        '500':
+          $ref: '#/components/responses/ServerError'
+webhooks:
+  bookingEvent:
+    post:
+      operationId: bookingEventWebhook
+      summary: Booking created or updated
+      description: |
+        Sent to your custom webhook URL (set in the Snappr portal under API → Custom Webhook) every time a
+        booking is created or updated. All event families share one URL: dispatch on which resource key is
+        present (`booking`, `magic_job`) and ignore event types or payload shapes you don't recognise.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingWebhookEvent'
+      responses:
+        '200':
+          description: Return any 2xx status to acknowledge the event.
+  magicJobImagesDelivered:
+    post:
+      operationId: magicJobImagesDeliveredWebhook
+      summary: Magic Job delivered a batch of images
+      description: |
+        Sent every time a Magic Job delivers a batch of images. A job can deliver several batches, so
+        several events may arrive for the same `magic_job.uid`, each with a different `delivery_uid`.
+        Treat every delivery the same way: call `listMagicJobImages` and replace what you stored for that job.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MagicJobImagesDeliveredEvent'
+      responses:
+        '200':
+          description: Return any 2xx status to acknowledge the event.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: |
+        Send your API key as `Authorization: Bearer <api_key>`. Get or regenerate the key in the Snappr
+        portal; each user has one active key and regenerating it deactivates the previous one. The sandbox
+        uses a separate sandbox key.
+  parameters:
+    AcceptVersion:
+      name: accept-version
+      in: header
+      required: false
+      description: API version. The only version is `1.0.0`.
+      schema:
+        type: string
+        default: 1.0.0
+    Latitude:
+      name: latitude
+      in: query
+      required: false
+      description: Latitude of the shoot location. Required together with `longitude` when `address` is not provided.
+      schema:
+        type: number
+      example: 34.0522
+    Longitude:
+      name: longitude
+      in: query
+      required: false
+      description: Longitude of the shoot location. Required together with `latitude` when `address` is not provided.
+      schema:
+        type: number
+      example: -118.2437
+    Address:
+      name: address
+      in: query
+      required: false
+      description: Address of the shoot location, as a Google Maps–valid address. Required when `latitude` and `longitude` are not provided.
+      schema:
+        type: string
+      example: Golden Gate Bridge Welcome Center, San Francisco, CA, USA
+    Offset:
+      name: offset
+      in: query
+      required: false
+      description: Number of items to skip, for pagination.
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    MediaLimit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return.
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 10000
+        default: 1000
+    TypeLimit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of types to return.
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 5000
+        default: 100
+    BookingUid:
+      name: booking_uid
+      in: path
+      required: true
+      description: The booking's `uid`.
+      schema:
+        type: string
+        format: uuid
+    MagicJobUid:
+      name: magic_job_uid
+      in: path
+      required: true
+      description: The Magic Job's `uid`.
+      schema:
+        type: string
+        format: uuid
+    EditingJobUid:
+      name: editing_job_uid
+      in: path
+      required: true
+      description: The editing job's `uid`.
+      schema:
+        type: string
+        format: uuid
+  responses:
+    BadRequest:
+      description: The request was invalid, or could not be fulfilled (validation failure, no coverage, no availability, location outside your region).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: ValidationError
+            errors: [shoottype is a required field]
+    Unauthorized:
+      description: The API key is missing or invalid, or its user is not an admin of the account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: Unauthorized
+    InsufficientCredits:
+      description: The account does not have enough credits. Add credits in the Snappr portal.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: InsufficientCredits
+            errors: [Not enough credits.]
+    NotFound:
+      description: The resource does not exist or does not belong to your account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: NotFound
+    RateLimit:
+      description: Rate limit exceeded (1,000 requests per minute per API key).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: RateLimit
+            error: Too Many Requests
+    ServerError:
+      description: Unexpected server error. Try again later.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: ServerError
+  schemas:
+    Error:
+      type: object
+      description: |
+        Error response. `code` is one of: `ValidationError`, `BadRequest`, `NoCoverage`, `NotAvailable`,
+        `OutsideRegion`, `CreatorNotFound`, `Unauthorized`, `InsufficientCredits`, `NotFound`, `RateLimit`,
+        `UnknownError`, `ServerError`. New codes may be added.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code.
+          examples: [ValidationError, NoCoverage, NotAvailable, OutsideRegion, CreatorNotFound, InsufficientCredits]
+        errors:
+          type: array
+          description: Human-readable details about what failed.
+          items: {}
+        error:
+          type: string
+          description: Human-readable summary (rate-limit responses).
+    Page:
+      type: object
+      required: [count, limit, offset, total]
+      properties:
+        count:
+          type: integer
+          description: Number of items in this page.
+        limit:
+          type: integer
+        offset:
+          type: integer
+        total:
+          type: integer
+          description: Number of items across all pages.
+    Coverage:
+      type: object
+      required: [latitude, longitude, coverage]
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+        shoottype:
+          type: [string, 'null']
+        coverage:
+          type: boolean
+          description: Whether Snappr has coverage for this location and shoot type.
+        available_providers:
+          type: [integer, 'null']
+          description: Number of photographers covering the location.
+        available_specialist_providers:
+          type: [integer, 'null']
+          description: Number of those who specialise in the shoot type.
+        available_related_specialist_providers:
+          type: [integer, 'null']
+          description: Number of those who specialise in the shoot type or a related one.
+    Availability:
+      type: object
+      required: [latitude, longitude, shoottype, duration, date, timezone, available_times]
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+        shoottype:
+          type: string
+        duration:
+          type: integer
+          description: Shoot length in minutes.
+        date:
+          type: string
+          format: date
+        timezone:
+          type: string
+          description: IANA timezone of the location.
+          example: America/Los_Angeles
+        available_times:
+          type: array
+          description: Available shoot start times, in UTC.
+          items:
+            type: string
+            format: date-time
+    BookingCreate:
+      type: object
+      required: [shoottype, start_at, duration, customer_firstname, customer_email, customer_mobilephone]
+      properties:
+        title:
+          type: string
+          description: Custom shoot title.
+        latitude:
+          type: number
+          description: Latitude of the shoot location. Required together with `longitude` when `address` is not provided.
+        longitude:
+          type: number
+          description: Longitude of the shoot location. Required together with `latitude` when `address` is not provided.
+        address:
+          type: string
+          description: Google Maps–valid address of the shoot location. Required when `latitude` and `longitude` are not provided.
+        shoottype:
+          type: string
+          description: Shoot type `name` (see `listShootTypes`), e.g. `event`.
+        start_at:
+          type: [string, 'null']
+          format: date-time
+          description: Shoot start time in UTC. Must be present; set to `null` to have the end-customer pick the date and time.
+        duration:
+          type: integer
+          description: Shoot length in minutes.
+        location_notes:
+          type: [string, 'null']
+          description: Details to help the photographer find the location and contact person.
+        style_notes:
+          type: [string, 'null']
+          description: Instructions, stylistic preferences and special requests.
+        customer_firstname:
+          type: string
+        customer_surname:
+          type: [string, 'null']
+        customer_email:
+          type: string
+          format: email
+        customer_mobilephone:
+          type: string
+          description: End-customer's mobile phone number, e.g. `+14153339966`.
+        customer_company:
+          type: [string, 'null']
+        internal_id:
+          type: [string, 'null']
+          description: Your own identifier, for matching the booking with your data.
+        creator_id:
+          type: [string, 'null']
+          format: uuid
+          description: Assign the booking to this specific creator.
+        tags:
+          type: [array, 'null']
+          description: Tags for finding and reporting on bookings in the Snappr portal. Each tag is lowercased, trimmed and truncated to 255 characters.
+          items:
+            type: string
+    Booking:
+      type: object
+      required: [uid, status, credits, created_at, updated_at]
+      properties:
+        uid:
+          type: string
+          format: uuid
+        package_id:
+          type: [string, 'null']
+          format: uuid
+          description: The Snappr package (product) the booking was placed on.
+        title:
+          type: [string, 'null']
+        status:
+          type: string
+          description: Booking status, e.g. `paid`, `paid_pending_schedule`, `completed`, `cancelled`.
+          examples: [paid, paid_pending_schedule, completed, cancelled]
+        credits:
+          type: integer
+          description: Credits charged for the booking.
+        latitude:
+          type: [number, 'null']
+        longitude:
+          type: [number, 'null']
+        shoottype:
+          type: [string, 'null']
+        start_at:
+          type: [string, 'null']
+          format: date-time
+        duration:
+          type: [integer, 'null']
+          description: Shoot length in minutes.
+        location_notes:
+          type: [string, 'null']
+        style_notes:
+          type: [string, 'null']
+        customer_firstname:
+          type: [string, 'null']
+        customer_surname:
+          type: [string, 'null']
+        customer_email:
+          type: [string, 'null']
+        customer_mobilephone:
+          type: [string, 'null']
+        customer_company:
+          type: [string, 'null']
+        internal_id:
+          type: [string, 'null']
+        creator_name:
+          type: [string, 'null']
+          description: Assigned photographer's first name and last initial.
+        creator_id:
+          type: [string, 'null']
+          format: uuid
+        creator_profile_image_url:
+          type: [string, 'null']
+          format: uri
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        update_at:
+          type: string
+          format: date-time
+          deprecated: true
+          description: Misspelled alias of `updated_at`, kept for backwards compatibility.
+        photographer_name:
+          type: [string, 'null']
+          deprecated: true
+          description: Old name for `creator_name`.
+    BookingCreated:
+      allOf:
+        - $ref: '#/components/schemas/Booking'
+        - type: object
+          properties:
+            scheduling_url:
+              type: string
+              format: uri
+              description: Present when `start_at` was `null`. Link the end-customer uses to pick a date and time.
+            bookingTags:
+              type: array
+              description: The tags stored on the booking (normalised from the request's `tags`).
+              items:
+                type: string
+    BookingImage:
+      type: object
+      required: [uid, url_original, url_thumb]
+      properties:
+        uid:
+          type: string
+          format: uuid
+        file_name:
+          type: [string, 'null']
+        url_original:
+          type: string
+          format: uri
+          description: Signed full-quality URL.
+        url_thumb:
+          type: string
+          format: uri
+          description: Thumbnail URL.
+    BookingVideo:
+      type: object
+      required: [uid, url_original]
+      properties:
+        uid:
+          type: string
+          format: uuid
+        file_name:
+          type: [string, 'null']
+        url_original:
+          type: string
+          format: uri
+          description: Signed full-quality URL.
+    MagicJobCreate:
+      type: object
+      required: [type]
+      properties:
+        type:
+          type: string
+          enum: [menu]
+          description: Type of Magic Job.
+        restaurant_name:
+          type: string
+          description: Name of the restaurant as it appears on your platform. Required when `type` is `menu`.
+        restaurant_address:
+          type: string
+          description: Full address of the restaurant as a single string. Required when `type` is `menu`.
+        internal_id:
+          type: string
+          description: Your own identifier, for matching the job with your data.
+        source_url:
+          type: string
+          format: uri
+          description: URL of the restaurant's store page on your platform. If omitted, Snappr locates it from the name, address and `internal_id`.
+    MagicJob:
+      type: object
+      required: [uid, type, status]
+      properties:
+        uid:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum: [menu]
+        status:
+          type: string
+          enum: [created, in_progress, completed, failed]
+        completed_at:
+          type: [string, 'null']
+          format: date-time
+        restaurant_name:
+          type: [string, 'null']
+        restaurant_address:
+          type: [string, 'null']
+        source_platform:
+          type: [string, 'null']
+          description: Platform Snappr found the listing on.
+        source_url:
+          type: [string, 'null']
+          format: uri
+        internal_id:
+          type: [string, 'null']
+        images_count:
+          type: integer
+          description: Number of delivered images. Present only when `status` is `completed`.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    MagicJobImage:
+      type: object
+      required: [uid, internal_ids, url_original, url_thumb, url_expires_at]
+      properties:
+        uid:
+          type: string
+          format: uuid
+          description: Stable identifier; kept if the image is replaced.
+        file_name:
+          type: string
+        menu_item_name:
+          type: string
+        internal_ids:
+          type: array
+          description: The menu item's identifier(s) in your catalog, as found on the source platform. Treat as opaque strings.
+          items:
+            type: string
+        width:
+          type: integer
+        height:
+          type: integer
+        content_type:
+          type: string
+          example: image/jpeg
+        url_original:
+          type: string
+          format: uri
+          description: Signed full-quality URL; expires at `url_expires_at`.
+        url_thumb:
+          type: string
+          format: uri
+          description: Signed thumbnail URL; expires at `url_expires_at`.
+        url_expires_at:
+          type: string
+          format: date-time
+    EditingJobCreate:
+      type: object
+      required: [type, preset_id]
+      properties:
+        title:
+          type: string
+          description: Custom editing job title.
+        type:
+          type: string
+          description: Editing job type `name` (see `listEditingJobTypes`), e.g. `food`.
+        preset_id:
+          type: string
+          format: uuid
+          description: Preset `uid` (see `listPresets`).
+        internal_id:
+          type: string
+          description: Your own identifier, for matching the job with your data.
+        images:
+          type: [array, 'null']
+          description: Source images. Set to `null` to have a third-party uploader provide them, in which case `uploader_firstname` and `uploader_email` are required.
+          items:
+            type: object
+            required: [url_source]
+            properties:
+              file_name:
+                type: string
+              url_source:
+                type: string
+                format: uri
+        uploader_firstname:
+          type: string
+        uploader_surname:
+          type: string
+        uploader_email:
+          type: string
+          format: email
+        uploader_mobilephone:
+          type: string
+        uploader_company:
+          type: string
+        min_photo_number:
+          type: integer
+          minimum: 1
+          description: Minimum number of photos the third-party uploader must upload.
+        max_photo_number:
+          type: integer
+          minimum: 1
+          description: Maximum number of photos the third-party uploader may upload. Must be greater than `min_photo_number`.
+    EditingJob:
+      type: object
+      required: [uid, status, type, created_at, updated_at]
+      properties:
+        uid:
+          type: string
+          format: uuid
+        title:
+          type: [string, 'null']
+        status:
+          type: string
+          description: Editing job status, e.g. `creating`, `pending_upload`, `editing`, `completed`, `failed`.
+        type:
+          type: string
+        credits:
+          type: [number, 'null']
+          description: Credits charged, once paid.
+        preset_id:
+          type: [string, 'null']
+          format: uuid
+        uploader_firstname:
+          type: [string, 'null']
+        uploader_surname:
+          type: [string, 'null']
+        uploader_email:
+          type: [string, 'null']
+        uploader_mobilephone:
+          type: [string, 'null']
+        uploader_company:
+          type: [string, 'null']
+        min_photo_number:
+          type: [integer, 'null']
+        max_photo_number:
+          type: [integer, 'null']
+        internal_id:
+          type: [string, 'null']
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    EditingJobImageFile:
+      type: object
+      properties:
+        file_name:
+          type: [string, 'null']
+        url_original:
+          type: [string, 'null']
+          format: uri
+        url_thumb:
+          type: [string, 'null']
+          format: uri
+    EditingJobImage:
+      type: object
+      required: [source, final]
+      properties:
+        source:
+          $ref: '#/components/schemas/EditingJobImageFile'
+        final:
+          $ref: '#/components/schemas/EditingJobImageFile'
+    Preset:
+      type: object
+      required: [uid, name]
+      properties:
+        uid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+          description: Omitted when the preset has no description.
+    NamedType:
+      type: object
+      required: [name, display_name]
+      properties:
+        name:
+          type: string
+          description: Identifier to pass to other endpoints.
+          example: real-estate
+        display_name:
+          type: string
+          example: Real Estate
+    BookingWebhookEvent:
+      type: object
+      required: [type, booking]
+      properties:
+        type:
+          type: string
+          enum: [creation, update]
+        booking:
+          type: object
+          description: The booking, with the same fields as `Booking` (except `creator_profile_image_url`) plus `country_code` and `portal_slug`.
+          properties:
+            uid:
+              type: string
+              format: uuid
+            status:
+              type: string
+            country_code:
+              type: [string, 'null']
+              description: Region of the booking, e.g. `US`.
+            portal_slug:
+              type: string
+              description: Your Snappr portal's slug.
+          additionalProperties: true
+    MagicJobImagesDeliveredEvent:
+      type: object
+      required: [type, magic_job]
+      properties:
+        type:
+          type: string
+          const: images_delivered
+        magic_job:
+          allOf:
+            - $ref: '#/components/schemas/MagicJob'
+            - type: object
+              required: [delivery_uid]
+              properties:
+                delivery_uid:
+                  type: string
+                  format: uuid
+                  description: Identifies this delivery batch.
