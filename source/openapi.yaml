@@ -570,7 +570,7 @@ paths:
                   url_source: https://example.com/source/zd-001.jpg
       responses:
         '201':
-          description: Editing job created. Credits are charged once the images are in; if the account runs out of credits the job's `status` becomes `failed`.
+          description: Editing job created. Credits are charged after the response. If `images` were sent in the body and the account doesn't have enough credits, the job's `status` becomes `failed`. If `images` was `null`, the job stays `pending_upload` until it can be paid.
           content:
             application/json:
               schema:
