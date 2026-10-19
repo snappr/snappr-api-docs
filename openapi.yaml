@@ -569,8 +569,8 @@ paths:
                 - file_name: ZD 001.JPG
                   url_source: https://example.com/source/zd-001.jpg
       responses:
-        '200':
-          description: Editing job created.
+        '201':
+          description: Editing job created. Credits are charged after the response. If `images` were sent in the body and the account doesn't have enough credits, the job's `status` becomes `failed`. If `images` was `null`, the job stays `pending_upload` until it can be paid.
           content:
             application/json:
               schema:
@@ -579,8 +579,6 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
-        '402':
-          $ref: '#/components/responses/InsufficientCredits'
         '429':
           $ref: '#/components/responses/RateLimit'
         '500':
@@ -630,7 +628,7 @@ paths:
       tags: [Editing Jobs]
       operationId: getEditingJob
       summary: Get an editing job
-      description: Retrieves one editing job by its `uid`. An unknown `uid` returns `400`.
+      description: Retrieves one editing job by its `uid`.
       parameters:
         - $ref: '#/components/parameters/AcceptVersion'
         - $ref: '#/components/parameters/EditingJobUid'
@@ -645,6 +643,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '429':
           $ref: '#/components/responses/RateLimit'
         '500':
@@ -654,7 +654,7 @@ paths:
       tags: [Images]
       operationId: listEditingJobImages
       summary: List an editing job's images
-      description: Lists each source image of an editing job with its edited (`final`) version. `final` URLs are `null` until editing is done. An unknown job, or a job with no images, returns `400`.
+      description: Lists each source image of an editing job with its edited (`final`) version. `final` URLs are `null` until editing is done. A job with no images yet returns `400`.
       parameters:
         - $ref: '#/components/parameters/AcceptVersion'
         - $ref: '#/components/parameters/EditingJobUid'
@@ -679,6 +679,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '429':
           $ref: '#/components/responses/RateLimit'
         '500':
