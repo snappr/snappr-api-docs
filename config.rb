@@ -61,7 +61,7 @@ after_build do
   require 'json'
   require 'yaml'
   spec = YAML.safe_load(File.read(File.join(config[:source], 'openapi.yaml')))
-  shared_responses = spec['components']['responses']
+  shared_responses = spec['components'].delete('responses')
   spec['paths'].each_value do |operations|
     operations.each_value do |operation|
       operation['responses'].transform_values! do |response|
