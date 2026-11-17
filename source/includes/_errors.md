@@ -15,6 +15,6 @@ The Snappr API uses the following error codes:
 | 401    | Unauthorized        | Provided access token is invalid or does not have access to requested resource.                                                                                        |
 | 402    | InsufficientCredits | The account does not have a sufficient credit balance to perform the request. Add more credits in the GUI.                                                             |
 | 404    | NotFound            | Requested resource not found.                                                                                                                                          |
-| 429    | RateLimit           | The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header that is included on API responses. |
+| 429    | RateLimit           | The API key went over its rate limit. Wait the number of seconds in the `Retry-After` header, then retry (see <a href="#rate-limits">Rate Limits</a>).                 |
 | 500    | ServerError         | There was an issue with our server. Try again later.                                                                                                                   |
 | 400    | UnknownError        | An error occurred that is not a server error and is not described here.                                                                                                |

@@ -14,6 +14,16 @@ info:
     `limit`, `offset` and `total` (items across all pages). Page through with `limit` and `offset`.
 
     Errors are JSON objects with a machine-readable `code` (see the `Error` schema).
+
+    Each API key can make 1,000 requests per minute. Every response carries the IETF `RateLimit-Policy`
+    and `RateLimit` headers, and a `429` response adds `Retry-After`
+    (https://docs.snappr.com/#rate-limits).
+
+    The current version is `1.0.0`, sent in the optional `accept-version` header. Additive changes ship
+    without a new version; breaking changes ship only as a new version. Removing an endpoint, parameter
+    or field, or retiring a version, is announced at least 6 months ahead, marked `deprecated: true` in
+    this spec, and signalled with `Deprecation` and `Sunset` response headers
+    (https://docs.snappr.com/#versioning-and-deprecation).
   contact:
     name: Snappr Enterprise Support
     email: enterprise-support@snappr.com
@@ -84,6 +94,11 @@ paths:
       responses:
         '200':
           description: Coverage status.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -162,6 +177,11 @@ paths:
       responses:
         '200':
           description: Available start times.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -227,6 +247,11 @@ paths:
       responses:
         '201':
           description: Booking created.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -267,6 +292,11 @@ paths:
       responses:
         '200':
           description: A page of bookings.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -299,6 +329,11 @@ paths:
       responses:
         '200':
           description: The booking.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -334,6 +369,11 @@ paths:
       responses:
         '200':
           description: A page of images.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -370,6 +410,11 @@ paths:
       responses:
         '200':
           description: A page of videos.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -417,6 +462,11 @@ paths:
       responses:
         '201':
           description: Magic Job created.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -451,6 +501,11 @@ paths:
       responses:
         '200':
           description: A page of Magic Jobs.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -487,6 +542,11 @@ paths:
       responses:
         '200':
           description: The Magic Job.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -519,6 +579,11 @@ paths:
       responses:
         '200':
           description: A page of images.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -571,6 +636,11 @@ paths:
       responses:
         '201':
           description: Editing job created. Credits are charged after the response. If `images` were sent in the body and the account doesn't have enough credits, the job's `status` becomes `failed`. If `images` was `null`, the job stays `pending_upload` until it can be paid.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -603,6 +673,11 @@ paths:
       responses:
         '200':
           description: A page of editing jobs.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -635,6 +710,11 @@ paths:
       responses:
         '200':
           description: The editing job.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -663,6 +743,11 @@ paths:
       responses:
         '200':
           description: A page of image pairs.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -706,6 +791,11 @@ paths:
       responses:
         '200':
           description: A page of presets.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -739,6 +829,11 @@ paths:
       responses:
         '200':
           description: A page of shoot types.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -772,6 +867,11 @@ paths:
       responses:
         '200':
           description: A page of editing job types.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimit-Policy'
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
           content:
             application/json:
               schema:
@@ -841,7 +941,7 @@ components:
       name: accept-version
       in: header
       required: false
-      description: API version. The only version is `1.0.0`.
+      description: API version. The only version is `1.0.0`, which is also the default. See https://docs.snappr.com/#versioning-and-deprecation.
       schema:
         type: string
         default: 1.0.0
@@ -922,9 +1022,30 @@ components:
       schema:
         type: string
         format: uuid
+  headers:
+    RateLimit-Policy:
+      description: The rate-limit quota, as an IETF `RateLimit-Policy` field. `q` is the number of requests allowed per window of `w` seconds.
+      schema:
+        type: string
+      example: '"default";q=1000;w=60'
+    RateLimit:
+      description: The quota left, as an IETF `RateLimit` field. `r` is the number of requests remaining in the current window, which resets in `t` seconds.
+      schema:
+        type: string
+      example: '"default";r=998;t=42'
+    Retry-After:
+      description: Seconds to wait before sending another request.
+      schema:
+        type: integer
+      example: 17
   responses:
     BadRequest:
       description: The request was invalid, or could not be fulfilled (validation failure, no coverage, no availability, location outside your region).
+      headers:
+        RateLimit-Policy:
+          $ref: '#/components/headers/RateLimit-Policy'
+        RateLimit:
+          $ref: '#/components/headers/RateLimit'
       content:
         application/json:
           schema:
@@ -934,6 +1055,11 @@ components:
             errors: [shoottype is a required field]
     Unauthorized:
       description: The API key is missing or invalid, or its user is not an admin of the account.
+      headers:
+        RateLimit-Policy:
+          $ref: '#/components/headers/RateLimit-Policy'
+        RateLimit:
+          $ref: '#/components/headers/RateLimit'
       content:
         application/json:
           schema:
@@ -942,6 +1068,11 @@ components:
             code: Unauthorized
     InsufficientCredits:
       description: The account does not have enough credits. Add credits in the Snappr portal.
+      headers:
+        RateLimit-Policy:
+          $ref: '#/components/headers/RateLimit-Policy'
+        RateLimit:
+          $ref: '#/components/headers/RateLimit'
       content:
         application/json:
           schema:
@@ -951,6 +1082,11 @@ components:
             errors: [Not enough credits.]
     NotFound:
       description: The resource does not exist or does not belong to your account.
+      headers:
+        RateLimit-Policy:
+          $ref: '#/components/headers/RateLimit-Policy'
+        RateLimit:
+          $ref: '#/components/headers/RateLimit'
       content:
         application/json:
           schema:
@@ -958,7 +1094,14 @@ components:
           example:
             code: NotFound
     RateLimit:
-      description: Rate limit exceeded (1,000 requests per minute per API key).
+      description: Rate limit exceeded (1,000 requests per minute per API key). Retry after the number of seconds in `Retry-After`.
+      headers:
+        RateLimit-Policy:
+          $ref: '#/components/headers/RateLimit-Policy'
+        RateLimit:
+          $ref: '#/components/headers/RateLimit'
+        Retry-After:
+          $ref: '#/components/headers/Retry-After'
       content:
         application/json:
           schema:
@@ -968,6 +1111,11 @@ components:
             error: Too Many Requests
     ServerError:
       description: Unexpected server error. Try again later.
+      headers:
+        RateLimit-Policy:
+          $ref: '#/components/headers/RateLimit-Policy'
+        RateLimit:
+          $ref: '#/components/headers/RateLimit'
       content:
         application/json:
           schema:
@@ -981,6 +1129,7 @@ components:
         Error response. `code` is one of: `ValidationError`, `BadRequest`, `NoCoverage`, `NotAvailable`,
         `OutsideRegion`, `CreatorNotFound`, `Unauthorized`, `InsufficientCredits`, `NotFound`, `RateLimit`,
         `UnknownError`, `ServerError`. New codes may be added.
+      required: [code]
       properties:
         code:
           type: string
