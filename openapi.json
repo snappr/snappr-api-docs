@@ -273,7 +273,7 @@
         ],
         "operationId": "createBooking",
         "summary": "Create a photoshoot booking",
-        "description": "Creates a photoshoot booking. There are two ways to create one:\n\n1. Provide all details including `start_at`. The end-customer is notified once the booking is placed.\n2. Set `start_at` to `null`. Snappr contacts the end-customer (email and/or mobile phone) to pick a\n   date and time, and the response includes a `scheduling_url` they can use. `start_at` cannot be\n   `null` when `creator_id` is set.\n\nProvide either `latitude` and `longitude`, or `address`. If both are provided, only `latitude` and\n`longitude` are used. Booking a time with no available photographer returns a `400` with code\n`NotAvailable`; an account without enough credits gets `402` `InsufficientCredits`.\n",
+        "description": "Creates a photoshoot booking. There are two ways to create one:\n\n1. Provide all details including `start_at`. The end-customer is notified once the booking is placed.\n2. Set `start_at` to `null`. Snappr contacts the end-customer (email and/or mobile phone) to pick a\n   date and time, and the response includes a `scheduling_url` they can use. `start_at` cannot be\n   `null` when `creator_id` is set.\n\nProvide either `latitude` and `longitude`, or `address`. If both are provided, only `latitude` and\n`longitude` are used. Booking a time with no available photographer returns a `400` with code\n`NotAvailable`; an account without enough credits gets `402` `InsufficientCredits`.\n\nFor a `food` booking you can optionally send the restaurant's `restaurant_name`,\n`restaurant_address` and `source_url`, and your `menu_items` to get a per-item report in the\nbooking's `menu_items` (see `MenuItem`). The response echoes your items straight away, each\n`pending` with its own `uid`. When the booking is `completed`, Snappr matches your items to the\ndelivered images by `internal_id`, falling back to name; sending items doesn't guarantee images of them.\n\n`restaurant_name`, `restaurant_address`, `source_url` and `menu_items` only apply when `shoottype`\nis `food`. Sent with any other `shoottype`, they are ignored: not validated, not stored and not\nechoed in the response, and the request succeeds. When `shoottype` is `food`, returns\n`400 ValidationError` when `menu_items` has more than 1000 items, when two items share an\n`internal_id`, or when an item is missing its `internal_id` or `name`.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/AcceptVersion"
@@ -286,26 +286,69 @@
               "schema": {
                 "$ref": "#/components/schemas/BookingCreate"
               },
-              "example": {
-                "title": "Emerald Theatre Shoot",
-                "latitude": 34.0522,
-                "longitude": -118.2437,
-                "shoottype": "event",
-                "start_at": "2018-12-01T07:30:00Z",
-                "duration": 120,
-                "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
-                "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
-                "customer_firstname": "Mary",
-                "customer_surname": "Smith",
-                "customer_email": "test@snappr.com",
-                "customer_mobilephone": "+14153339966",
-                "customer_company": "Snappr Inc.",
-                "internal_id": "123-ABC",
-                "tags": [
-                  "tag1",
-                  "tag2",
-                  "tag3"
-                ]
+              "examples": {
+                "event": {
+                  "summary": "Event booking",
+                  "value": {
+                    "title": "Emerald Theatre Shoot",
+                    "latitude": 34.0522,
+                    "longitude": -118.2437,
+                    "shoottype": "event",
+                    "start_at": "2018-12-01T07:30:00Z",
+                    "duration": 120,
+                    "location_notes": "Location is Emerald Theatre - ring buzzer at main entrance on arrival",
+                    "style_notes": "Shots of as many members of crowd as possible; shallow depth of field where possible",
+                    "customer_firstname": "Mary",
+                    "customer_surname": "Smith",
+                    "customer_email": "test@snappr.com",
+                    "customer_mobilephone": "+14153339966",
+                    "customer_company": "Snappr Inc.",
+                    "internal_id": "123-ABC",
+                    "tags": [
+                      "tag1",
+                      "tag2",
+                      "tag3"
+                    ]
+                  }
+                },
+                "food": {
+                  "summary": "Food booking with menu items",
+                  "value": {
+                    "title": "Sample Bistro Menu Shoot",
+                    "latitude": 34.0522,
+                    "longitude": -118.2437,
+                    "shoottype": "food",
+                    "start_at": "2026-12-01T15:00:00Z",
+                    "duration": 60,
+                    "location_notes": "Sample Bistro - ask for the manager at the front counter on arrival",
+                    "style_notes": "One hero shot per dish on a plain table; natural light where possible",
+                    "customer_firstname": "Mary",
+                    "customer_surname": "Smith",
+                    "customer_email": "test@snappr.com",
+                    "customer_mobilephone": "+14153339966",
+                    "customer_company": "Sample Bistro",
+                    "internal_id": "456-DEF",
+                    "restaurant_name": "Sample Bistro",
+                    "restaurant_address": "123 Example Street, Sampletown, CA 90000, USA",
+                    "source_url": "https://www.restaurant-app.example/store/Zk8pQ2mN7xL4",
+                    "menu_items": [
+                      {
+                        "internal_id": "7c1e3a5b-9d2f-4b6e-8a0c-2f4d6b8e1a3c",
+                        "name": "Pizza Margherita (Small)",
+                        "description": "Tomato, mozzarella and basil, 25 cm"
+                      },
+                      {
+                        "internal_id": "3e5a7c9b-1d4f-4a6c-9e2b-5d7f9a1c3e6b",
+                        "name": "Pizza Margherita (Large)",
+                        "description": "Tomato, mozzarella and basil, 35 cm"
+                      },
+                      {
+                        "internal_id": "9a2c4e6b-8d1f-4c3a-b5e7-0f2a4c6e8b1d",
+                        "name": "Panna Cotta"
+                      }
+                    ]
+                  }
+                }
               }
             }
           }
@@ -484,7 +527,7 @@
         ],
         "operationId": "listBookingImages",
         "summary": "List a booking's images",
-        "description": "Lists the delivered images of a booking. The booking must have status `completed`; otherwise the request fails with `400` code `BadRequest`.",
+        "description": "Lists the delivered images of a booking. The booking must have status `completed`; otherwise the request fails with `400` code `BadRequest`.\n\nOn a booking that has `menu_items`, each image also lists the menu items it shows: one image can\nbelong to several items (e.g. one photo for several sizes of a pizza), and `menu_item_uids` joins\nit to the booking's `menu_items`.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/AcceptVersion"
@@ -622,7 +665,7 @@
         ],
         "operationId": "createMagicJob",
         "summary": "Create a Magic Job",
-        "description": "Creates a Magic Job. It is returned with status `created`; Snappr then locates the business's\nlisting, generates the images and delivers them in one or more batches. Each delivery triggers an\n`images_delivered` webhook event.\n",
+        "description": "Creates a Magic Job. It is returned with status `created`; Snappr then locates the business's\nlisting, generates the images and delivers them in one or more batches. Each delivery triggers an\n`images_delivered` webhook event.\n\nFor a `menu` job you can optionally send `menu_items` to get a per-item report in the job's\n`menu_items` (see `MenuItem`). The response echoes your items straight away, each `pending`\nwith its own `uid`. Snappr still builds the image set from the restaurant's store page and matches\nyour items to the delivered images by `internal_id`, falling back to name; sending items doesn't\nguarantee images for them.\n\n`restaurant_name`, `restaurant_address` and `menu_items` only apply when `type` is `menu`. Sent with\nany other `type`, they are ignored: not validated, not stored and not echoed in the response, and\nthe request succeeds. When `type` is `menu`, returns `400 ValidationError` when `menu_items` has\nmore than 1000 items, when two items share an `internal_id`, or when an item is missing its\n`internal_id` or `name`.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/AcceptVersion"
@@ -639,7 +682,28 @@
                 "type": "menu",
                 "restaurant_name": "Sample Bistro",
                 "restaurant_address": "123 Example Street, Sampletown, CA 90000, USA",
-                "internal_id": "st-7qk2mx9pl4"
+                "internal_id": "st-7qk2mx9pl4",
+                "menu_items": [
+                  {
+                    "internal_id": "e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b",
+                    "name": "Insalata della Casa (Groß)",
+                    "description": "Mixed leaves, cherry tomatoes, cucumber and house dressing"
+                  },
+                  {
+                    "internal_id": "b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f",
+                    "name": "Pizza Diavola (Medium)",
+                    "description": "Tomato, mozzarella and spicy salami, 30 cm"
+                  },
+                  {
+                    "internal_id": "c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b",
+                    "name": "Pizza Diavola (Large)"
+                  },
+                  {
+                    "internal_id": "f6a8c0e2-4b6d-4f8a-9c1e-5d7b9f1a3c4e",
+                    "name": "Tiramisu",
+                    "description": "Espresso-soaked ladyfingers with mascarpone cream"
+                  }
+                ]
               }
             }
           }
@@ -750,7 +814,7 @@
         ],
         "operationId": "getMagicJob",
         "summary": "Get a Magic Job",
-        "description": "Retrieves one Magic Job. A job moves through `created`, `in_progress`, `completed` and `failed`.\nIt stays `in_progress` while further deliveries are expected and becomes `completed` once all\nimages are delivered, at which point `completed_at` and `images_count` are populated. Failed\njobs are followed up by your account manager.\n",
+        "description": "Retrieves one Magic Job. A job moves through `created`, `in_progress`, `completed` and `failed`.\nIt stays `in_progress` while further deliveries are expected and becomes `completed` once all\nimages are delivered, at which point `completed_at` and `images_count` are populated. Failed\njobs are followed up by your account manager. `menu_items` reports which menu items got images.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/AcceptVersion"
@@ -795,7 +859,7 @@
         ],
         "operationId": "listMagicJobImages",
         "summary": "List a Magic Job's images",
-        "description": "Lists the current complete set of delivered images for a Magic Job, across all delivery batches.\nEach result is one image for one menu item. If Snappr replaces an image after delivery it keeps\nits `uid` (the stable handle for diffing) while `internal_ids` and URLs may change. URLs are\nsigned and expire at `url_expires_at`; call again for freshly signed URLs.\n",
+        "description": "Lists the current complete set of delivered images for a Magic Job, across all delivery batches.\nEach result is one image, which can belong to several menu items (e.g. one photo for several\nsizes of a pizza); `menu_item_uids` joins it to the job's `menu_items`. If Snappr replaces an\nimage after delivery it keeps its `uid` (the stable handle for diffing) while `internal_ids` and\nURLs may change. URLs are signed and expire at `url_expires_at`; call again for freshly signed URLs.\n",
         "parameters": [
           {
             "$ref": "#/components/parameters/AcceptVersion"
@@ -1798,6 +1862,27 @@
             "items": {
               "type": "string"
             }
+          },
+          "restaurant_name": {
+            "type": "string",
+            "description": "Name of the restaurant as it appears on your platform. If omitted, `title` is used. Only applies when `shoottype` is `food`; ignored for any other shoot type."
+          },
+          "restaurant_address": {
+            "type": "string",
+            "description": "Full address of the restaurant as a single string. If omitted, `address` is used. Only applies when `shoottype` is `food`; ignored for any other shoot type."
+          },
+          "source_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the restaurant's store page on your platform. Only applies when `shoottype` is `food`; ignored for any other shoot type."
+          },
+          "menu_items": {
+            "type": "array",
+            "maxItems": 1000,
+            "description": "The items on the restaurant's menu, for a per-item report in the booking's `menu_items`. Only applies\nwhen `shoottype` is `food`; ignored, and not validated, for any other shoot type. `[]` is the same as\nomitting the field. Each item's `internal_id` must be unique within the list.\n",
+            "items": {
+              "$ref": "#/components/schemas/MenuItemCreate"
+            }
           }
         }
       },
@@ -1944,6 +2029,26 @@
             ],
             "format": "uri"
           },
+          "restaurant_name": {
+            "type": "string",
+            "description": "Present only on a `food` booking created with `restaurant_name`."
+          },
+          "restaurant_address": {
+            "type": "string",
+            "description": "Present only on a `food` booking created with `restaurant_address`."
+          },
+          "source_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Present only on a `food` booking created with `source_url`."
+          },
+          "menu_items": {
+            "type": "array",
+            "description": "Per-item report: which menu items got images. Present only on a `food` booking created with a\nnon-empty `menu_items` list; omitted otherwise (unlike a Magic Job, a booking never lists discovered\nitems when you sent none). Every item is `pending` until the booking is `completed`. Then each item\nyou sent becomes `delivered` or `not_found`, and the items Snappr found in the images that you didn't\nsend are added (`provided: false`). Items you sent come first, in the order you sent them.\n",
+            "items": {
+              "$ref": "#/components/schemas/MenuItem"
+            }
+          },
           "created_at": {
             "type": "string",
             "format": "date-time"
@@ -2010,6 +2115,21 @@
               "null"
             ]
           },
+          "internal_ids": {
+            "type": "array",
+            "description": "The `internal_id`s of the menu items this image shows, skipping items whose `internal_id` is `null`.\nPresent only on a booking that has `menu_items`. Can be empty, e.g. for a photo of the restaurant\nitself. Treat as opaque strings.\n",
+            "items": {
+              "type": "string"
+            }
+          },
+          "menu_item_uids": {
+            "type": "array",
+            "description": "The `uid`s of the menu items in the booking's `menu_items` that this image shows. Present only on a\nbooking that has `menu_items`. One image can belong to several items, e.g. several sizes of a pizza.\n",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
           "url_original": {
             "type": "string",
             "format": "uri",
@@ -2061,20 +2181,28 @@
           },
           "restaurant_name": {
             "type": "string",
-            "description": "Name of the restaurant as it appears on your platform. Required when `type` is `menu`."
+            "description": "Name of the restaurant as it appears on your platform. Required when `type` is `menu`; ignored for any other type."
           },
           "restaurant_address": {
             "type": "string",
-            "description": "Full address of the restaurant as a single string. Required when `type` is `menu`."
+            "description": "Full address of the restaurant as a single string. Required when `type` is `menu`; ignored for any other type."
           },
           "internal_id": {
             "type": "string",
-            "description": "Your own identifier, for matching the job with your data."
+            "description": "Your restaurant's or menu's ID, for matching the job with your data."
           },
           "source_url": {
             "type": "string",
             "format": "uri",
             "description": "URL of the restaurant's store page on your platform. If omitted, Snappr locates it from the name, address and `internal_id`."
+          },
+          "menu_items": {
+            "type": "array",
+            "maxItems": 1000,
+            "description": "The items on the restaurant's menu, for a per-item report in the job's `menu_items`. Only applies\nwhen `type` is `menu`; ignored, and not validated, for any other type. `[]` is the same as omitting\nthe field. Each item's `internal_id` must be unique within the list.\n",
+            "items": {
+              "$ref": "#/components/schemas/MenuItemCreate"
+            }
           }
         }
       },
@@ -2131,6 +2259,13 @@
             ],
             "description": "Platform Snappr found the listing on."
           },
+          "internal_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Your restaurant's or menu's ID, as you sent it."
+          },
           "source_url": {
             "type": [
               "string",
@@ -2138,15 +2273,16 @@
             ],
             "format": "uri"
           },
-          "internal_id": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
           "images_count": {
             "type": "integer",
             "description": "Number of delivered images. Present only when `status` is `completed`."
+          },
+          "menu_items": {
+            "type": "array",
+            "description": "Per-item report: which menu items got images. Present on every `menu` job. Items you sent come\nfirst, in the order you sent them, followed by the items Snappr discovered on the source platform.\nIf you sent no `menu_items`, it holds only discovered items: `[]` on a new job, growing as images\nare delivered.\n",
+            "items": {
+              "$ref": "#/components/schemas/MenuItem"
+            }
           },
           "created_at": {
             "type": "string",
@@ -2158,11 +2294,90 @@
           }
         }
       },
+      "MenuItemCreate": {
+        "type": "object",
+        "description": "One menu item you send in `menu_items` when you create a Magic Job or a booking.",
+        "required": [
+          "internal_id",
+          "name"
+        ],
+        "properties": {
+          "internal_id": {
+            "type": "string",
+            "description": "Your ID for the item. Unique within `menu_items`. Treated as an opaque string."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the item."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the item."
+          }
+        }
+      },
+      "MenuItem": {
+        "type": "object",
+        "description": "One menu item in the per-item report of a Magic Job or a booking. Once the Magic Job or booking is\n`completed`, every item falls into one of three groups: `provided` and `delivered` (you sent it and\nit got images), `provided` and `not_found` (you sent it and Snappr found no image for it), or not\n`provided` (Snappr discovered it).\n",
+        "required": [
+          "uid",
+          "internal_id",
+          "name",
+          "description",
+          "provided",
+          "status",
+          "images_count"
+        ],
+        "properties": {
+          "uid": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Snappr's stable identifier for the item, generated and controlled by Snappr. It never changes."
+          },
+          "internal_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Your ID for the item, as you sent it. For a discovered item, the ID Snappr found for it (on a Magic\nJob, the item's ID on the source platform), or `null` if there is none.\n"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the item, as you sent it. For a discovered item, the name Snappr found for it (on a Magic\nJob, the same as the image's `menu_item_name`).\n"
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Description of the item, as you sent it; `null` if you sent none. Always `null` for a discovered item."
+          },
+          "provided": {
+            "type": "boolean",
+            "description": "`true` if you sent the item in `menu_items`. `false` if Snappr discovered it (on a Magic Job, on\nthe source platform); a discovered item is always `delivered`.\n"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "delivered",
+              "not_found"
+            ],
+            "description": "`pending`: no images yet and the Magic Job or booking is not `completed`. `delivered`: at least\none image. `not_found`: the Magic Job or booking is `completed` and the item has no images.\n"
+          },
+          "images_count": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Number of delivered images linked to the item. An image that belongs to several items counts towards\neach of them, so the items' counts can add up to more than the total number of delivered images.\n"
+          }
+        }
+      },
       "MagicJobImage": {
         "type": "object",
         "required": [
           "uid",
           "internal_ids",
+          "menu_item_uids",
           "url_original",
           "url_thumb",
           "url_expires_at"
@@ -2181,9 +2396,17 @@
           },
           "internal_ids": {
             "type": "array",
-            "description": "The menu item's identifier(s) in your catalog, as found on the source platform. Treat as opaque strings.",
+            "description": "The menu items' identifier(s) in your catalog, as found on the source platform, or from your submitted menu item when Snappr matched it by name. Treat as opaque strings.",
             "items": {
               "type": "string"
+            }
+          },
+          "menu_item_uids": {
+            "type": "array",
+            "description": "The `uid`s of the menu items in the job's `menu_items` that this image belongs to. One image can belong to several items, e.g. several sizes of a pizza.",
+            "items": {
+              "type": "string",
+              "format": "uuid"
             }
           },
           "width": {

@@ -710,7 +710,7 @@ All available times within the range of the local date will be returned. However
 </aside>
 <h1 id='bookings'>Bookings</h1><h2 id='create-new-booking'>Create New Booking</h2>
 <blockquote>
-<p>Example request when start_at, latitude and, longitude are provided:</p>
+<p>Example request when start_at, latitude and longitude are provided:</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/bookings"</span> <span class="se">\</span>
   -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
@@ -937,6 +937,109 @@ let bookings = api.bookings.post({
   </span><span class="s2">"tags"</span><span class="p">:</span><span class="w">  </span><span class="p">[</span><span class="s2">"tag1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tag2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tag3"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+<blockquote>
+<p>Example request when shoottype is food and menu items are provided:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.snappr.com/bookings"</span> <span class="se">\</span>
+  -H <span class="s2">"Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z"</span> <span class="se">\</span>
+  -H <span class="s1">'accept-version: 1.0.0'</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  --data-binary <span class="s1">$'{
+    "title": "Sample Bistro Menu Shoot",
+    "latitude": 34.0522,
+    "longitude": -118.2437,
+    "shoottype": "food",
+    "start_at": "2026-12-01T15:00:00Z",
+    "duration": 60,
+    "location_notes": "Sample Bistro - ask for the manager at the front counter on arrival",
+    "style_notes": "One hero shot per dish on a plain table; natural light where possible",
+    "customer_firstname": "Mary",
+    "customer_surname": "Smith",
+    "customer_email": "test@snappr.com",
+    "customer_mobilephone": "+14153339966",
+    "customer_company": "Sample Bistro",
+    "internal_id": "456-DEF",
+    "restaurant_name": "Sample Bistro",
+    "restaurant_address": "123 Example Street, Sampletown, CA 90000, USA",
+    "source_url": "https://www.restaurant-app.example/store/Zk8pQ2mN7xL4",
+    "menu_items": [
+      {
+        "internal_id": "7c1e3a5b-9d2f-4b6e-8a0c-2f4d6b8e1a3c",
+        "name": "Pizza Margherita (Small)",
+        "description": "Tomato, mozzarella and basil, 25 cm"
+      },
+      {
+        "internal_id": "3e5a7c9b-1d4f-4a6c-9e2b-5d7f9a1c3e6b",
+        "name": "Pizza Margherita (Large)",
+        "description": "Tomato, mozzarella and basil, 35 cm"
+      },
+      {
+        "internal_id": "9a2c4e6b-8d1f-4c3a-b5e7-0f2a4c6e8b1d",
+        "name": "Panna Cotta"
+      }
+    ]
+  }'</span>
+</code></pre>
+<blockquote>
+<p>Example JSON response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5d8f2a4c-1e6b-4c9a-8f3d-7b2e9a1c4f6e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Bistro Menu Shoot"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paid"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"credits"</span><span class="p">:</span><span class="w"> </span><span class="mi">249</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">34.0522</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-118.2437</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"shoottype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"food"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"start_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-12-01T15:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"duration"</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"location_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Bistro - ask for the manager at the front counter on arrival"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"style_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One hero shot per dish on a plain table; natural light where possible"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mary"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Bistro"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"456-DEF"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creator_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creator_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"69a66cb2-dcb2-4803-9d23-f7894e443e68"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creator_profile_image_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://snappr.imgix.net/d7f5be08-e189-4c9b-bdb5-172111560d9d?auto=format&amp;w=300&amp;h=300&amp;fit=facearea&amp;facepad=2&amp;s=3dd41a8404ba86d78d54adad40fd9108"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"restaurant_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Bistro"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"restaurant_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 Example Street, Sampletown, CA 90000, USA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.restaurant-app.example/store/Zk8pQ2mN7xL4"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"menu_items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1f3b5d7a-9c2e-4a6b-8d0f-3e5a7c9b1d4f"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7c1e3a5b-9d2f-4b6e-8a0c-2f4d6b8e1a3c"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pizza Margherita (Small)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tomato, mozzarella and basil, 25 cm"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6d8f0b2c-4e6a-4c8e-a1b3-5f7d9b1e3a6c"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3e5a7c9b-1d4f-4a6c-9e2b-5d7f9a1c3e6b"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pizza Margherita (Large)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tomato, mozzarella and basil, 35 cm"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b3d5f7a9-1c4e-4e6a-9c2d-7a9b1d3f5e8a"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9a2c4e6b-8d1f-4c3a-b5e7-0f2a4c6e8b1d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Panna Cotta"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-11-18T09:12:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-11-18T09:12:00Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p>This endpoint creates a new photoshoot booking.</p>
 
 <p>Broadly, there are two main ways to create a new photoshoot booking, and examples are provided for each:</p>
@@ -945,6 +1048,8 @@ let bookings = api.bookings.post({
 <li>Provide all shoot details <em>including</em> the start date and time for the shoot (<code>start_at</code>). With this option, Snappr will not seek any input on shoot details from your end-customer, they will simply be notified if the booking is placed successfully.</li>
 <li>Provide all shoot details <em>except</em> the start date and time for the shoot (<code>start_at</code> set to <code>null</code>). This will trigger an automatic process to collect the start date and time from your end-customer using the contact details (email and/or mobile phone) provided. End-customers will be able to select from all available dates and times for the shoot location, using a Snappr UI.</li>
 </ol>
+
+<p>For a <code>food</code> booking you can also send the restaurant&#39;s details and your <code>menu_items</code>. Snappr then reports, item by item, which of them got images (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>). The response echoes your items straight away, each with status <code>pending</code> and its own <code>uid</code>.</p>
 <h3 id='http-request-3'>HTTP Request</h3>
 <p><code>POST https://api.snappr.com/bookings</code></p>
 <h3 id='request-body-parameters'>Request (Body) Parameters</h3>
@@ -1058,11 +1163,53 @@ let bookings = api.bookings.post({
 <td>An array of strings containing tags used to identify bookings within the Snappr portal, also utilized for creating reports. (Limit chars 255)</td>
 <td>No</td>
 </tr>
+<tr>
+<td><code>restaurant_name</code></td>
+<td>String</td>
+<td>Name of the restaurant as it appears on your platform. If omitted, <code>title</code> is used.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>restaurant_address</code></td>
+<td>String</td>
+<td>Full address of the restaurant as a single string. If omitted, <code>address</code> is used.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>source_url</code></td>
+<td>URL</td>
+<td>URL of the restaurant&#39;s store page on your platform.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>menu_items</code></td>
+<td>Array of Menu item objects</td>
+<td>The items on the restaurant&#39;s menu, for a per-item report (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>). Maximum of 1000 items. Sending <code>[]</code> is the same as omitting the field.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>menu_items[].internal_id</code></td>
+<td>String</td>
+<td>Your ID for the menu item. Must be unique within <code>menu_items</code>. Treated as an opaque string.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>menu_items[].name</code></td>
+<td>String</td>
+<td>Name of the menu item.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>menu_items[].description</code></td>
+<td>String</td>
+<td>Description of the menu item.</td>
+<td>No</td>
+</tr>
 </tbody></table>
 
 <aside class="notice">
 
-If <code>start_at</code> is set to <code>null</code> the system assumes you want the end-customer to pick the start date and time, the response will include a <code>scheduling_url</code> that can be used by the end-customer to pick an appropiate date and time
+If <code>start_at</code> is set to <code>null</code> the system assumes you want the end-customer to pick the start date and time, the response will include a <code>scheduling_url</code> that can be used by the end-customer to pick an appropriate date and time
 
 </aside>
 
@@ -1072,6 +1219,20 @@ Always check <a href="#availability">availability</a> before trying to create a 
 
 <aside class="notice">
 *One of the following is required: <code>address</code>; or <code>latitude</code> and <code>longitude</code>. If both are provided, only <code>latitude</code> and <code>longitude</code> will be used
+</aside>
+
+<aside class="notice">
+<code>restaurant_name</code>, <code>restaurant_address</code>, <code>source_url</code> and <code>menu_items</code> only apply when <code>shoottype</code> is <code>food</code>. If you send any of them with another shoot type, they are ignored: they are not validated, not stored and not returned in the response, and the request still succeeds. When <code>shoottype</code> is <code>food</code>, you get a 400 error with code <code>ValidationError</code> when <code>menu_items</code> has more than 1000 items, when two items share the same <code>internal_id</code>, or when an item is missing its <code>internal_id</code> or <code>name</code>. The booking's own <code>internal_id</code> is unchanged: it is still your ID for the booking.
+</aside>
+<h3 id='food-booking-menu-items'>Food Booking Menu Items</h3>
+<p>A <code>food</code> booking created with a non-empty <code>menu_items</code> list returns a <code>menu_items</code> list: Snappr&#39;s report of which menu items got images. It is returned by <a href="#create-new-booking">Create New Booking</a>, <a href="#get-all-bookings">Get All Bookings</a>, <a href="#get-single-booking">Get Single Booking</a> and the booking webhook events (see <a href="#custom-webhooks">Custom Webhooks</a>). Each item has the same fields as in a magic job&#39;s report (see <a href="#menu-items-report">Menu Items Report</a>). <code>restaurant_name</code>, <code>restaurant_address</code> and <code>source_url</code> are returned only if you sent them.</p>
+
+<p>Every item is <code>pending</code> until the booking is <code>completed</code>. When the booking completes, Snappr matches the photographer&#39;s delivered images to your items by <code>internal_id</code>, falling back to the item&#39;s name. Each item you sent then becomes <code>delivered</code> (it got at least one image) or <code>not_found</code> (it got none), and the items Snappr found in the images but you didn&#39;t send are added with <code>provided: false</code>. Items you sent come first, in the order you sent them. Join images to items with each image&#39;s <code>menu_item_uids</code> (see <a href="#get-all-images-for-a-booking">Get All Images For a Booking</a>).</p>
+
+<p>Your items are used for this report, not as a shot list for the photographer, so sending menu items doesn&#39;t guarantee images of them: the report tells you which ones got images.</p>
+
+<aside class="notice">
+Unlike a magic job, which lists the items Snappr discovered even when you sent no <code>menu_items</code>, a booking only has <code>menu_items</code> if you sent a non-empty list. Bookings created without menu items, and bookings of other shoot types, don't include the field.
 </aside>
 <h2 id='get-all-bookings'>Get All Bookings</h2>
 <blockquote>
@@ -1131,7 +1292,7 @@ let bookings = api.bookings.get({
       </span><span class="s2">"shoottype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"family"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"start_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-12-01T07:30:00Z"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"duration"</span><span class="p">:</span><span class="w"> </span><span class="mi">180</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"location_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Meet near the park entance"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"location_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Meet near the park entrance"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"style_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Variety of group shots of the family with different backgrounds"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
@@ -1146,12 +1307,12 @@ let bookings = api.bookings.get({
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
   </span><span class="s2">"offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves all bookings.</p>
+<p>This endpoint retrieves all bookings. A <code>food</code> booking created with menu items also includes <code>menu_items</code> (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>).</p>
 <h3 id='http-request-4'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/bookings?limit=<span class="route_param">:limit</span>&amp;offset=<span class="route_param">:offset</span></code></p>
 <h3 id='query-parameters-3'>Query Parameters</h3>
@@ -1166,13 +1327,13 @@ let bookings = api.bookings.get({
 <tr>
 <td><code>limit</code></td>
 <td>Integer</td>
-<td>Maximum number of bookings to be returned (maximum of 100). Defaults to <code>100</code>.</td>
+<td>Maximum number of bookings to be returned (maximum of 5000). Defaults to <code>30</code>.</td>
 <td>No</td>
 </tr>
 <tr>
 <td><code>offset</code></td>
 <td>Integer</td>
-<td>Offset used for pagination if there are more bookings than the limit (or more than 100 bookings if there is no limit). Defaults to <code>0</code>.</td>
+<td>Offset used for pagination if there are more bookings than the limit (or more than 30 bookings if there is no limit). Defaults to <code>0</code>.</td>
 <td>No</td>
 </tr>
 </tbody></table>
@@ -1224,11 +1385,79 @@ let bookings = api.bookings.get({
   </span><span class="s2">"creator_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"69a66cb2-dcb2-4803-9d23-f7894e443e68"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"creator_profile_image_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://snappr.imgix.net/d7f5be08-e189-4c9b-bdb5-172111560d9d?auto=format&amp;w=300&amp;h=300&amp;fit=facearea&amp;facepad=2&amp;s=3dd41a8404ba86d78d54adad40fd9108"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-09-01T09:12:00Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a specific booking using the ID of the booking.</p>
+<blockquote>
+<p>Example JSON response when a completed food booking has menu items:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5d8f2a4c-1e6b-4c9a-8f3d-7b2e9a1c4f6e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Bistro Menu Shoot"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"completed"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"credits"</span><span class="p">:</span><span class="w"> </span><span class="mi">249</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">34.0522</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-118.2437</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"shoottype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"food"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"start_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-12-01T15:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"duration"</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"location_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Bistro - ask for the manager at the front counter on arrival"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"style_notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One hero shot per dish on a plain table; natural light where possible"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_firstname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mary"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_surname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@snappr.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_mobilephone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"+14153339966"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_company"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Bistro"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"456-DEF"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creator_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hollie B."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creator_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"69a66cb2-dcb2-4803-9d23-f7894e443e68"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creator_profile_image_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://snappr.imgix.net/d7f5be08-e189-4c9b-bdb5-172111560d9d?auto=format&amp;w=300&amp;h=300&amp;fit=facearea&amp;facepad=2&amp;s=3dd41a8404ba86d78d54adad40fd9108"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"restaurant_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Bistro"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"restaurant_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 Example Street, Sampletown, CA 90000, USA"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.restaurant-app.example/store/Zk8pQ2mN7xL4"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"menu_items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1f3b5d7a-9c2e-4a6b-8d0f-3e5a7c9b1d4f"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7c1e3a5b-9d2f-4b6e-8a0c-2f4d6b8e1a3c"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pizza Margherita (Small)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tomato, mozzarella and basil, 25 cm"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6d8f0b2c-4e6a-4c8e-a1b3-5f7d9b1e3a6c"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3e5a7c9b-1d4f-4a6c-9e2b-5d7f9a1c3e6b"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pizza Margherita (Large)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tomato, mozzarella and basil, 35 cm"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b3d5f7a9-1c4e-4e6a-9c2d-7a9b1d3f5e8a"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9a2c4e6b-8d1f-4c3a-b5e7-0f2a4c6e8b1d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Panna Cotta"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not_found"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e8a0c2d4-6f1b-4b3d-8e5f-9c1a3e5b7d0f"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Garlic Bread"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-11-18T09:12:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-12-02T18:40:00Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves a specific booking using the ID of the booking. On a <code>food</code> booking created with menu items, <code>menu_items</code> reports which items got images (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>).</p>
 <h3 id='http-request-5'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/bookings/<span class="route_param">:booking_uid</span></code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
@@ -1265,7 +1494,28 @@ Magic Jobs are available to Enterprise accounts. Contact your account manager to
     "type": "menu",
     "restaurant_name": "Sample Bistro",
     "restaurant_address": "123 Example Street, Sampletown, CA 90000, USA",
-    "internal_id": "st-7qk2mx9pl4"
+    "internal_id": "st-7qk2mx9pl4",
+    "menu_items": [
+      {
+        "internal_id": "e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b",
+        "name": "Insalata della Casa (Groß)",
+        "description": "Mixed leaves, cherry tomatoes, cucumber and house dressing"
+      },
+      {
+        "internal_id": "b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f",
+        "name": "Pizza Diavola (Medium)",
+        "description": "Tomato, mozzarella and spicy salami, 30 cm"
+      },
+      {
+        "internal_id": "c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b",
+        "name": "Pizza Diavola (Large)"
+      },
+      {
+        "internal_id": "f6a8c0e2-4b6d-4f8a-9c1e-5d7b9f1a3c4e",
+        "name": "Tiramisu",
+        "description": "Espresso-soaked ladyfingers with mascarpone cream"
+      }
+    ]
   }'</span>
 </code></pre>
 <blockquote>
@@ -1279,13 +1529,53 @@ Magic Jobs are available to Enterprise accounts. Contact your account manager to
   </span><span class="s2">"restaurant_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Bistro"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"restaurant_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 Example Street, Sampletown, CA 90000, USA"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"source_platform"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"st-7qk2mx9pl4"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"menu_items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6b1d3f5a-7c9e-4a2b-8d0f-1e3c5a7b9d2f"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Insalata della Casa (Groß)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mixed leaves, cherry tomatoes, cucumber and house dressing"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2c4e6a8b-0d1f-4e3a-9b5c-7d9f1b3e5a6c"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pizza Diavola (Medium)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tomato, mozzarella and spicy salami, 30 cm"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8e0a2c4d-6f1b-4d3e-a5c7-9b1d3f5e7a0b"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pizza Diavola (Large)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4a6c8e0b-2d4f-4b6a-8c1e-3f5a7c9e1b2d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f6a8c0e2-4b6d-4f8a-9c1e-5d7b9f1a3c4e"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tiramisu"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Espresso-soaked ladyfingers with mascarpone cream"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-12T09:12:00Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-12T09:12:00Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint creates a new magic job. The job is returned with status <code>created</code> and a <code>201</code> status code; Snappr then locates the business&#39;s listing, generates the images and delivers them in one or more batches. Each delivery triggers an <code>images_delivered</code> event on your webhook (see <a href="#custom-webhooks">Custom Webhooks</a>).</p>
+
+<p>For a <code>menu</code> job you can optionally send your <code>menu_items</code>. Snappr then reports, item by item, which of them got images (see <a href="#menu-items-report">Menu Items Report</a>). The response echoes your items straight away, each with status <code>pending</code> and its own <code>uid</code>.</p>
 <h3 id='http-request-6'>HTTP Request</h3>
 <p><code>POST https://api.snappr.com/magic-jobs</code></p>
 <h3 id='request-body-parameters-2'>Request (Body) Parameters</h3>
@@ -1318,7 +1608,7 @@ Magic Jobs are available to Enterprise accounts. Contact your account manager to
 <tr>
 <td><code>internal_id</code></td>
 <td>String</td>
-<td>ID for your internal systems. Useful for matching a magic job with your internal data.</td>
+<td>Your restaurant&#39;s or menu&#39;s ID in your internal systems. Useful for matching a magic job with your internal data.</td>
 <td>No</td>
 </tr>
 <tr>
@@ -1327,10 +1617,100 @@ Magic Jobs are available to Enterprise accounts. Contact your account manager to
 <td>URL of the restaurant&#39;s store page on your platform. If omitted, Snappr locates the store page from <code>restaurant_name</code>, <code>restaurant_address</code> and <code>internal_id</code> when provided.</td>
 <td>No</td>
 </tr>
+<tr>
+<td><code>menu_items</code></td>
+<td>Array of Menu item objects</td>
+<td>The items on the restaurant&#39;s menu, for a per-item report (see <a href="#menu-items-report">Menu Items Report</a>). Maximum of 1000 items. Sending <code>[]</code> is the same as omitting the field.</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>menu_items[].internal_id</code></td>
+<td>String</td>
+<td>Your ID for the menu item. Must be unique within <code>menu_items</code>. Treated as an opaque string.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>menu_items[].name</code></td>
+<td>String</td>
+<td>Name of the menu item.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>menu_items[].description</code></td>
+<td>String</td>
+<td>Description of the menu item.</td>
+<td>No</td>
+</tr>
 </tbody></table>
 
 <aside class="notice">
 *Required when <code>type</code> is <code>menu</code>.
+</aside>
+
+<aside class="notice">
+<code>restaurant_name</code>, <code>restaurant_address</code> and <code>menu_items</code> only apply when <code>type</code> is <code>menu</code>. If you send any of them with another type, they are ignored: they are not validated, not stored and not returned in the response, and the request still succeeds. When <code>type</code> is <code>menu</code>, you get a 400 error with code <code>ValidationError</code> when <code>menu_items</code> has more than 1000 items, when two items share the same <code>internal_id</code>, or when an item is missing its <code>internal_id</code> or <code>name</code>.
+</aside>
+<h3 id='menu-items-report'>Menu Items Report</h3>
+<p>Every <code>menu</code> magic job returns a <code>menu_items</code> list: Snappr&#39;s report of which menu items got images. It is returned by <a href="#create-new-magic-job">Create New Magic Job</a>, <a href="#get-all-magic-jobs">Get All Magic Jobs</a>, <a href="#get-single-magic-job">Get Single Magic Job</a> and the <code>images_delivered</code> webhook event (see <a href="#custom-webhooks">Custom Webhooks</a>).</p>
+
+<p>Snappr still builds the image set from the restaurant&#39;s store page. It then matches each item you sent to the delivered images by <code>internal_id</code>, falling back to the item&#39;s name. Sending menu items doesn&#39;t guarantee images for them: the report tells you which ones got images.</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>uid</code></td>
+<td>String</td>
+<td>Snappr&#39;s identifier for the menu item. It never changes.</td>
+</tr>
+<tr>
+<td><code>internal_id</code></td>
+<td>String or null</td>
+<td>Your ID for the menu item, as you sent it. For an item Snappr discovered, the ID Snappr found for it (on a magic job, the item&#39;s ID on the source platform), or <code>null</code> if there is none.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>String</td>
+<td>Name of the menu item, as you sent it. For an item Snappr discovered, the name Snappr found for it (on a magic job, the same as the image&#39;s <code>menu_item_name</code>).</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>String or null</td>
+<td>Description of the menu item, as you sent it. <code>null</code> if you sent none, and always <code>null</code> for an item Snappr discovered.</td>
+</tr>
+<tr>
+<td><code>provided</code></td>
+<td>Boolean</td>
+<td><code>true</code> if you sent the item in <code>menu_items</code>. <code>false</code> if Snappr discovered it (on a magic job, on the source platform); such an item always has status <code>delivered</code>.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>String</td>
+<td><code>pending</code>: no images yet and the magic job or booking is not <code>completed</code>. <code>delivered</code>: the item has at least one image. <code>not_found</code>: the magic job or booking is <code>completed</code> and the item has no images.</td>
+</tr>
+<tr>
+<td><code>images_count</code></td>
+<td>Integer</td>
+<td>Number of delivered images linked to the item. Always present. An image that belongs to several items counts towards each of them, so the items&#39; counts can add up to more than the total number of delivered images.</td>
+</tr>
+</tbody></table>
+
+<p>Once the job is <code>completed</code>, every item falls into one of three groups:</p>
+
+<ol>
+<li><code>provided: true</code> and <code>status: delivered</code>: you sent the item and it got images.</li>
+<li><code>provided: true</code> and <code>status: not_found</code>: you sent the item and Snappr found no image for it.</li>
+<li><code>provided: false</code>: Snappr found the item on the source platform, but you didn&#39;t send it.</li>
+</ol>
+
+<p><code>not_found</code> only appears once the job is <code>completed</code>; until then, items without images are <code>pending</code>. Items you sent come first, in the order you sent them, followed by the items Snappr discovered. If you didn&#39;t send <code>menu_items</code>, the list holds only the items Snappr discovered: it is <code>[]</code> on a new job and grows as images are delivered. Join images to items with the image&#39;s <code>menu_item_uids</code> (see <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a>).</p>
+
+<aside class="notice">
+A <code>uid</code> is always generated and controlled by Snappr, for both the magic job and its menu items. An <code>internal_id</code> is always yours. Store the <code>uid</code>s Snappr returns, and send your own IDs as <code>internal_id</code>.
 </aside>
 <h2 id='get-all-magic-jobs'>Get All Magic Jobs</h2>
 <blockquote>
@@ -1353,9 +1733,56 @@ Magic Jobs are available to Enterprise accounts. Contact your account manager to
       </span><span class="s2">"restaurant_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Bistro"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"restaurant_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 Example Street, Sampletown, CA 90000, USA"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"source_platform"</span><span class="p">:</span><span class="w"> </span><span class="s2">"restaurant-app"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.restaurant-app.example/store/Zk8pQ2mN7xL4"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"st-7qk2mx9pl4"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.restaurant-app.example/store/Zk8pQ2mN7xL4"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"menu_items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6b1d3f5a-7c9e-4a2b-8d0f-1e3c5a7b9d2f"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Insalata della Casa (Groß)"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mixed leaves, cherry tomatoes, cucumber and house dressing"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2c4e6a8b-0d1f-4e3a-9b5c-7d9f1b3e5a6c"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pizza Diavola (Medium)"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tomato, mozzarella and spicy salami, 30 cm"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8e0a2c4d-6f1b-4d3e-a5c7-9b1d3f5e7a0b"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pizza Diavola (Large)"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4a6c8e0b-2d4f-4b6a-8c1e-3f5a7c9e1b2d"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f6a8c0e2-4b6d-4f8a-9c1e-5d7b9f1a3c4e"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tiramisu"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Espresso-soaked ladyfingers with mascarpone cream"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not_found"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d1f3b5a7-9c2e-4f6a-b8d0-2e4c6a8f1b3d"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3. Bruschetta al Pomodoro"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-12T09:12:00Z"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-15T16:25:30Z"</span><span class="w">
     </span><span class="p">},</span><span class="w">
@@ -1367,8 +1794,28 @@ Magic Jobs are available to Enterprise accounts. Contact your account manager to
       </span><span class="s2">"restaurant_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Example Trattoria"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"restaurant_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"45 Sample Avenue, Sampletown, CA 90000, USA"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"source_platform"</span><span class="p">:</span><span class="w"> </span><span class="s2">"restaurant-app"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.restaurant-app.example/store/Hq3wN8vT2kLp"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"st-4hn8vz2qr7"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.restaurant-app.example/store/Hq3wN8vT2kLp"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"menu_items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7f9b1d3e-5a2c-4e8f-9d1b-3c5e7a9f2b4d"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5e7a9c1b-3d5f-4a7c-9e2b-4d6f8a0c2e5a"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1. Pizza Margherita"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0b2d4f6a-8c1e-4a3c-b5e7-9d1f3a5c7e8b"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4. Penne all'Arrabbiata"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
       </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-14T11:05:00Z"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-15T08:40:00Z"</span><span class="w">
     </span><span class="p">}</span><span class="w">
@@ -1423,14 +1870,61 @@ Magic Jobs are available to Enterprise accounts. Contact your account manager to
   </span><span class="s2">"restaurant_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Bistro"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"restaurant_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 Example Street, Sampletown, CA 90000, USA"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"source_platform"</span><span class="p">:</span><span class="w"> </span><span class="s2">"restaurant-app"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.restaurant-app.example/store/Zk8pQ2mN7xL4"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"st-7qk2mx9pl4"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.restaurant-app.example/store/Zk8pQ2mN7xL4"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"menu_items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6b1d3f5a-7c9e-4a2b-8d0f-1e3c5a7b9d2f"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Insalata della Casa (Groß)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mixed leaves, cherry tomatoes, cucumber and house dressing"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2c4e6a8b-0d1f-4e3a-9b5c-7d9f1b3e5a6c"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pizza Diavola (Medium)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tomato, mozzarella and spicy salami, 30 cm"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8e0a2c4d-6f1b-4d3e-a5c7-9b1d3f5e7a0b"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pizza Diavola (Large)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4a6c8e0b-2d4f-4b6a-8c1e-3f5a7c9e1b2d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f6a8c0e2-4b6d-4f8a-9c1e-5d7b9f1a3c4e"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tiramisu"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Espresso-soaked ladyfingers with mascarpone cream"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not_found"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d1f3b5a7-9c2e-4f6a-b8d0-2e4c6a8f1b3d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3. Bruschetta al Pomodoro"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-12T09:12:00Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-15T16:25:30Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a specific magic job using the ID of the magic job. A magic job moves through the statuses <code>created</code>, <code>in_progress</code>, <code>completed</code> and <code>failed</code>. It stays <code>in_progress</code> while further image deliveries are still expected and becomes <code>completed</code> once all of its images have been delivered, at which point <code>completed_at</code> and <code>images_count</code> are populated. If a job is <code>failed</code>, your account manager will follow up with you. Retrieve the job&#39;s images via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a>.</p>
+<p>This endpoint retrieves a specific magic job using the ID of the magic job. A magic job moves through the statuses <code>created</code>, <code>in_progress</code>, <code>completed</code> and <code>failed</code>. It stays <code>in_progress</code> while further image deliveries are still expected and becomes <code>completed</code> once all of its images have been delivered, at which point <code>completed_at</code> and <code>images_count</code> are populated. If a job is <code>failed</code>, your account manager will follow up with you. <code>menu_items</code> reports which menu items got images (see <a href="#menu-items-report">Menu Items Report</a>). Retrieve the job&#39;s images via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a>.</p>
 <h3 id='http-request-8'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/magic-jobs/<span class="route_param">:magic_job_uid</span></code></p>
 <h3 id='request-parameters-2'>Request Parameters</h3>
@@ -1965,7 +2459,45 @@ let bookings = api.bookings.getImages({
   </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+<blockquote>
+<p>Example JSON response when the booking has menu items:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4b6d8f0a-2c4e-4a6c-8e1b-3d5f7a9c1e2b"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SB 001.JPG"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"7c1e3a5b-9d2f-4b6e-8a0c-2f4d6b8e1a3c"</span><span class="p">,</span><span class="w"> </span><span class="s2">"3e5a7c9b-1d4f-4a6c-9e2b-5d7f9a1c3e6b"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"menu_item_uids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"1f3b5d7a-9c2e-4a6b-8d0f-3e5a7c9b1d4f"</span><span class="p">,</span><span class="w"> </span><span class="s2">"6d8f0b2c-4e6a-4c8e-a1b3-5f7d9b1e3a6c"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/4b6d8f0a-2c4e-4a6c-8e1b-3d5f7a9c1e2b?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=Hn3Kq8Vw2Lp6Xc0Rt5Ym9Bd4Fs7%3D"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://img.snappr.co/Tq6Wm1Rk9Zp3Lc7Xv2Nb5Hd8Gs0=/fit-in/600x0/4b6d8f0a-2c4e-4a6c-8e1b-3d5f7a9c1e2b"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8f0b2d4e-6a8c-4e1a-b3d5-7f9a1c3e5b6d"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SB 002.JPG"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="s2">"menu_item_uids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"e8a0c2d4-6f1b-4b3d-8e5f-9c1a3e5b7d0f"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/8f0b2d4e-6a8c-4e1a-b3d5-7f9a1c3e5b6d?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=Pz5Lr8Ck2Wq6Ht0Ys4Nm9Fb3Vd1%3D"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://img.snappr.co/Gk2Vn7Ws4Qc9Ry1Lp6Xm3Td8Bh5=/fit-in/600x0/8f0b2d4e-6a8c-4e1a-b3d5-7f9a1c3e5b6d"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2a4c6e8f-0b2d-4f4a-9c6e-1b3d5f7a9c0e"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SB 003.JPG"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="s2">"menu_item_uids"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/2a4c6e8f-0b2d-4f4a-9c6e-1b3d5f7a9c0e?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=Mw8Jd3Tx6Kq1Zr5Lc9Vn2Hp7Ys4%3D"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://img.snappr.co/Xc4Ph9Lt2Rm7Wk3Qd6Nv1Bs8Fz5=/fit-in/600x0/2a4c6e8f-0b2d-4f4a-9c6e-1b3d5f7a9c0e"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p>This endpoint retrieves all the images of a specific booking.</p>
+
+<p>On a booking that has <code>menu_items</code> (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>), each image also lists the menu items it shows. One image can belong to several items — for example, one photo for several sizes of a pizza. <code>menu_item_uids</code> lists the <code>uid</code>s of those items, so you can join each image to the booking&#39;s <code>menu_items</code> exactly. <code>internal_ids</code> lists those items&#39; <code>internal_id</code>s, skipping any item whose <code>internal_id</code> is <code>null</code>. Both are empty for a photo that shows none of the items, such as a photo of the restaurant itself. Images of other bookings don&#39;t include these fields.</p>
 <h3 id='http-request-13'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/bookings/<span class="route_param">:booking_uid</span>/images</code></p>
 <h3 id='request-parameters-4'>Request Parameters</h3>
@@ -2135,6 +2667,7 @@ let editingJobs = api.editingJobs.getImages({
       </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12. Insalata della Casa (Groß).jpg"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"menu_item_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12. Insalata della Casa (Groß)"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"internal_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"menu_item_uids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"6b1d3f5a-7c9e-4a2b-8d0f-1e3c5a7b9d2f"</span><span class="p">],</span><span class="w">
       </span><span class="s2">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span><span class="w">
       </span><span class="s2">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span><span class="w">
       </span><span class="s2">"content_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image/jpeg"</span><span class="p">,</span><span class="w">
@@ -2147,23 +2680,37 @@ let editingJobs = api.editingJobs.getImages({
       </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7. Pizza Diavola.jpg"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"menu_item_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7. Pizza Diavola"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"internal_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f"</span><span class="p">,</span><span class="w"> </span><span class="s2">"c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"menu_item_uids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"2c4e6a8b-0d1f-4e3a-9b5c-7d9f1b3e5a6c"</span><span class="p">,</span><span class="w"> </span><span class="s2">"8e0a2c4d-6f1b-4d3e-a5c7-9b1d3f5e7a0b"</span><span class="p">],</span><span class="w">
       </span><span class="s2">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span><span class="w">
       </span><span class="s2">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span><span class="w">
       </span><span class="s2">"content_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image/jpeg"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/a8c3f1e5-6b9d-4a2c-8e7f-3d5b1c9a4e6f?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://img.snappr.co/rXtW9z6hGdDm3lebP9IPHGo9V5k=/fit-in/600x0/a8c3f1e5-6b9d-4a2c-8e7f-3d5b1c9a4e6f"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"url_expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-17T16:25:30Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e2c4a6b8-0d1f-4b3a-9c5e-7f9a1b3d5c6e"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"file_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3. Bruschetta al Pomodoro.jpg"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"menu_item_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3. Bruschetta al Pomodoro"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"internal_ids"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="s2">"menu_item_uids"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"d1f3b5a7-9c2e-4f6a-b8d0-2e4c6a8f1b3d"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">1024</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"content_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"image/jpeg"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_original"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/e2c4a6b8-0d1f-4b3a-9c5e-7f9a1b3d5c6e?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&amp;Expires=1586478927&amp;Signature=Wq7Lm2Xc9Rb4Tn6Yp1Kd8Fs3Hv0%3D"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_thumb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://img.snappr.co/Jv4Nq8Ts2Lc6Wd0Xm5Rb9Hy3Pk7=/fit-in/600x0/e2c4a6b8-0d1f-4b3a-9c5e-7f9a1b3d5c6e"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"url_expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-17T16:25:30Z"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
   </span><span class="s2">"limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w">
   </span><span class="s2">"offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves all the images of a specific magic job.</p>
 
-<p>Each result is one delivered image for one menu item. <code>internal_ids</code> contains the menu item&#39;s identifier(s) in your own catalog, as scraped from the source platform — usually a single element, but some platforms list the same dish under several menus or sections, so the array can carry multiple ids; the image applies to all of them. Treat these ids as opaque strings — never validate or parse their shape. The response always reflects the current complete set of images for the job, across all of its delivery batches: if Snappr replaces an image after delivery, the item keeps its <code>uid</code> (the stable handle for diffing) while its <code>internal_ids</code> and URLs may change.</p>
+<p>Each result is one delivered image, which can belong to several menu items — for example, one photo for several sizes of a pizza. <code>menu_item_uids</code> lists the <code>uid</code>s of those items, so you can join each image to the job&#39;s <code>menu_items</code> exactly (see <a href="#menu-items-report">Menu Items Report</a>). <code>internal_ids</code> contains the menu items&#39; identifier(s) in your own catalog, as found on the source platform, or from your submitted menu item when Snappr matched it by name — usually a single element, but some platforms list the same dish under several menus, sections or sizes, so the array can carry multiple ids; the image applies to all of them. It can be empty when the platform shows no ids and Snappr matched none of your items. Treat these ids as opaque strings — never validate or parse their shape. The response always reflects the current complete set of images for the job, across all of its delivery batches: if Snappr replaces an image after delivery, the image keeps its <code>uid</code> (the stable handle for diffing) while its <code>internal_ids</code> and URLs may change.</p>
 
 <aside class="notice">
 
@@ -2428,11 +2975,58 @@ let bookings = api.shoottypes.get({});
     </span><span class="s2">"source_platform"</span><span class="p">:</span><span class="w"> </span><span class="s2">"restaurant-app"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"st-7qk2mx9pl4"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"source_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.restaurant-app.example/store/Zk8pQ2mN7xL4"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="w">
+    </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"menu_items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6b1d3f5a-7c9e-4a2b-8d0f-1e3c5a7b9d2f"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Insalata della Casa (Groß)"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mixed leaves, cherry tomatoes, cucumber and house dressing"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2c4e6a8b-0d1f-4e3a-9b5c-7d9f1b3e5a6c"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pizza Diavola (Medium)"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tomato, mozzarella and spicy salami, 30 cm"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8e0a2c4d-6f1b-4d3e-a5c7-9b1d3f5e7a0b"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pizza Diavola (Large)"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4a6c8e0b-2d4f-4b6a-8c1e-3f5a7c9e1b2d"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f6a8c0e2-4b6d-4f8a-9c1e-5d7b9f1a3c4e"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tiramisu"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Espresso-soaked ladyfingers with mascarpone cream"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not_found"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d1f3b5a7-9c2e-4f6a-b8d0-2e4c6a8f1b3d"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3. Bruschetta al Pomodoro"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>You can set a custom webhook URL in the Snappr Photography Portal GUI. If the custom webhook URL is set, we will POST to that URL every time a booking is created or updated, and every time a magic job delivers a batch of images (an <code>images_delivered</code> event). A magic job can deliver several batches over time, so multiple <code>images_delivered</code> events may arrive for the same <code>magic_job.uid</code>, each with a different <code>delivery_uid</code>. The recommended approach is to treat every delivery the same way: retrieve the job&#39;s full image set via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a> and replace anything you have already stored for that job — the endpoint always returns the current complete set.</p>
+<p>You can set a custom webhook URL in the Snappr Photography Portal GUI. If the custom webhook URL is set, we will POST to that URL every time a booking is created or updated, and every time a magic job delivers a batch of images (an <code>images_delivered</code> event). On a <code>food</code> booking, booking events also carry the restaurant fields you sent and <code>menu_items</code> (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>). A magic job can deliver several batches over time, so multiple <code>images_delivered</code> events may arrive for the same <code>magic_job.uid</code>, each with a different <code>delivery_uid</code>. The recommended approach is to treat every delivery the same way: retrieve the job&#39;s full image set via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a> and replace anything you have already stored for that job — the endpoint always returns the current complete set.</p>
 
 <aside class="notice">
 
