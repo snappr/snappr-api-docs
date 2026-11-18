@@ -403,14 +403,16 @@ paths:
         `images_delivered` webhook event.
 
         For a `menu` job you can optionally send `menu_items` to get a per-item report in the job's
-        `menu_items` (see `MagicJobMenuItem`). The response echoes your items straight away, each `pending`
+        `menu_items` (see `MenuItem`). The response echoes your items straight away, each `pending`
         with its own `uid`. Snappr still builds the image set from the restaurant's store page and matches
         your items to the delivered images by `internal_id`, falling back to name; sending items doesn't
         guarantee images for them.
 
-        Returns `400 ValidationError` when `restaurant_name`, `restaurant_address` or `menu_items` is sent
-        with a `type` other than `menu`, when `menu_items` has more than 1000 items, when two items share
-        an `internal_id`, or when an item is missing its `internal_id` or `name`.
+        `restaurant_name`, `restaurant_address` and `menu_items` only apply when `type` is `menu`. Sent with
+        any other `type`, they are ignored: not validated, not stored and not echoed in the response, and
+        the request succeeds. When `type` is `menu`, returns `400 ValidationError` when `menu_items` has
+        more than 1000 items, when two items share an `internal_id`, or when an item is missing its
+        `internal_id` or `name`.
       parameters:
         - $ref: '#/components/parameters/AcceptVersion'
       requestBody:
@@ -1260,10 +1262,10 @@ components:
           description: Type of Magic Job.
         restaurant_name:
           type: string
-          description: Name of the restaurant as it appears on your platform. Required when `type` is `menu`, and only accepted then.
+          description: Name of the restaurant as it appears on your platform. Required when `type` is `menu`; ignored for any other type.
         restaurant_address:
           type: string
-          description: Full address of the restaurant as a single string. Required when `type` is `menu`, and only accepted then.
+          description: Full address of the restaurant as a single string. Required when `type` is `menu`; ignored for any other type.
         internal_id:
           type: string
           description: Your restaurant's or menu's ID, for matching the job with your data.
@@ -1275,9 +1277,9 @@ components:
           type: array
           maxItems: 1000
           description: |
-            The items on the restaurant's menu, for a per-item report in the job's `menu_items`. Only accepted
-            when `type` is `menu`. `[]` is the same as omitting the field. Each item's `internal_id` must be
-            unique within the list.
+            The items on the restaurant's menu, for a per-item report in the job's `menu_items`. Only applies
+            when `type` is `menu`; ignored, and not validated, for any other type. `[]` is the same as omitting
+            the field. Each item's `internal_id` must be unique within the list.
           items:
             type: object
             required: [internal_id, name]
@@ -1331,19 +1333,20 @@ components:
             If you sent no `menu_items`, it holds only discovered items: `[]` on a new job, growing as images
             are delivered.
           items:
-            $ref: '#/components/schemas/MagicJobMenuItem'
+            $ref: '#/components/schemas/MenuItem'
         created_at:
           type: string
           format: date-time
         updated_at:
           type: string
           format: date-time
-    MagicJobMenuItem:
+    MenuItem:
       type: object
       description: |
-        One menu item in a Magic Job's report. Once the job is `completed`, every item falls into one of
-        three groups: `provided` and `delivered` (you sent it and it got images), `provided` and `not_found`
-        (you sent it and Snappr found no image for it), or not `provided` (Snappr discovered it).
+        One menu item in the per-item report of a Magic Job or a booking. Once the Magic Job or booking is
+        `completed`, every item falls into one of three groups: `provided` and `delivered` (you sent it and
+        it got images), `provided` and `not_found` (you sent it and Snappr found no image for it), or not
+        `provided` (Snappr discovered it).
       required: [uid, internal_id, name, description, provided, status, images_count]
       properties:
         uid:
@@ -1353,31 +1356,33 @@ components:
         internal_id:
           type: [string, 'null']
           description: |
-            Your ID for the item, as you sent it. For a discovered item, the item's ID on the source platform,
-            or `null` if the platform doesn't show one.
+            Your ID for the item, as you sent it. For a discovered item, the ID Snappr found for it (on a Magic
+            Job, the item's ID on the source platform), or `null` if there is none.
         name:
           type: string
-          description: Name of the item. For a discovered item, the same as the image's `menu_item_name`.
+          description: |
+            Name of the item, as you sent it. For a discovered item, the name Snappr found for it (on a Magic
+            Job, the same as the image's `menu_item_name`).
         description:
           type: [string, 'null']
           description: Description of the item, as you sent it; `null` if you sent none. Always `null` for a discovered item.
         provided:
           type: boolean
           description: |
-            `true` if you sent the item in `menu_items`. `false` if Snappr discovered it on the source
-            platform; a discovered item is always `delivered`.
+            `true` if you sent the item in `menu_items`. `false` if Snappr discovered it (on a Magic Job, on
+            the source platform); a discovered item is always `delivered`.
         status:
           type: string
           enum: [pending, delivered, not_found]
           description: |
-            `pending`: no images yet and the job is not `completed`. `delivered`: at least one image.
-            `not_found`: the job is `completed` and the item has no images.
+            `pending`: no images yet and the Magic Job or booking is not `completed`. `delivered`: at least
+            one image. `not_found`: the Magic Job or booking is `completed` and the item has no images.
         images_count:
           type: integer
           minimum: 0
           description: |
             Number of delivered images linked to the item. An image that belongs to several items counts towards
-            each of them, so the items' counts can add up to more than the job's `images_count`.
+            each of them, so the items' counts can add up to more than the total number of delivered images.
     MagicJobImage:
       type: object
       required: [uid, internal_ids, menu_item_uids, url_original, url_thumb, url_expires_at]
