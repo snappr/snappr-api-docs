@@ -2204,7 +2204,7 @@ When <code>type</code> is <code>menu</code> on a magic job, or <code>shoottype</
 
 ## Matching and Statuses
 
-Every item you send starts as `pending`. Snappr matches each item you sent to the delivered images by `internal_id`, falling back to the item's name. An item with at least one image becomes `delivered`. `not_found` only appears once the magic job or booking is `completed`: until then, items without images are `pending`, and once it completes, each item you sent that has no images becomes `not_found`. Items Snappr found but you didn't send are added with `provided: false`.
+Every item you send starts as `pending`. Snappr matches each item you sent to the delivered images by `internal_id`, falling back to the item's name. An item with at least one image becomes `delivered`; on a booking, matching happens when the booking is `completed`, so every item stays `pending` until then. `not_found` only appears once the magic job or booking is `completed`: until then, items without images are `pending`, and once it completes, each item you sent that has no images becomes `not_found`. Items Snappr found but you didn't send are added with `provided: false`.
 
 The list is a report, not a promise of coverage: sending menu items doesn't guarantee images for them, and the report tells you which ones got images.
 

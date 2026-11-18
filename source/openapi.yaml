@@ -204,8 +204,9 @@ paths:
         For a `food` booking you can optionally send the restaurant's `restaurant_name`,
         `restaurant_address` and `source_url`, and `menu_items` (see `MenuItemCreate`) to get a per-item
         report in the booking's `menu_items` (see `MenuItem`). The response echoes your items straight
-        away, each `pending` with its own `uid`. When the booking is `completed`, Snappr matches your items to the
-        delivered images by `internal_id`, falling back to name; sending items doesn't guarantee images of them.
+        away, each `pending` with its own `uid`. When the booking is `completed`, Snappr matches your
+        items to the delivered images by `internal_id`, falling back to name; sending items doesn't
+        guarantee images of them.
 
         `restaurant_name`, `restaurant_address`, `source_url` and `menu_items` only apply when `shoottype`
         is `food`. Sent with any other `shoottype`, they are ignored: not validated, not stored and not
@@ -453,9 +454,9 @@ paths:
 
         For a `menu` job you can optionally send `menu_items` (see `MenuItemCreate`) to get a per-item
         report in the job's `menu_items` (see `MenuItem`). The response echoes your items straight away,
-        each `pending` with its own `uid`. Snappr still builds the image set from the restaurant's store page and matches
-        your items to the delivered images by `internal_id`, falling back to name; sending items doesn't
-        guarantee images for them.
+        each `pending` with its own `uid`. Snappr still builds the image set from the restaurant's store
+        page and matches your items to the delivered images by `internal_id`, falling back to name;
+        sending items doesn't guarantee images for them.
 
         `restaurant_name`, `restaurant_address` and `menu_items` only apply when `type` is `menu`. Sent with
         any other `type`, they are ignored: not validated, not stored and not echoed in the response, and
@@ -1463,11 +1464,12 @@ components:
         them directly: they are returned inside the Magic Job or booking.
 
         Every item you send starts as `pending`. Snappr matches each one to the delivered images by
-        `internal_id`, falling back to name. An item with at least one image is `delivered`; once the Magic
-        Job or booking is `completed`, an item you sent with no images becomes `not_found`. Items Snappr
-        found but you didn't send are added with `provided: false` and are always `delivered`. On a Magic
-        Job they appear as images are delivered; on a booking, when it is `completed`. The report doesn't
-        guarantee images for the items you send.
+        `internal_id`, falling back to name. An item with at least one image is `delivered`; on a booking,
+        matching happens when the booking is `completed`, so every item stays `pending` until then. Once
+        the Magic Job or booking is `completed`, an item you sent with no images becomes `not_found`.
+        Items Snappr found but you didn't send are added with `provided: false` and are always
+        `delivered`. On a Magic Job, these discovered items appear as images are delivered; on a booking,
+        when it is `completed`. The report doesn't guarantee images for the items you send.
 
         Once the Magic Job or booking is `completed`, every item falls into one of three groups: `provided`
         and `delivered` (you sent it and it got images), `provided` and `not_found` (you sent it and Snappr
