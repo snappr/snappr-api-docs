@@ -888,7 +888,7 @@ For a `menu` job you can optionally send your `menu_items`. Snappr then reports,
 </aside>
 
 <aside class="notice">
-<code>restaurant_name</code>, <code>restaurant_address</code> and <code>menu_items</code> are only accepted when <code>type</code> is <code>menu</code>. Sending any of them with another type returns a 400 error with code <code>ValidationError</code>. You also get a 400 <code>ValidationError</code> when <code>menu_items</code> has more than 1000 items, when two items share the same <code>internal_id</code>, or when an item is missing its <code>internal_id</code> or <code>name</code>.
+<code>restaurant_name</code>, <code>restaurant_address</code> and <code>menu_items</code> only apply when <code>type</code> is <code>menu</code>. If you send any of them with another type, they are ignored: they are not validated, not stored and not returned in the response, and the request still succeeds. When <code>type</code> is <code>menu</code>, you get a 400 error with code <code>ValidationError</code> when <code>menu_items</code> has more than 1000 items, when two items share the same <code>internal_id</code>, or when an item is missing its <code>internal_id</code> or <code>name</code>.
 </aside>
 
 ### Menu Items Report
