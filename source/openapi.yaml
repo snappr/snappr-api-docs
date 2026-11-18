@@ -1375,7 +1375,9 @@ components:
         images_count:
           type: integer
           minimum: 0
-          description: Number of delivered images linked to the item.
+          description: |
+            Number of delivered images linked to the item. An image that belongs to several items counts towards
+            each of them, so the items' counts can add up to more than the job's `images_count`.
     MagicJobImage:
       type: object
       required: [uid, internal_ids, menu_item_uids, url_original, url_thumb, url_expires_at]

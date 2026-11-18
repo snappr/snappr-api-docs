@@ -905,7 +905,7 @@ Snappr still builds the image set from the restaurant's store page. It then matc
 | `description`  | String or null | Description of the menu item, as you sent it. `null` if you sent none, and always `null` for an item Snappr discovered.                                             |
 | `provided`     | Boolean        | `true` if you sent the item in `menu_items`. `false` if Snappr discovered it on the source platform; such an item always has status `delivered`.                    |
 | `status`       | String         | `pending`: no images yet and the job is not `completed`. `delivered`: the item has at least one image. `not_found`: the job is `completed` and the item has no images. |
-| `images_count` | Integer        | Number of delivered images linked to the item. Always present.                                                                                                      |
+| `images_count` | Integer        | Number of delivered images linked to the item. Always present. An image that belongs to several items counts towards each of them, so the items' counts can add up to more than the job's `images_count`. |
 
 Once the job is `completed`, every item falls into one of three groups:
 
@@ -944,7 +944,7 @@ curl "https://api.snappr.com/magic-jobs" \
       "source_platform": "restaurant-app",
       "source_url": "https://www.restaurant-app.example/store/Zk8pQ2mN7xL4",
       "internal_id": "st-7qk2mx9pl4",
-      "images_count": 23,
+      "images_count": 3,
       "menu_items": [
         {
           "uid": "6b1d3f5a-7c9e-4a2b-8d0f-1e3c5a7b9d2f",
@@ -1072,7 +1072,7 @@ curl "https://api.snappr.com/magic-jobs/9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e" \
   "source_platform": "restaurant-app",
   "source_url": "https://www.restaurant-app.example/store/Zk8pQ2mN7xL4",
   "internal_id": "st-7qk2mx9pl4",
-  "images_count": 23,
+  "images_count": 3,
   "menu_items": [
     {
       "uid": "6b1d3f5a-7c9e-4a2b-8d0f-1e3c5a7b9d2f",
@@ -1988,7 +1988,7 @@ This endpoint returns all available Snappr editing job types.
     "source_platform": "restaurant-app",
     "internal_id": "st-7qk2mx9pl4",
     "source_url": "https://www.restaurant-app.example/store/Zk8pQ2mN7xL4",
-    "images_count": 23,
+    "images_count": 3,
     "menu_items": [
       {
         "uid": "6b1d3f5a-7c9e-4a2b-8d0f-1e3c5a7b9d2f",
