@@ -202,9 +202,9 @@ paths:
         `NotAvailable`; an account without enough credits gets `402` `InsufficientCredits`.
 
         For a `food` booking you can optionally send the restaurant's `restaurant_name`,
-        `restaurant_address` and `source_url`, and your `menu_items` to get a per-item report in the
-        booking's `menu_items` (see `MenuItem`). The response echoes your items straight away, each
-        `pending` with its own `uid`. When the booking is `completed`, Snappr matches your items to the
+        `restaurant_address` and `source_url`, and `menu_items` (see `MenuItemCreate`) to get a per-item
+        report in the booking's `menu_items` (see `MenuItem`). The response echoes your items straight
+        away, each `pending` with its own `uid`. When the booking is `completed`, Snappr matches your items to the
         delivered images by `internal_id`, falling back to name; sending items doesn't guarantee images of them.
 
         `restaurant_name`, `restaurant_address`, `source_url` and `menu_items` only apply when `shoottype`
@@ -451,9 +451,9 @@ paths:
         listing, generates the images and delivers them in one or more batches. Each delivery triggers an
         `images_delivered` webhook event.
 
-        For a `menu` job you can optionally send `menu_items` to get a per-item report in the job's
-        `menu_items` (see `MenuItem`). The response echoes your items straight away, each `pending`
-        with its own `uid`. Snappr still builds the image set from the restaurant's store page and matches
+        For a `menu` job you can optionally send `menu_items` (see `MenuItemCreate`) to get a per-item
+        report in the job's `menu_items` (see `MenuItem`). The response echoes your items straight away,
+        each `pending` with its own `uid`. Snappr still builds the image set from the restaurant's store page and matches
         your items to the delivered images by `internal_id`, falling back to name; sending items doesn't
         guarantee images for them.
 
@@ -553,7 +553,8 @@ paths:
         Retrieves one Magic Job. A job moves through `created`, `in_progress`, `completed` and `failed`.
         It stays `in_progress` while further deliveries are expected and becomes `completed` once all
         images are delivered, at which point `completed_at` and `images_count` are populated. Failed
-        jobs are followed up by your account manager. `menu_items` reports which menu items got images.
+        jobs are followed up by your account manager. `menu_items` reports which menu items got images
+        (see `MenuItem`).
       parameters:
         - $ref: '#/components/parameters/AcceptVersion'
         - $ref: '#/components/parameters/MagicJobUid'
@@ -1435,7 +1436,14 @@ components:
           format: date-time
     MenuItemCreate:
       type: object
-      description: One menu item you send in `menu_items` when you create a Magic Job or a booking.
+      description: |
+        One menu item you send in `menu_items` when you create a Magic Job whose `type` is `menu` or a
+        booking whose `shoottype` is `food`; with any other type or shoot type, `menu_items` is ignored.
+        No endpoint reads or writes menu items directly. A list takes at most 1000 items, each item's
+        `internal_id` must be unique within it, and `[]` is the same as omitting the field. On a `menu`
+        Magic Job or a `food` booking, returns `400 ValidationError` when the list has more than 1000
+        items, when two items share an `internal_id`, or when an item is missing its `internal_id` or
+        `name`. Snappr reports on each item in the Magic Job's or booking's `menu_items` (see `MenuItem`).
       required: [internal_id, name]
       properties:
         internal_id:
@@ -1450,10 +1458,21 @@ components:
     MenuItem:
       type: object
       description: |
-        One menu item in the per-item report of a Magic Job or a booking. Once the Magic Job or booking is
-        `completed`, every item falls into one of three groups: `provided` and `delivered` (you sent it and
-        it got images), `provided` and `not_found` (you sent it and Snappr found no image for it), or not
-        `provided` (Snappr discovered it).
+        One menu item in the per-item report of a Magic Job or a booking. Menu items only exist on a Magic
+        Job whose `type` is `menu` and on a booking whose `shoottype` is `food`. No endpoint reads or writes
+        them directly: they are returned inside the Magic Job or booking.
+
+        Every item you send starts as `pending`. Snappr matches each one to the delivered images by
+        `internal_id`, falling back to name. An item with at least one image is `delivered`; once the Magic
+        Job or booking is `completed`, an item you sent with no images becomes `not_found`. Items Snappr
+        found but you didn't send are added with `provided: false` and are always `delivered`. On a Magic
+        Job they appear as images are delivered; on a booking, when it is `completed`. The report doesn't
+        guarantee images for the items you send.
+
+        Once the Magic Job or booking is `completed`, every item falls into one of three groups: `provided`
+        and `delivered` (you sent it and it got images), `provided` and `not_found` (you sent it and Snappr
+        found no image for it), or not `provided` (Snappr discovered it). Items you sent come first, in the
+        order you sent them. Join images to items with each image's `menu_item_uids`.
       required: [uid, internal_id, name, description, provided, status, images_count]
       properties:
         uid:
