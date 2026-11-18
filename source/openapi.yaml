@@ -1356,19 +1356,21 @@ components:
         internal_id:
           type: [string, 'null']
           description: |
-            Your ID for the item, as you sent it. For a discovered item, the item's ID on the source platform,
-            or `null` if the platform doesn't show one.
+            Your ID for the item, as you sent it. For a discovered item, the ID Snappr found for it (on a Magic
+            Job, the item's ID on the source platform), or `null` if there is none.
         name:
           type: string
-          description: Name of the item. For a discovered item, the same as the image's `menu_item_name`.
+          description: |
+            Name of the item, as you sent it. For a discovered item, the name Snappr found for it (on a Magic
+            Job, the same as the image's `menu_item_name`).
         description:
           type: [string, 'null']
           description: Description of the item, as you sent it; `null` if you sent none. Always `null` for a discovered item.
         provided:
           type: boolean
           description: |
-            `true` if you sent the item in `menu_items`. `false` if Snappr discovered it on the source
-            platform; a discovered item is always `delivered`.
+            `true` if you sent the item in `menu_items`. `false` if Snappr discovered it (on a Magic Job, on
+            the source platform); a discovered item is always `delivered`.
         status:
           type: string
           enum: [pending, delivered, not_found]
