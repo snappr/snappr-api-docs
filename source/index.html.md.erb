@@ -662,7 +662,7 @@ Broadly, there are two main ways to create a new photoshoot booking, and example
 1. Provide all shoot details _including_ the start date and time for the shoot (`start_at`). With this option, Snappr will not seek any input on shoot details from your end-customer, they will simply be notified if the booking is placed successfully.
 2. Provide all shoot details _except_ the start date and time for the shoot (`start_at` set to `null`). This will trigger an automatic process to collect the start date and time from your end-customer using the contact details (email and/or mobile phone) provided. End-customers will be able to select from all available dates and times for the shoot location, using a Snappr UI.
 
-For a `food` booking you can also send the restaurant's details and your `menu_items`. Snappr then reports, item by item, which of them got photos (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>). The response echoes your items straight away, each with status `pending` and its own `uid`.
+For a `food` booking you can also send the restaurant's details and your `menu_items`. Snappr then reports, item by item, which of them got images (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>). The response echoes your items straight away, each with status `pending` and its own `uid`.
 
 ### HTTP Request
 
@@ -717,11 +717,11 @@ Always check <a href="#availability">availability</a> before trying to create a 
 
 ### Food Booking Menu Items
 
-A `food` booking created with a non-empty `menu_items` list returns a `menu_items` list: Snappr's report of which menu items got photos. It is returned by <a href="#create-new-booking">Create New Booking</a>, <a href="#get-all-bookings">Get All Bookings</a>, <a href="#get-single-booking">Get Single Booking</a> and the booking webhook events (see <a href="#custom-webhooks">Custom Webhooks</a>). Each item has the same fields as in a magic job's report (see <a href="#menu-items-report">Menu Items Report</a>). `restaurant_name`, `restaurant_address` and `source_url` are returned only if you sent them.
+A `food` booking created with a non-empty `menu_items` list returns a `menu_items` list: Snappr's report of which menu items got images. It is returned by <a href="#create-new-booking">Create New Booking</a>, <a href="#get-all-bookings">Get All Bookings</a>, <a href="#get-single-booking">Get Single Booking</a> and the booking webhook events (see <a href="#custom-webhooks">Custom Webhooks</a>). Each item has the same fields as in a magic job's report (see <a href="#menu-items-report">Menu Items Report</a>). `restaurant_name`, `restaurant_address` and `source_url` are returned only if you sent them.
 
-Every item is `pending` until the booking is `completed`. When the booking completes, Snappr matches the photographer's delivered photos to your items by `internal_id`, falling back to the item's name. Each item you sent then becomes `delivered` (it got at least one photo) or `not_found` (it got none), and the items Snappr found in the photos but you didn't send are added with `provided: false`. Items you sent come first, in the order you sent them. Join photos to items with each image's `menu_item_uids` (see <a href="#get-all-images-for-a-booking">Get All Images For a Booking</a>).
+Every item is `pending` until the booking is `completed`. When the booking completes, Snappr matches the photographer's delivered images to your items by `internal_id`, falling back to the item's name. Each item you sent then becomes `delivered` (it got at least one image) or `not_found` (it got none), and the items Snappr found in the images but you didn't send are added with `provided: false`. Items you sent come first, in the order you sent them. Join images to items with each image's `menu_item_uids` (see <a href="#get-all-images-for-a-booking">Get All Images For a Booking</a>).
 
-Your items are used for this report, not as a shot list for the photographer, so sending menu items doesn't guarantee photos of them: the report tells you which ones got photos.
+Your items are used for this report, not as a shot list for the photographer, so sending menu items doesn't guarantee images of them: the report tells you which ones got images.
 
 <aside class="notice">
 Unlike a magic job, which lists the items Snappr discovered even when you sent no <code>menu_items</code>, a booking only has <code>menu_items</code> if you sent a non-empty list. Bookings created without menu items, and bookings of other shoot types, don't include the field.
@@ -876,7 +876,7 @@ let bookings = api.bookings.get({
 }
 ```
 
-> Example JSON response for a completed food booking with menu items:
+> Example JSON response when a completed food booking has menu items:
 
 ```json
 {
@@ -946,7 +946,7 @@ let bookings = api.bookings.get({
 }
 ```
 
-This endpoint retrieves a specific booking using the ID of the booking. On a `food` booking created with menu items, `menu_items` reports which items got photos (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>).
+This endpoint retrieves a specific booking using the ID of the booking. On a `food` booking created with menu items, `menu_items` reports which items got images (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>).
 
 ### HTTP Request
 
@@ -1099,12 +1099,12 @@ Snappr still builds the image set from the restaurant's store page. It then matc
 | Field          | Type           | Description                                                                                                                                                         |
 | -------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `uid`          | String         | Snappr's identifier for the menu item. It never changes.                                                                                                            |
-| `internal_id`  | String or null | Your ID for the menu item. For an item Snappr discovered, the item's ID on the source platform, or `null` if the platform doesn't show one.                        |
-| `name`         | String         | Name of the menu item. For an item Snappr discovered, the same as the image's `menu_item_name`.                                                                    |
+| `internal_id`  | String or null | Your ID for the menu item, as you sent it. For an item Snappr discovered, the ID Snappr found for it (on a magic job, the item's ID on the source platform), or `null` if there is none. |
+| `name`         | String         | Name of the menu item, as you sent it. For an item Snappr discovered, the name Snappr found for it (on a magic job, the same as the image's `menu_item_name`).        |
 | `description`  | String or null | Description of the menu item, as you sent it. `null` if you sent none, and always `null` for an item Snappr discovered.                                             |
-| `provided`     | Boolean        | `true` if you sent the item in `menu_items`. `false` if Snappr discovered it on the source platform; such an item always has status `delivered`.                    |
-| `status`       | String         | `pending`: no images yet and the job is not `completed`. `delivered`: the item has at least one image. `not_found`: the job is `completed` and the item has no images. |
-| `images_count` | Integer        | Number of delivered images linked to the item. Always present. An image that belongs to several items counts towards each of them, so the items' counts can add up to more than the job's `images_count`. |
+| `provided`     | Boolean        | `true` if you sent the item in `menu_items`. `false` if Snappr discovered it (on a magic job, on the source platform); such an item always has status `delivered`.   |
+| `status`       | String         | `pending`: no images yet and the magic job or booking is not `completed`. `delivered`: the item has at least one image. `not_found`: the magic job or booking is `completed` and the item has no images. |
+| `images_count` | Integer        | Number of delivered images linked to the item. Always present. An image that belongs to several items counts towards each of them, so the items' counts can add up to more than the total number of delivered images. |
 
 Once the job is `completed`, every item falls into one of three groups:
 
@@ -1767,15 +1767,7 @@ let bookings = api.bookings.getImages({
 }
 ```
 
-> Example request for a food booking with menu items:
-
-```shell
-curl "https://api.snappr.com/bookings/5d8f2a4c-1e6b-4c9a-8f3d-7b2e9a1c4f6e/images" \
-  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
-  -H 'accept-version: 1.0.0'
-```
-
-> Example JSON response for a food booking with menu items:
+> Example JSON response when the booking has menu items:
 
 ```json
 {

@@ -205,7 +205,7 @@ paths:
         `restaurant_address` and `source_url`, and your `menu_items` to get a per-item report in the
         booking's `menu_items` (see `MenuItem`). The response echoes your items straight away, each
         `pending` with its own `uid`. When the booking is `completed`, Snappr matches your items to the
-        delivered photos by `internal_id`, falling back to name; sending items doesn't guarantee photos of them.
+        delivered images by `internal_id`, falling back to name; sending items doesn't guarantee images of them.
 
         `restaurant_name`, `restaurant_address`, `source_url` and `menu_items` only apply when `shoottype`
         is `food`. Sent with any other `shoottype`, they are ignored: not validated, not stored and not
@@ -1285,10 +1285,10 @@ components:
         menu_items:
           type: array
           description: |
-            Per-item report: which menu items got photos. Present only on a `food` booking created with a
+            Per-item report: which menu items got images. Present only on a `food` booking created with a
             non-empty `menu_items` list; omitted otherwise (unlike a Magic Job, a booking never lists discovered
             items when you sent none). Every item is `pending` until the booking is `completed`. Then each item
-            you sent becomes `delivered` or `not_found`, and the items Snappr found in the photos that you didn't
+            you sent becomes `delivered` or `not_found`, and the items Snappr found in the images that you didn't
             send are added (`provided: false`). Items you sent come first, in the order you sent them.
           items:
             $ref: '#/components/schemas/MenuItem'
