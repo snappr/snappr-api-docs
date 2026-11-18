@@ -530,10 +530,10 @@ paths:
       summary: List a Magic Job's images
       description: |
         Lists the current complete set of delivered images for a Magic Job, across all delivery batches.
-        Each result is one image, which can belong to several menu items (e.g. one photo for several sizes
-        of a pizza); `menu_item_uids` joins it to the job's `menu_items`. If Snappr replaces an image after delivery it keeps
-        its `uid` (the stable handle for diffing) while `internal_ids` and URLs may change. URLs are
-        signed and expire at `url_expires_at`; call again for freshly signed URLs.
+        Each result is one image, which can belong to several menu items (e.g. one photo for several
+        sizes of a pizza); `menu_item_uids` joins it to the job's `menu_items`. If Snappr replaces an
+        image after delivery it keeps its `uid` (the stable handle for diffing) while `internal_ids` and
+        URLs may change. URLs are signed and expire at `url_expires_at`; call again for freshly signed URLs.
       parameters:
         - $ref: '#/components/parameters/AcceptVersion'
         - $ref: '#/components/parameters/MagicJobUid'
@@ -1349,7 +1349,7 @@ components:
         uid:
           type: string
           format: uuid
-          description: Snappr's stable identifier for the item, generated and controlled by Snappr.
+          description: Snappr's stable identifier for the item, generated and controlled by Snappr. It never changes.
         internal_id:
           type: [string, 'null']
           description: |
@@ -1360,7 +1360,7 @@ components:
           description: Name of the item. For a discovered item, the same as the image's `menu_item_name`.
         description:
           type: [string, 'null']
-          description: Description of the item, as you sent it. Always `null` for a discovered item.
+          description: Description of the item, as you sent it; `null` if you sent none. Always `null` for a discovered item.
         provided:
           type: boolean
           description: |
@@ -1390,7 +1390,7 @@ components:
           type: string
         internal_ids:
           type: array
-          description: The menu item's identifier(s) in your catalog, as found on the source platform, or from your submitted menu item when Snappr matched it by name. Treat as opaque strings.
+          description: The menu items' identifier(s) in your catalog, as found on the source platform, or from your submitted menu item when Snappr matched it by name. Treat as opaque strings.
           items:
             type: string
         menu_item_uids:
