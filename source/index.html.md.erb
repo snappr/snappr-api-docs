@@ -780,7 +780,28 @@ curl "https://api.snappr.com/magic-jobs" \
     "type": "menu",
     "restaurant_name": "Sample Bistro",
     "restaurant_address": "123 Example Street, Sampletown, CA 90000, USA",
-    "internal_id": "st-7qk2mx9pl4"
+    "internal_id": "st-7qk2mx9pl4",
+    "menu_items": [
+      {
+        "internal_id": "e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b",
+        "name": "Insalata della Casa (Groß)",
+        "description": "Mixed leaves, cherry tomatoes, cucumber and house dressing"
+      },
+      {
+        "internal_id": "b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f",
+        "name": "Pizza Diavola (Medium)",
+        "description": "Tomato, mozzarella and spicy salami, 30 cm"
+      },
+      {
+        "internal_id": "c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b",
+        "name": "Pizza Diavola (Large)"
+      },
+      {
+        "internal_id": "f6a8c0e2-4b6d-4f8a-9c1e-5d7b9f1a3c4e",
+        "name": "Tiramisu",
+        "description": "Espresso-soaked ladyfingers with mascarpone cream"
+      }
+    ]
   }'
 ```
 
@@ -797,6 +818,44 @@ curl "https://api.snappr.com/magic-jobs" \
   "source_platform": null,
   "source_url": null,
   "internal_id": "st-7qk2mx9pl4",
+  "menu_items": [
+    {
+      "uid": "6b1d3f5a-7c9e-4a2b-8d0f-1e3c5a7b9d2f",
+      "internal_id": "e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b",
+      "name": "Insalata della Casa (Groß)",
+      "description": "Mixed leaves, cherry tomatoes, cucumber and house dressing",
+      "provided": true,
+      "status": "pending",
+      "images_count": 0
+    },
+    {
+      "uid": "2c4e6a8b-0d1f-4e3a-9b5c-7d9f1b3e5a6c",
+      "internal_id": "b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f",
+      "name": "Pizza Diavola (Medium)",
+      "description": "Tomato, mozzarella and spicy salami, 30 cm",
+      "provided": true,
+      "status": "pending",
+      "images_count": 0
+    },
+    {
+      "uid": "8e0a2c4d-6f1b-4d3e-a5c7-9b1d3f5e7a0b",
+      "internal_id": "c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b",
+      "name": "Pizza Diavola (Large)",
+      "description": null,
+      "provided": true,
+      "status": "pending",
+      "images_count": 0
+    },
+    {
+      "uid": "4a6c8e0b-2d4f-4b6a-8c1e-3f5a7c9e1b2d",
+      "internal_id": "f6a8c0e2-4b6d-4f8a-9c1e-5d7b9f1a3c4e",
+      "name": "Tiramisu",
+      "description": "Espresso-soaked ladyfingers with mascarpone cream",
+      "provided": true,
+      "status": "pending",
+      "images_count": 0
+    }
+  ],
   "created_at": "2026-08-12T09:12:00Z",
   "updated_at": "2026-08-12T09:12:00Z"
 }
@@ -804,22 +863,60 @@ curl "https://api.snappr.com/magic-jobs" \
 
 This endpoint creates a new magic job. The job is returned with status `created` and a `201` status code; Snappr then locates the business's listing, generates the images and delivers them in one or more batches. Each delivery triggers an `images_delivered` event on your webhook (see <a href="#custom-webhooks">Custom Webhooks</a>).
 
+For a `menu` job you can optionally send your `menu_items`. Snappr then reports, item by item, which of them got images (see <a href="#menu-items-report">Menu Items Report</a>). The response echoes your items straight away, each with status `pending` and its own `uid`.
+
 ### HTTP Request
 
 `POST https://api.snappr.com/magic-jobs`
 
 ### Request (Body) Parameters
 
-| Parameter            | Type   | Description                                                                                                                                                                  | Required |
-| -------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `type`               | String | Type of magic job. Currently supported values: `menu`.                                                                                                                       | Yes      |
-| `restaurant_name`    | String | Name of the restaurant as it appears on your platform.                                                                                                                       | Yes\*    |
-| `restaurant_address` | String | Full address of the restaurant as a single string.                                                                                                                           | Yes\*    |
-| `internal_id`        | String | ID for your internal systems. Useful for matching a magic job with your internal data.                                                                                       | No       |
-| `source_url`         | URL    | URL of the restaurant's store page on your platform. If omitted, Snappr locates the store page from `restaurant_name`, `restaurant_address` and `internal_id` when provided. | No       |
+| Parameter                  | Type         | Description                                                                                                                                                                  | Required |
+| -------------------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `type`                     | String       | Type of magic job. Currently supported values: `menu`.                                                                                                                       | Yes      |
+| `restaurant_name`          | String       | Name of the restaurant as it appears on your platform.                                                                                                                       | Yes\*    |
+| `restaurant_address`       | String       | Full address of the restaurant as a single string.                                                                                                                           | Yes\*    |
+| `internal_id`              | String       | Your restaurant's or menu's ID in your internal systems. Useful for matching a magic job with your internal data.                                                            | No       |
+| `source_url`               | URL          | URL of the restaurant's store page on your platform. If omitted, Snappr locates the store page from `restaurant_name`, `restaurant_address` and `internal_id` when provided. | No       |
+| `menu_items`               | Array Object | The items on the restaurant's menu, for a per-item report (see <a href="#menu-items-report">Menu Items Report</a>). Maximum of 1000 items. Sending `[]` is the same as omitting the field. | No       |
+| `menu_items[].internal_id` | String       | Your ID for the menu item. Must be unique within `menu_items`.                                                                                                               | Yes      |
+| `menu_items[].name`        | String       | Name of the menu item.                                                                                                                                                       | Yes      |
+| `menu_items[].description` | String       | Description of the menu item.                                                                                                                                                | No       |
 
 <aside class="notice">
 *Required when <code>type</code> is <code>menu</code>.
+</aside>
+
+<aside class="notice">
+<code>restaurant_name</code>, <code>restaurant_address</code> and <code>menu_items</code> are only accepted when <code>type</code> is <code>menu</code>. Sending any of them with another type returns a 400 error with code <code>ValidationError</code>. You also get a 400 <code>ValidationError</code> when <code>menu_items</code> has more than 1000 items, when two items share the same <code>internal_id</code>, or when an item is missing its <code>internal_id</code> or <code>name</code>.
+</aside>
+
+### Menu Items Report
+
+Every `menu` magic job returns a `menu_items` list: Snappr's report of which menu items got images. It is returned by <a href="#create-new-magic-job">Create New Magic Job</a>, <a href="#get-all-magic-jobs">Get All Magic Jobs</a>, <a href="#get-single-magic-job">Get Single Magic Job</a> and the `images_delivered` webhook event (see <a href="#custom-webhooks">Custom Webhooks</a>).
+
+Snappr still builds the image set from the restaurant's store page. It then matches each item you sent to the delivered images by `internal_id`, falling back to the item's name. Sending menu items doesn't guarantee images for them: the report tells you which ones got images.
+
+| Field          | Type           | Description                                                                                                                                                         |
+| -------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `uid`          | String         | Snappr's identifier for the menu item. It never changes.                                                                                                            |
+| `internal_id`  | String or null | Your ID for the menu item. For an item Snappr discovered, the item's ID on the source platform, or `null` if the platform doesn't show one.                        |
+| `name`         | String         | Name of the menu item. For an item Snappr discovered, the same as the image's `menu_item_name`.                                                                    |
+| `description`  | String or null | Description of the menu item, as you sent it. `null` if you sent none, and always `null` for an item Snappr discovered.                                             |
+| `provided`     | Boolean        | `true` if you sent the item in `menu_items`. `false` if Snappr discovered it on the source platform; such an item always has status `delivered`.                    |
+| `status`       | String         | `pending`: no images yet and the job is not `completed`. `delivered`: the item has at least one image. `not_found`: the job is `completed` and the item has no images. |
+| `images_count` | Integer        | Number of delivered images linked to the item. Always present.                                                                                                      |
+
+Once the job is `completed`, every item falls into one of three groups:
+
+1. `provided: true` and `status: delivered`: you sent the item and it got images.
+2. `provided: true` and `status: not_found`: you sent the item and Snappr found no image for it.
+3. `provided: false`: Snappr found the item on the source platform, but you didn't send it.
+
+`not_found` only appears once the job is `completed`; until then, items without images are `pending`. Items you sent come first, in the order you sent them, followed by the items Snappr discovered. If you didn't send `menu_items`, the list holds only the items Snappr discovered: it is `[]` on a new job and grows as images are delivered. Join images to items with the image's `menu_item_uids` (see <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a>).
+
+<aside class="notice">
+A <code>uid</code> is always generated and controlled by Snappr, for both the magic job and its menu items. An <code>internal_id</code> is always yours. Store the <code>uid</code>s Snappr returns, and send your own IDs as <code>internal_id</code>.
 </aside>
 
 ## Get All Magic Jobs
@@ -848,6 +945,53 @@ curl "https://api.snappr.com/magic-jobs" \
       "source_url": "https://www.restaurant-app.example/store/Zk8pQ2mN7xL4",
       "internal_id": "st-7qk2mx9pl4",
       "images_count": 23,
+      "menu_items": [
+        {
+          "uid": "6b1d3f5a-7c9e-4a2b-8d0f-1e3c5a7b9d2f",
+          "internal_id": "e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b",
+          "name": "Insalata della Casa (Groß)",
+          "description": "Mixed leaves, cherry tomatoes, cucumber and house dressing",
+          "provided": true,
+          "status": "delivered",
+          "images_count": 1
+        },
+        {
+          "uid": "2c4e6a8b-0d1f-4e3a-9b5c-7d9f1b3e5a6c",
+          "internal_id": "b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f",
+          "name": "Pizza Diavola (Medium)",
+          "description": "Tomato, mozzarella and spicy salami, 30 cm",
+          "provided": true,
+          "status": "delivered",
+          "images_count": 1
+        },
+        {
+          "uid": "8e0a2c4d-6f1b-4d3e-a5c7-9b1d3f5e7a0b",
+          "internal_id": "c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b",
+          "name": "Pizza Diavola (Large)",
+          "description": null,
+          "provided": true,
+          "status": "delivered",
+          "images_count": 1
+        },
+        {
+          "uid": "4a6c8e0b-2d4f-4b6a-8c1e-3f5a7c9e1b2d",
+          "internal_id": "f6a8c0e2-4b6d-4f8a-9c1e-5d7b9f1a3c4e",
+          "name": "Tiramisu",
+          "description": "Espresso-soaked ladyfingers with mascarpone cream",
+          "provided": true,
+          "status": "not_found",
+          "images_count": 0
+        },
+        {
+          "uid": "d1f3b5a7-9c2e-4f6a-b8d0-2e4c6a8f1b3d",
+          "internal_id": null,
+          "name": "3. Bruschetta al Pomodoro",
+          "description": null,
+          "provided": false,
+          "status": "delivered",
+          "images_count": 1
+        }
+      ],
       "created_at": "2026-08-12T09:12:00Z",
       "updated_at": "2026-08-15T16:25:30Z"
     },
@@ -861,6 +1005,26 @@ curl "https://api.snappr.com/magic-jobs" \
       "source_platform": "restaurant-app",
       "source_url": "https://www.restaurant-app.example/store/Hq3wN8vT2kLp",
       "internal_id": "st-4hn8vz2qr7",
+      "menu_items": [
+        {
+          "uid": "7f9b1d3e-5a2c-4e8f-9d1b-3c5e7a9f2b4d",
+          "internal_id": "5e7a9c1b-3d5f-4a7c-9e2b-4d6f8a0c2e5a",
+          "name": "1. Pizza Margherita",
+          "description": null,
+          "provided": false,
+          "status": "delivered",
+          "images_count": 1
+        },
+        {
+          "uid": "0b2d4f6a-8c1e-4a3c-b5e7-9d1f3a5c7e8b",
+          "internal_id": null,
+          "name": "4. Penne all'Arrabbiata",
+          "description": null,
+          "provided": false,
+          "status": "delivered",
+          "images_count": 1
+        }
+      ],
       "created_at": "2026-08-14T11:05:00Z",
       "updated_at": "2026-08-15T08:40:00Z"
     }
@@ -909,12 +1073,59 @@ curl "https://api.snappr.com/magic-jobs/9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e" \
   "source_url": "https://www.restaurant-app.example/store/Zk8pQ2mN7xL4",
   "internal_id": "st-7qk2mx9pl4",
   "images_count": 23,
+  "menu_items": [
+    {
+      "uid": "6b1d3f5a-7c9e-4a2b-8d0f-1e3c5a7b9d2f",
+      "internal_id": "e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b",
+      "name": "Insalata della Casa (Groß)",
+      "description": "Mixed leaves, cherry tomatoes, cucumber and house dressing",
+      "provided": true,
+      "status": "delivered",
+      "images_count": 1
+    },
+    {
+      "uid": "2c4e6a8b-0d1f-4e3a-9b5c-7d9f1b3e5a6c",
+      "internal_id": "b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f",
+      "name": "Pizza Diavola (Medium)",
+      "description": "Tomato, mozzarella and spicy salami, 30 cm",
+      "provided": true,
+      "status": "delivered",
+      "images_count": 1
+    },
+    {
+      "uid": "8e0a2c4d-6f1b-4d3e-a5c7-9b1d3f5e7a0b",
+      "internal_id": "c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b",
+      "name": "Pizza Diavola (Large)",
+      "description": null,
+      "provided": true,
+      "status": "delivered",
+      "images_count": 1
+    },
+    {
+      "uid": "4a6c8e0b-2d4f-4b6a-8c1e-3f5a7c9e1b2d",
+      "internal_id": "f6a8c0e2-4b6d-4f8a-9c1e-5d7b9f1a3c4e",
+      "name": "Tiramisu",
+      "description": "Espresso-soaked ladyfingers with mascarpone cream",
+      "provided": true,
+      "status": "not_found",
+      "images_count": 0
+    },
+    {
+      "uid": "d1f3b5a7-9c2e-4f6a-b8d0-2e4c6a8f1b3d",
+      "internal_id": null,
+      "name": "3. Bruschetta al Pomodoro",
+      "description": null,
+      "provided": false,
+      "status": "delivered",
+      "images_count": 1
+    }
+  ],
   "created_at": "2026-08-12T09:12:00Z",
   "updated_at": "2026-08-15T16:25:30Z"
 }
 ```
 
-This endpoint retrieves a specific magic job using the ID of the magic job. A magic job moves through the statuses `created`, `in_progress`, `completed` and `failed`. It stays `in_progress` while further image deliveries are still expected and becomes `completed` once all of its images have been delivered, at which point `completed_at` and `images_count` are populated. If a job is `failed`, your account manager will follow up with you. Retrieve the job's images via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a>.
+This endpoint retrieves a specific magic job using the ID of the magic job. A magic job moves through the statuses `created`, `in_progress`, `completed` and `failed`. It stays `in_progress` while further image deliveries are still expected and becomes `completed` once all of its images have been delivered, at which point `completed_at` and `images_count` are populated. If a job is `failed`, your account manager will follow up with you. `menu_items` reports which menu items got images (see <a href="#menu-items-report">Menu Items Report</a>). Retrieve the job's images via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a>.
 
 ### HTTP Request
 
@@ -1488,6 +1699,7 @@ curl "https://api.snappr.com/magic-jobs/9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e/ima
       "file_name": "12. Insalata della Casa (Groß).jpg",
       "menu_item_name": "12. Insalata della Casa (Groß)",
       "internal_ids": ["e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b"],
+      "menu_item_uids": ["6b1d3f5a-7c9e-4a2b-8d0f-1e3c5a7b9d2f"],
       "width": 1024,
       "height": 1024,
       "content_type": "image/jpeg",
@@ -1500,24 +1712,38 @@ curl "https://api.snappr.com/magic-jobs/9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e/ima
       "file_name": "7. Pizza Diavola.jpg",
       "menu_item_name": "7. Pizza Diavola",
       "internal_ids": ["b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f", "c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b"],
+      "menu_item_uids": ["2c4e6a8b-0d1f-4e3a-9b5c-7d9f1b3e5a6c", "8e0a2c4d-6f1b-4d3e-a5c7-9b1d3f5e7a0b"],
       "width": 1024,
       "height": 1024,
       "content_type": "image/jpeg",
       "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/a8c3f1e5-6b9d-4a2c-8e7f-3d5b1c9a4e6f?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=E%2BPTBIqQOEgf0MctPRy6WXLIsBM%3D",
       "url_thumb": "https://img.snappr.co/rXtW9z6hGdDm3lebP9IPHGo9V5k=/fit-in/600x0/a8c3f1e5-6b9d-4a2c-8e7f-3d5b1c9a4e6f",
       "url_expires_at": "2026-08-17T16:25:30Z"
+    },
+    {
+      "uid": "e2c4a6b8-0d1f-4b3a-9c5e-7f9a1b3d5c6e",
+      "file_name": "3. Bruschetta al Pomodoro.jpg",
+      "menu_item_name": "3. Bruschetta al Pomodoro",
+      "internal_ids": [],
+      "menu_item_uids": ["d1f3b5a7-9c2e-4f6a-b8d0-2e4c6a8f1b3d"],
+      "width": 1024,
+      "height": 1024,
+      "content_type": "image/jpeg",
+      "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/e2c4a6b8-0d1f-4b3a-9c5e-7f9a1b3d5c6e?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=Wq7Lm2Xc9Rb4Tn6Yp1Kd8Fs3Hv0%3D",
+      "url_thumb": "https://img.snappr.co/Jv4Nq8Ts2Lc6Wd0Xm5Rb9Hy3Pk7=/fit-in/600x0/e2c4a6b8-0d1f-4b3a-9c5e-7f9a1b3d5c6e",
+      "url_expires_at": "2026-08-17T16:25:30Z"
     }
   ],
-  "count": 2,
+  "count": 3,
   "limit": 1000,
   "offset": 0,
-  "total": 2
+  "total": 3
 }
 ```
 
 This endpoint retrieves all the images of a specific magic job.
 
-Each result is one delivered image for one menu item. `internal_ids` contains the menu item's identifier(s) in your own catalog, as scraped from the source platform — usually a single element, but some platforms list the same dish under several menus or sections, so the array can carry multiple ids; the image applies to all of them. Treat these ids as opaque strings — never validate or parse their shape. The response always reflects the current complete set of images for the job, across all of its delivery batches: if Snappr replaces an image after delivery, the item keeps its `uid` (the stable handle for diffing) while its `internal_ids` and URLs may change.
+Each result is one delivered image, which can belong to several menu items — for example, one photo for several sizes of a pizza. `menu_item_uids` lists the `uid`s of those items, so you can join each image to the job's `menu_items` exactly (see <a href="#menu-items-report">Menu Items Report</a>). `internal_ids` contains the menu item's identifier(s) in your own catalog, as found on the source platform, or from your submitted menu item when Snappr matched it by name — usually a single element, but some platforms list the same dish under several menus, sections or sizes, so the array can carry multiple ids; the image applies to all of them. It can be empty when the platform shows no ids and Snappr matched none of your items. Treat these ids as opaque strings — never validate or parse their shape. The response always reflects the current complete set of images for the job, across all of its delivery batches: if Snappr replaces an image after delivery, the image keeps its `uid` (the stable handle for diffing) while its `internal_ids` and URLs may change.
 
 <aside class="notice">
 
@@ -1762,7 +1988,54 @@ This endpoint returns all available Snappr editing job types.
     "source_platform": "restaurant-app",
     "internal_id": "st-7qk2mx9pl4",
     "source_url": "https://www.restaurant-app.example/store/Zk8pQ2mN7xL4",
-    "images_count": 23
+    "images_count": 23,
+    "menu_items": [
+      {
+        "uid": "6b1d3f5a-7c9e-4a2b-8d0f-1e3c5a7b9d2f",
+        "internal_id": "e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b",
+        "name": "Insalata della Casa (Groß)",
+        "description": "Mixed leaves, cherry tomatoes, cucumber and house dressing",
+        "provided": true,
+        "status": "delivered",
+        "images_count": 1
+      },
+      {
+        "uid": "2c4e6a8b-0d1f-4e3a-9b5c-7d9f1b3e5a6c",
+        "internal_id": "b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f",
+        "name": "Pizza Diavola (Medium)",
+        "description": "Tomato, mozzarella and spicy salami, 30 cm",
+        "provided": true,
+        "status": "delivered",
+        "images_count": 1
+      },
+      {
+        "uid": "8e0a2c4d-6f1b-4d3e-a5c7-9b1d3f5e7a0b",
+        "internal_id": "c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b",
+        "name": "Pizza Diavola (Large)",
+        "description": null,
+        "provided": true,
+        "status": "delivered",
+        "images_count": 1
+      },
+      {
+        "uid": "4a6c8e0b-2d4f-4b6a-8c1e-3f5a7c9e1b2d",
+        "internal_id": "f6a8c0e2-4b6d-4f8a-9c1e-5d7b9f1a3c4e",
+        "name": "Tiramisu",
+        "description": "Espresso-soaked ladyfingers with mascarpone cream",
+        "provided": true,
+        "status": "not_found",
+        "images_count": 0
+      },
+      {
+        "uid": "d1f3b5a7-9c2e-4f6a-b8d0-2e4c6a8f1b3d",
+        "internal_id": null,
+        "name": "3. Bruschetta al Pomodoro",
+        "description": null,
+        "provided": false,
+        "status": "delivered",
+        "images_count": 1
+      }
+    ]
   }
 }
 ```

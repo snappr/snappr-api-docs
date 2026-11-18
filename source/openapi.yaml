@@ -401,6 +401,16 @@ paths:
         Creates a Magic Job. It is returned with status `created`; Snappr then locates the business's
         listing, generates the images and delivers them in one or more batches. Each delivery triggers an
         `images_delivered` webhook event.
+
+        For a `menu` job you can optionally send `menu_items` to get a per-item report in the job's
+        `menu_items` (see `MagicJobMenuItem`). The response echoes your items straight away, each `pending`
+        with its own `uid`. Snappr still builds the image set from the restaurant's store page and matches
+        your items to the delivered images by `internal_id`, falling back to name; sending items doesn't
+        guarantee images for them.
+
+        Returns `400 ValidationError` when `restaurant_name`, `restaurant_address` or `menu_items` is sent
+        with a `type` other than `menu`, when `menu_items` has more than 1000 items, when two items share
+        an `internal_id`, or when an item is missing its `internal_id` or `name`.
       parameters:
         - $ref: '#/components/parameters/AcceptVersion'
       requestBody:
@@ -414,6 +424,18 @@ paths:
               restaurant_name: Sample Bistro
               restaurant_address: 123 Example Street, Sampletown, CA 90000, USA
               internal_id: st-7qk2mx9pl4
+              menu_items:
+                - internal_id: e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b
+                  name: Insalata della Casa (Groß)
+                  description: Mixed leaves, cherry tomatoes, cucumber and house dressing
+                - internal_id: b2d4f6a8-1c3e-5a7b-9d0f-2e4c6a8b1d3f
+                  name: Pizza Diavola (Medium)
+                  description: Tomato, mozzarella and spicy salami, 30 cm
+                - internal_id: c9e1a3b5-7d2f-4c6e-8a0b-5f1d3c7e9a2b
+                  name: Pizza Diavola (Large)
+                - internal_id: f6a8c0e2-4b6d-4f8a-9c1e-5d7b9f1a3c4e
+                  name: Tiramisu
+                  description: Espresso-soaked ladyfingers with mascarpone cream
       responses:
         '201':
           description: Magic Job created.
@@ -480,7 +502,7 @@ paths:
         Retrieves one Magic Job. A job moves through `created`, `in_progress`, `completed` and `failed`.
         It stays `in_progress` while further deliveries are expected and becomes `completed` once all
         images are delivered, at which point `completed_at` and `images_count` are populated. Failed
-        jobs are followed up by your account manager.
+        jobs are followed up by your account manager. `menu_items` reports which menu items got images.
       parameters:
         - $ref: '#/components/parameters/AcceptVersion'
         - $ref: '#/components/parameters/MagicJobUid'
@@ -508,7 +530,8 @@ paths:
       summary: List a Magic Job's images
       description: |
         Lists the current complete set of delivered images for a Magic Job, across all delivery batches.
-        Each result is one image for one menu item. If Snappr replaces an image after delivery it keeps
+        Each result is one image, which can belong to several menu items (e.g. one photo for several sizes
+        of a pizza); `menu_item_uids` joins it to the job's `menu_items`. If Snappr replaces an image after delivery it keeps
         its `uid` (the stable handle for diffing) while `internal_ids` and URLs may change. URLs are
         signed and expire at `url_expires_at`; call again for freshly signed URLs.
       parameters:
@@ -1237,17 +1260,37 @@ components:
           description: Type of Magic Job.
         restaurant_name:
           type: string
-          description: Name of the restaurant as it appears on your platform. Required when `type` is `menu`.
+          description: Name of the restaurant as it appears on your platform. Required when `type` is `menu`, and only accepted then.
         restaurant_address:
           type: string
-          description: Full address of the restaurant as a single string. Required when `type` is `menu`.
+          description: Full address of the restaurant as a single string. Required when `type` is `menu`, and only accepted then.
         internal_id:
           type: string
-          description: Your own identifier, for matching the job with your data.
+          description: Your restaurant's or menu's ID, for matching the job with your data.
         source_url:
           type: string
           format: uri
           description: URL of the restaurant's store page on your platform. If omitted, Snappr locates it from the name, address and `internal_id`.
+        menu_items:
+          type: array
+          maxItems: 1000
+          description: |
+            The items on the restaurant's menu, for a per-item report in the job's `menu_items`. Only accepted
+            when `type` is `menu`. `[]` is the same as omitting the field. Each item's `internal_id` must be
+            unique within the list.
+          items:
+            type: object
+            required: [internal_id, name]
+            properties:
+              internal_id:
+                type: string
+                description: Your ID for the menu item. Unique within `menu_items`. Treated as an opaque string.
+              name:
+                type: string
+                description: Name of the menu item.
+              description:
+                type: string
+                description: Description of the menu item.
     MagicJob:
       type: object
       required: [uid, type, status]
@@ -1276,18 +1319,66 @@ components:
           format: uri
         internal_id:
           type: [string, 'null']
+          description: Your restaurant's or menu's ID, as you sent it.
         images_count:
           type: integer
           description: Number of delivered images. Present only when `status` is `completed`.
+        menu_items:
+          type: array
+          description: |
+            Per-item report: which menu items got images. Present on every `menu` job. Items you sent come
+            first, in the order you sent them, followed by the items Snappr discovered on the source platform.
+            If you sent no `menu_items`, it holds only discovered items: `[]` on a new job, growing as images
+            are delivered.
+          items:
+            $ref: '#/components/schemas/MagicJobMenuItem'
         created_at:
           type: string
           format: date-time
         updated_at:
           type: string
           format: date-time
+    MagicJobMenuItem:
+      type: object
+      description: |
+        One menu item in a Magic Job's report. Once the job is `completed`, every item falls into one of
+        three groups: `provided` and `delivered` (you sent it and it got images), `provided` and `not_found`
+        (you sent it and Snappr found no image for it), or not `provided` (Snappr discovered it).
+      required: [uid, internal_id, name, description, provided, status, images_count]
+      properties:
+        uid:
+          type: string
+          format: uuid
+          description: Snappr's stable identifier for the item, generated and controlled by Snappr.
+        internal_id:
+          type: [string, 'null']
+          description: |
+            Your ID for the item, as you sent it. For a discovered item, the item's ID on the source platform,
+            or `null` if the platform doesn't show one.
+        name:
+          type: string
+          description: Name of the item. For a discovered item, the same as the image's `menu_item_name`.
+        description:
+          type: [string, 'null']
+          description: Description of the item, as you sent it. Always `null` for a discovered item.
+        provided:
+          type: boolean
+          description: |
+            `true` if you sent the item in `menu_items`. `false` if Snappr discovered it on the source
+            platform; a discovered item is always `delivered`.
+        status:
+          type: string
+          enum: [pending, delivered, not_found]
+          description: |
+            `pending`: no images yet and the job is not `completed`. `delivered`: at least one image.
+            `not_found`: the job is `completed` and the item has no images.
+        images_count:
+          type: integer
+          minimum: 0
+          description: Number of delivered images linked to the item.
     MagicJobImage:
       type: object
-      required: [uid, internal_ids, url_original, url_thumb, url_expires_at]
+      required: [uid, internal_ids, menu_item_uids, url_original, url_thumb, url_expires_at]
       properties:
         uid:
           type: string
@@ -1299,9 +1390,15 @@ components:
           type: string
         internal_ids:
           type: array
-          description: The menu item's identifier(s) in your catalog, as found on the source platform. Treat as opaque strings.
+          description: The menu item's identifier(s) in your catalog, as found on the source platform, or from your submitted menu item when Snappr matched it by name. Treat as opaque strings.
           items:
             type: string
+        menu_item_uids:
+          type: array
+          description: The `uid`s of the menu items in the job's `menu_items` that this image belongs to. One image can belong to several items, e.g. several sizes of a pizza.
+          items:
+            type: string
+            format: uuid
         width:
           type: integer
         height:
