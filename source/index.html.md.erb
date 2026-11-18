@@ -802,7 +802,7 @@ let bookings = api.bookings.get({
     }
   ],
   "count": 2,
-  "limit": 100,
+  "limit": 30,
   "offset": 0,
   "total": 2
 }
@@ -818,8 +818,8 @@ This endpoint retrieves all bookings. A `food` booking created with menu items a
 
 | Parameter | Type    | Description                                                                                                                             | Required |
 | --------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `limit`   | Integer | Maximum number of bookings to be returned (maximum of 100). Defaults to `100`.                                                          | No       |
-| `offset`  | Integer | Offset used for pagination if there are more bookings than the limit (or more than 100 bookings if there is no limit). Defaults to `0`. | No       |
+| `limit`   | Integer | Maximum number of bookings to be returned (maximum of 5000). Defaults to `30`.                                                           | No       |
+| `offset`  | Integer | Offset used for pagination if there are more bookings than the limit (or more than 30 bookings if there is no limit). Defaults to `0`. | No       |
 
 <aside class="notice">
 The API does not currently support booking filters (e.g. filtering by a certain status), but this is planned for an upcoming release.
