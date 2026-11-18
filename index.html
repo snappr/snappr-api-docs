@@ -343,6 +343,20 @@
               </ul>
           </li>
           <li>
+            <a href="#menu-items" class="toc-h1 toc-link" data-title="Menu Items">Menu Items</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#the-menu-item-object" class="toc-h2 toc-link" data-title="The Menu Item Object">The Menu Item Object</a>
+                  </li>
+                  <li>
+                    <a href="#sending-menu-items" class="toc-h2 toc-link" data-title="Sending Menu Items">Sending Menu Items</a>
+                  </li>
+                  <li>
+                    <a href="#matching-and-statuses" class="toc-h2 toc-link" data-title="Matching and Statuses">Matching and Statuses</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#custom-webhooks" class="toc-h1 toc-link" data-title="Custom Webhooks">Custom Webhooks</a>
               <ul class="toc-list-h2">
                   <li>
@@ -981,7 +995,7 @@ let bookings = api.bookings.post({
   }'</span>
 </code></pre>
 <blockquote>
-<p>Example JSON response:</p>
+<p>Example JSON response. For the <code>menu_items</code> fields, see <a href="#the-menu-item-object">The Menu Item Object</a>.</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5d8f2a4c-1e6b-4c9a-8f3d-7b2e9a1c4f6e"</span><span class="p">,</span><span class="w">
@@ -1049,7 +1063,7 @@ let bookings = api.bookings.post({
 <li>Provide all shoot details <em>except</em> the start date and time for the shoot (<code>start_at</code> set to <code>null</code>). This will trigger an automatic process to collect the start date and time from your end-customer using the contact details (email and/or mobile phone) provided. End-customers will be able to select from all available dates and times for the shoot location, using a Snappr UI.</li>
 </ol>
 
-<p>For a <code>food</code> booking you can also send the restaurant&#39;s details and your <code>menu_items</code>. Snappr then reports, item by item, which of them got images (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>). The response echoes your items straight away, each with status <code>pending</code> and its own <code>uid</code>.</p>
+<p>For a <code>food</code> booking you can also send the restaurant&#39;s details and your <code>menu_items</code>, and Snappr then reports, item by item, which of them got images (see <a href="#menu-items">Menu Items</a>).</p>
 <h3 id='http-request-3'>HTTP Request</h3>
 <p><code>POST https://api.snappr.com/bookings</code></p>
 <h3 id='request-body-parameters'>Request (Body) Parameters</h3>
@@ -1184,25 +1198,7 @@ let bookings = api.bookings.post({
 <tr>
 <td><code>menu_items</code></td>
 <td>Array of Menu item objects</td>
-<td>The items on the restaurant&#39;s menu, for a per-item report (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>). Maximum of 1000 items. Sending <code>[]</code> is the same as omitting the field.</td>
-<td>No</td>
-</tr>
-<tr>
-<td><code>menu_items[].internal_id</code></td>
-<td>String</td>
-<td>Your ID for the menu item. Must be unique within <code>menu_items</code>. Treated as an opaque string.</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td><code>menu_items[].name</code></td>
-<td>String</td>
-<td>Name of the menu item.</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td><code>menu_items[].description</code></td>
-<td>String</td>
-<td>Description of the menu item.</td>
+<td>The items on the restaurant&#39;s menu, for a per-item report (see <a href="#sending-menu-items">Sending Menu Items</a>).</td>
 <td>No</td>
 </tr>
 </tbody></table>
@@ -1222,17 +1218,7 @@ Always check <a href="#availability">availability</a> before trying to create a 
 </aside>
 
 <aside class="notice">
-<code>restaurant_name</code>, <code>restaurant_address</code>, <code>source_url</code> and <code>menu_items</code> only apply when <code>shoottype</code> is <code>food</code>. If you send any of them with another shoot type, they are ignored: they are not validated, not stored and not returned in the response, and the request still succeeds. When <code>shoottype</code> is <code>food</code>, you get a 400 error with code <code>ValidationError</code> when <code>menu_items</code> has more than 1000 items, when two items share the same <code>internal_id</code>, or when an item is missing its <code>internal_id</code> or <code>name</code>. The booking's own <code>internal_id</code> is unchanged: it is still your ID for the booking.
-</aside>
-<h3 id='food-booking-menu-items'>Food Booking Menu Items</h3>
-<p>A <code>food</code> booking created with a non-empty <code>menu_items</code> list returns a <code>menu_items</code> list: Snappr&#39;s report of which menu items got images. It is returned by <a href="#create-new-booking">Create New Booking</a>, <a href="#get-all-bookings">Get All Bookings</a>, <a href="#get-single-booking">Get Single Booking</a> and the booking webhook events (see <a href="#custom-webhooks">Custom Webhooks</a>). Each item has the same fields as in a magic job&#39;s report (see <a href="#menu-items-report">Menu Items Report</a>). <code>restaurant_name</code>, <code>restaurant_address</code> and <code>source_url</code> are returned only if you sent them.</p>
-
-<p>Every item is <code>pending</code> until the booking is <code>completed</code>. When the booking completes, Snappr matches the photographer&#39;s delivered images to your items by <code>internal_id</code>, falling back to the item&#39;s name. Each item you sent then becomes <code>delivered</code> (it got at least one image) or <code>not_found</code> (it got none), and the items Snappr found in the images but you didn&#39;t send are added with <code>provided: false</code>. Items you sent come first, in the order you sent them. Join images to items with each image&#39;s <code>menu_item_uids</code> (see <a href="#get-all-images-for-a-booking">Get All Images For a Booking</a>).</p>
-
-<p>Your items are used for this report, not as a shot list for the photographer, so sending menu items doesn&#39;t guarantee images of them: the report tells you which ones got images.</p>
-
-<aside class="notice">
-Unlike a magic job, which lists the items Snappr discovered even when you sent no <code>menu_items</code>, a booking only has <code>menu_items</code> if you sent a non-empty list. Bookings created without menu items, and bookings of other shoot types, don't include the field.
+<code>restaurant_name</code>, <code>restaurant_address</code>, <code>source_url</code> and <code>menu_items</code> only apply when <code>shoottype</code> is <code>food</code>. If you send any of them with another shoot type, they are ignored: they are not validated, not stored and not returned in the response, and the request still succeeds. On a <code>food</code> booking, <code>restaurant_name</code>, <code>restaurant_address</code> and <code>source_url</code> are returned only if you sent them. The booking's own <code>internal_id</code> is unchanged: it is still your ID for the booking.
 </aside>
 <h2 id='get-all-bookings'>Get All Bookings</h2>
 <blockquote>
@@ -1312,7 +1298,7 @@ let bookings = api.bookings.get({
   </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves all bookings. A <code>food</code> booking created with menu items also includes <code>menu_items</code> (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>).</p>
+<p>This endpoint retrieves all bookings. A <code>food</code> booking created with menu items also includes <code>menu_items</code> (see <a href="#menu-items">Menu Items</a>).</p>
 <h3 id='http-request-4'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/bookings?limit=<span class="route_param">:limit</span>&amp;offset=<span class="route_param">:offset</span></code></p>
 <h3 id='query-parameters-3'>Query Parameters</h3>
@@ -1389,7 +1375,7 @@ let bookings = api.bookings.get({
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
-<p>Example JSON response when a completed food booking has menu items:</p>
+<p>Example JSON response when a completed food booking has menu items. For the <code>menu_items</code> fields, see <a href="#the-menu-item-object">The Menu Item Object</a>.</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5d8f2a4c-1e6b-4c9a-8f3d-7b2e9a1c4f6e"</span><span class="p">,</span><span class="w">
@@ -1457,7 +1443,7 @@ let bookings = api.bookings.get({
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-12-02T18:40:00Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a specific booking using the ID of the booking. On a <code>food</code> booking created with menu items, <code>menu_items</code> reports which items got images (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>).</p>
+<p>This endpoint retrieves a specific booking using the ID of the booking. On a <code>food</code> booking created with menu items, <code>menu_items</code> reports which items got images (see <a href="#menu-items">Menu Items</a>).</p>
 <h3 id='http-request-5'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/bookings/<span class="route_param">:booking_uid</span></code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
@@ -1519,7 +1505,7 @@ Magic Jobs are available to Enterprise accounts. Contact your account manager to
   }'</span>
 </code></pre>
 <blockquote>
-<p>Example JSON response:</p>
+<p>Example JSON response. For the <code>menu_items</code> fields, see <a href="#the-menu-item-object">The Menu Item Object</a>.</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e"</span><span class="p">,</span><span class="w">
@@ -1575,7 +1561,7 @@ Magic Jobs are available to Enterprise accounts. Contact your account manager to
 </span></code></pre>
 <p>This endpoint creates a new magic job. The job is returned with status <code>created</code> and a <code>201</code> status code; Snappr then locates the business&#39;s listing, generates the images and delivers them in one or more batches. Each delivery triggers an <code>images_delivered</code> event on your webhook (see <a href="#custom-webhooks">Custom Webhooks</a>).</p>
 
-<p>For a <code>menu</code> job you can optionally send your <code>menu_items</code>. Snappr then reports, item by item, which of them got images (see <a href="#menu-items-report">Menu Items Report</a>). The response echoes your items straight away, each with status <code>pending</code> and its own <code>uid</code>.</p>
+<p>For a <code>menu</code> job you can optionally send your <code>menu_items</code>, and Snappr then reports, item by item, which of them got images (see <a href="#menu-items">Menu Items</a>).</p>
 <h3 id='http-request-6'>HTTP Request</h3>
 <p><code>POST https://api.snappr.com/magic-jobs</code></p>
 <h3 id='request-body-parameters-2'>Request (Body) Parameters</h3>
@@ -1620,25 +1606,7 @@ Magic Jobs are available to Enterprise accounts. Contact your account manager to
 <tr>
 <td><code>menu_items</code></td>
 <td>Array of Menu item objects</td>
-<td>The items on the restaurant&#39;s menu, for a per-item report (see <a href="#menu-items-report">Menu Items Report</a>). Maximum of 1000 items. Sending <code>[]</code> is the same as omitting the field.</td>
-<td>No</td>
-</tr>
-<tr>
-<td><code>menu_items[].internal_id</code></td>
-<td>String</td>
-<td>Your ID for the menu item. Must be unique within <code>menu_items</code>. Treated as an opaque string.</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td><code>menu_items[].name</code></td>
-<td>String</td>
-<td>Name of the menu item.</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td><code>menu_items[].description</code></td>
-<td>String</td>
-<td>Description of the menu item.</td>
+<td>The items on the restaurant&#39;s menu, for a per-item report (see <a href="#sending-menu-items">Sending Menu Items</a>).</td>
 <td>No</td>
 </tr>
 </tbody></table>
@@ -1648,69 +1616,7 @@ Magic Jobs are available to Enterprise accounts. Contact your account manager to
 </aside>
 
 <aside class="notice">
-<code>restaurant_name</code>, <code>restaurant_address</code> and <code>menu_items</code> only apply when <code>type</code> is <code>menu</code>. If you send any of them with another type, they are ignored: they are not validated, not stored and not returned in the response, and the request still succeeds. When <code>type</code> is <code>menu</code>, you get a 400 error with code <code>ValidationError</code> when <code>menu_items</code> has more than 1000 items, when two items share the same <code>internal_id</code>, or when an item is missing its <code>internal_id</code> or <code>name</code>.
-</aside>
-<h3 id='menu-items-report'>Menu Items Report</h3>
-<p>Every <code>menu</code> magic job returns a <code>menu_items</code> list: Snappr&#39;s report of which menu items got images. It is returned by <a href="#create-new-magic-job">Create New Magic Job</a>, <a href="#get-all-magic-jobs">Get All Magic Jobs</a>, <a href="#get-single-magic-job">Get Single Magic Job</a> and the <code>images_delivered</code> webhook event (see <a href="#custom-webhooks">Custom Webhooks</a>).</p>
-
-<p>Snappr still builds the image set from the restaurant&#39;s store page. It then matches each item you sent to the delivered images by <code>internal_id</code>, falling back to the item&#39;s name. Sending menu items doesn&#39;t guarantee images for them: the report tells you which ones got images.</p>
-
-<table><thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>uid</code></td>
-<td>String</td>
-<td>Snappr&#39;s identifier for the menu item. It never changes.</td>
-</tr>
-<tr>
-<td><code>internal_id</code></td>
-<td>String or null</td>
-<td>Your ID for the menu item, as you sent it. For an item Snappr discovered, the ID Snappr found for it (on a magic job, the item&#39;s ID on the source platform), or <code>null</code> if there is none.</td>
-</tr>
-<tr>
-<td><code>name</code></td>
-<td>String</td>
-<td>Name of the menu item, as you sent it. For an item Snappr discovered, the name Snappr found for it (on a magic job, the same as the image&#39;s <code>menu_item_name</code>).</td>
-</tr>
-<tr>
-<td><code>description</code></td>
-<td>String or null</td>
-<td>Description of the menu item, as you sent it. <code>null</code> if you sent none, and always <code>null</code> for an item Snappr discovered.</td>
-</tr>
-<tr>
-<td><code>provided</code></td>
-<td>Boolean</td>
-<td><code>true</code> if you sent the item in <code>menu_items</code>. <code>false</code> if Snappr discovered it (on a magic job, on the source platform); such an item always has status <code>delivered</code>.</td>
-</tr>
-<tr>
-<td><code>status</code></td>
-<td>String</td>
-<td><code>pending</code>: no images yet and the magic job or booking is not <code>completed</code>. <code>delivered</code>: the item has at least one image. <code>not_found</code>: the magic job or booking is <code>completed</code> and the item has no images.</td>
-</tr>
-<tr>
-<td><code>images_count</code></td>
-<td>Integer</td>
-<td>Number of delivered images linked to the item. Always present. An image that belongs to several items counts towards each of them, so the items&#39; counts can add up to more than the total number of delivered images.</td>
-</tr>
-</tbody></table>
-
-<p>Once the job is <code>completed</code>, every item falls into one of three groups:</p>
-
-<ol>
-<li><code>provided: true</code> and <code>status: delivered</code>: you sent the item and it got images.</li>
-<li><code>provided: true</code> and <code>status: not_found</code>: you sent the item and Snappr found no image for it.</li>
-<li><code>provided: false</code>: Snappr found the item on the source platform, but you didn&#39;t send it.</li>
-</ol>
-
-<p><code>not_found</code> only appears once the job is <code>completed</code>; until then, items without images are <code>pending</code>. Items you sent come first, in the order you sent them, followed by the items Snappr discovered. If you didn&#39;t send <code>menu_items</code>, the list holds only the items Snappr discovered: it is <code>[]</code> on a new job and grows as images are delivered. Join images to items with the image&#39;s <code>menu_item_uids</code> (see <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a>).</p>
-
-<aside class="notice">
-A <code>uid</code> is always generated and controlled by Snappr, for both the magic job and its menu items. An <code>internal_id</code> is always yours. Store the <code>uid</code>s Snappr returns, and send your own IDs as <code>internal_id</code>.
+<code>restaurant_name</code>, <code>restaurant_address</code> and <code>menu_items</code> only apply when <code>type</code> is <code>menu</code>. If you send any of them with another type, they are ignored: they are not validated, not stored and not returned in the response, and the request still succeeds.
 </aside>
 <h2 id='get-all-magic-jobs'>Get All Magic Jobs</h2>
 <blockquote>
@@ -1721,7 +1627,7 @@ A <code>uid</code> is always generated and controlled by Snappr, for both the ma
   -H <span class="s1">'accept-version: 1.0.0'</span>
 </code></pre>
 <blockquote>
-<p>Example JSON response:</p>
+<p>Example JSON response. For the <code>menu_items</code> fields, see <a href="#the-menu-item-object">The Menu Item Object</a>.</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -1860,7 +1766,7 @@ A <code>uid</code> is always generated and controlled by Snappr, for both the ma
   -H <span class="s1">'accept-version: 1.0.0'</span>
 </code></pre>
 <blockquote>
-<p>Example JSON response:</p>
+<p>Example JSON response. For the <code>menu_items</code> fields, see <a href="#the-menu-item-object">The Menu Item Object</a>.</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9c4e7a1b-2d5f-4a8c-b3e6-0f1d2c3b4a5e"</span><span class="p">,</span><span class="w">
@@ -1924,7 +1830,7 @@ A <code>uid</code> is always generated and controlled by Snappr, for both the ma
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-08-15T16:25:30Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a specific magic job using the ID of the magic job. A magic job moves through the statuses <code>created</code>, <code>in_progress</code>, <code>completed</code> and <code>failed</code>. It stays <code>in_progress</code> while further image deliveries are still expected and becomes <code>completed</code> once all of its images have been delivered, at which point <code>completed_at</code> and <code>images_count</code> are populated. If a job is <code>failed</code>, your account manager will follow up with you. <code>menu_items</code> reports which menu items got images (see <a href="#menu-items-report">Menu Items Report</a>). Retrieve the job&#39;s images via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a>.</p>
+<p>This endpoint retrieves a specific magic job using the ID of the magic job. A magic job moves through the statuses <code>created</code>, <code>in_progress</code>, <code>completed</code> and <code>failed</code>. It stays <code>in_progress</code> while further image deliveries are still expected and becomes <code>completed</code> once all of its images have been delivered, at which point <code>completed_at</code> and <code>images_count</code> are populated. If a job is <code>failed</code>, your account manager will follow up with you. <code>menu_items</code> reports which menu items got images (see <a href="#menu-items">Menu Items</a>). Retrieve the job&#39;s images via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a>.</p>
 <h3 id='http-request-8'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/magic-jobs/<span class="route_param">:magic_job_uid</span></code></p>
 <h3 id='request-parameters-2'>Request Parameters</h3>
@@ -2497,7 +2403,7 @@ let bookings = api.bookings.getImages({
 </span></code></pre>
 <p>This endpoint retrieves all the images of a specific booking.</p>
 
-<p>On a booking that has <code>menu_items</code> (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>), each image also lists the menu items it shows. One image can belong to several items — for example, one photo for several sizes of a pizza. <code>menu_item_uids</code> lists the <code>uid</code>s of those items, so you can join each image to the booking&#39;s <code>menu_items</code> exactly. <code>internal_ids</code> lists those items&#39; <code>internal_id</code>s, skipping any item whose <code>internal_id</code> is <code>null</code>. Both are empty for a photo that shows none of the items, such as a photo of the restaurant itself. Images of other bookings don&#39;t include these fields.</p>
+<p>On a booking that has <code>menu_items</code> (see <a href="#menu-items">Menu Items</a>), each image also lists the menu items it shows. One image can belong to several items — for example, one photo for several sizes of a pizza. <code>menu_item_uids</code> lists the <code>uid</code>s of those items, so you can join each image to the booking&#39;s <code>menu_items</code> exactly. <code>internal_ids</code> lists those items&#39; <code>internal_id</code>s, skipping any item whose <code>internal_id</code> is <code>null</code>. Both are empty for a photo that shows none of the items, such as a photo of the restaurant itself. Images of other bookings don&#39;t include these fields.</p>
 <h3 id='http-request-13'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/bookings/<span class="route_param">:booking_uid</span>/images</code></p>
 <h3 id='request-parameters-4'>Request Parameters</h3>
@@ -2710,7 +2616,7 @@ let editingJobs = api.editingJobs.getImages({
 </span></code></pre>
 <p>This endpoint retrieves all the images of a specific magic job.</p>
 
-<p>Each result is one delivered image, which can belong to several menu items — for example, one photo for several sizes of a pizza. <code>menu_item_uids</code> lists the <code>uid</code>s of those items, so you can join each image to the job&#39;s <code>menu_items</code> exactly (see <a href="#menu-items-report">Menu Items Report</a>). <code>internal_ids</code> contains the menu items&#39; identifier(s) in your own catalog, as found on the source platform, or from your submitted menu item when Snappr matched it by name — usually a single element, but some platforms list the same dish under several menus, sections or sizes, so the array can carry multiple ids; the image applies to all of them. It can be empty when the platform shows no ids and Snappr matched none of your items. Treat these ids as opaque strings — never validate or parse their shape. The response always reflects the current complete set of images for the job, across all of its delivery batches: if Snappr replaces an image after delivery, the image keeps its <code>uid</code> (the stable handle for diffing) while its <code>internal_ids</code> and URLs may change.</p>
+<p>Each result is one delivered image, which can belong to several menu items — for example, one photo for several sizes of a pizza. <code>menu_item_uids</code> lists the <code>uid</code>s of those items, so you can join each image to the job&#39;s <code>menu_items</code> exactly (see <a href="#matching-and-statuses">Matching and Statuses</a>). <code>internal_ids</code> contains the menu items&#39; identifier(s) in your own catalog, as found on the source platform, or from your submitted menu item when Snappr matched it by name — usually a single element, but some platforms list the same dish under several menus, sections or sizes, so the array can carry multiple ids; the image applies to all of them. It can be empty when the platform shows no ids and Snappr matched none of your items. Treat these ids as opaque strings — never validate or parse their shape. The response always reflects the current complete set of images for the job, across all of its delivery batches: if Snappr replaces an image after delivery, the image keeps its <code>uid</code> (the stable handle for diffing) while its <code>internal_ids</code> and URLs may change.</p>
 
 <aside class="notice">
 
@@ -2926,6 +2832,174 @@ let bookings = api.shoottypes.get({});
 <p>This endpoint returns all available Snappr editing job types.</p>
 <h3 id='http-request-18'>HTTP Request</h3>
 <p><code>GET https://api.snappr.com/editing-job-types</code></p>
+<h1 id='menu-items'>Menu Items</h1>
+<p>Menu items are only available on magic jobs whose <code>type</code> is <code>menu</code> and on bookings whose <code>shoottype</code> is <code>food</code>. You send your menu&#39;s items as <code>menu_items</code> when you create the magic job or booking, and Snappr returns a <code>menu_items</code> list on it: Snappr&#39;s report of which menu items got images.</p>
+
+<p>No endpoint reads or writes menu items directly: they are sent and returned inside those resources. See <a href="#create-new-magic-job">Create New Magic Job</a> and <a href="#create-new-booking">Create New Booking</a> for sending them, and <a href="#matching-and-statuses">Matching and Statuses</a> for which endpoints and webhook events return them.</p>
+<h2 id='the-menu-item-object'>The Menu Item Object</h2>
+<blockquote>
+<p>Example <code>menu_items</code> on a completed magic job, with one item from each group:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6b1d3f5a-7c9e-4a2b-8d0f-1e3c5a7b9d2f"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e3a1c5b7-9d2f-4e6a-8c0b-1f3d5a7c9e2b"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Insalata della Casa (Groß)"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mixed leaves, cherry tomatoes, cucumber and house dressing"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4a6c8e0b-2d4f-4b6a-8c1e-3f5a7c9e1b2d"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f6a8c0e2-4b6d-4f8a-9c1e-5d7b9f1a3c4e"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tiramisu"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Espresso-soaked ladyfingers with mascarpone cream"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"not_found"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d1f3b5a7-9c2e-4f6a-b8d0-2e4c6a8f1b3d"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"internal_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3. Bruschetta al Pomodoro"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"provided"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"delivered"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"images_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>Each item in a magic job&#39;s or booking&#39;s <code>menu_items</code> has these fields:</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>uid</code></td>
+<td>String</td>
+<td>Snappr&#39;s identifier for the menu item. It never changes.</td>
+</tr>
+<tr>
+<td><code>internal_id</code></td>
+<td>String or null</td>
+<td>Your ID for the menu item, as you sent it. For an item Snappr discovered, the ID Snappr found for it (on a magic job, the item&#39;s ID on the source platform), or <code>null</code> if there is none.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>String</td>
+<td>Name of the menu item, as you sent it. For an item Snappr discovered, the name Snappr found for it (on a magic job, the same as the image&#39;s <code>menu_item_name</code>).</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>String or null</td>
+<td>Description of the menu item, as you sent it. <code>null</code> if you sent none, and always <code>null</code> for an item Snappr discovered.</td>
+</tr>
+<tr>
+<td><code>provided</code></td>
+<td>Boolean</td>
+<td><code>true</code> if you sent the item in <code>menu_items</code>. <code>false</code> if Snappr discovered it (on a magic job, on the source platform); such an item always has status <code>delivered</code>.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>String</td>
+<td><code>pending</code>: no images yet and the magic job or booking is not <code>completed</code>. <code>delivered</code>: the item has at least one image. <code>not_found</code>: the magic job or booking is <code>completed</code> and the item has no images.</td>
+</tr>
+<tr>
+<td><code>images_count</code></td>
+<td>Integer</td>
+<td>Number of delivered images linked to the item. Always present. An image that belongs to several items counts towards each of them, so the items&#39; counts can add up to more than the total number of delivered images.</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+A <code>uid</code> is always generated and controlled by Snappr, for both the menu items and the magic job or booking they belong to. An <code>internal_id</code> is always yours. Store the <code>uid</code>s Snappr returns, and send your own IDs as <code>internal_id</code>.
+</aside>
+<h2 id='sending-menu-items'>Sending Menu Items</h2>
+<p>To get a per-item report, send <code>menu_items</code> when you create a <code>menu</code> magic job (see <a href="#create-new-magic-job">Create New Magic Job</a>) or a <code>food</code> booking (see <a href="#create-new-booking">Create New Booking</a>). Each item you send has these fields:</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>internal_id</code></td>
+<td>String</td>
+<td>Your ID for the menu item. Must be unique within <code>menu_items</code>. Treated as an opaque string.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>String</td>
+<td>Name of the menu item.</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>String</td>
+<td>Description of the menu item.</td>
+<td>No</td>
+</tr>
+</tbody></table>
+
+<p><code>menu_items</code> takes a maximum of 1000 items. Sending <code>[]</code> is the same as omitting the field. The response echoes your items straight away, each with status <code>pending</code> and its own <code>uid</code>.</p>
+
+<aside class="notice">
+When <code>type</code> is <code>menu</code> on a magic job, or <code>shoottype</code> is <code>food</code> on a booking, you get a 400 error with code <code>ValidationError</code> when <code>menu_items</code> has more than 1000 items, when two items share the same <code>internal_id</code>, or when an item is missing its <code>internal_id</code> or <code>name</code>. With any other type or shoot type, <code>menu_items</code> is ignored.
+</aside>
+<h2 id='matching-and-statuses'>Matching and Statuses</h2>
+<p>Every item you send starts as <code>pending</code>. Snappr matches each item you sent to the delivered images by <code>internal_id</code>, falling back to the item&#39;s name. An item with at least one image becomes <code>delivered</code>; on a booking, matching happens when the booking is <code>completed</code>, so every item stays <code>pending</code> until then. <code>not_found</code> only appears once the magic job or booking is <code>completed</code>: until then, items without images are <code>pending</code>, and once it completes, each item you sent that has no images becomes <code>not_found</code>. Items Snappr found but you didn&#39;t send are added with <code>provided: false</code>.</p>
+
+<p>The list is a report, not a promise of coverage: sending menu items doesn&#39;t guarantee images for them, and the report tells you which ones got images.</p>
+
+<p>Once the magic job or booking is <code>completed</code>, every item falls into one of three groups:</p>
+
+<ol>
+<li><code>provided: true</code> and <code>status: delivered</code>: you sent the item and it got images.</li>
+<li><code>provided: true</code> and <code>status: not_found</code>: you sent the item and Snappr found no image for it.</li>
+<li><code>provided: false</code>: Snappr found the item, but you didn&#39;t send it.</li>
+</ol>
+
+<p>Items you sent come first, in the order you sent them, followed by the items Snappr discovered. Join images to items with each image&#39;s <code>menu_item_uids</code> (see <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a> and <a href="#get-all-images-for-a-booking">Get All Images For a Booking</a>).</p>
+
+<p>Magic jobs and bookings differ in a few ways:</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th>Magic job (<code>type</code> <code>menu</code>)</th>
+<th>Booking (<code>shoottype</code> <code>food</code>)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>When <code>menu_items</code> is present</td>
+<td>On every <code>menu</code> magic job. If you didn&#39;t send <code>menu_items</code>, the list holds only the items Snappr discovered: it is <code>[]</code> on a new job and grows as images are delivered.</td>
+<td>Only on a <code>food</code> booking created with a non-empty <code>menu_items</code> list. Bookings created without menu items, and bookings of other shoot types, don&#39;t include the field.</td>
+</tr>
+<tr>
+<td>Returned by</td>
+<td><a href="#create-new-magic-job">Create New Magic Job</a>, <a href="#get-all-magic-jobs">Get All Magic Jobs</a>, <a href="#get-single-magic-job">Get Single Magic Job</a> and the <code>images_delivered</code> webhook event (see <a href="#custom-webhooks">Custom Webhooks</a>).</td>
+<td><a href="#create-new-booking">Create New Booking</a>, <a href="#get-all-bookings">Get All Bookings</a>, <a href="#get-single-booking">Get Single Booking</a> and the booking webhook events (see <a href="#custom-webhooks">Custom Webhooks</a>).</td>
+</tr>
+<tr>
+<td>Where the images come from</td>
+<td>Snappr builds the image set from the restaurant&#39;s store page.</td>
+<td>The photographer&#39;s delivered images, which Snappr matches to your items when the booking is <code>completed</code>. Your items are used for the report, not as a shot list for the photographer.</td>
+</tr>
+<tr>
+<td>When discovered items appear</td>
+<td>As images are delivered: Snappr adds the items it found on the source platform.</td>
+<td>When the booking is <code>completed</code>: Snappr adds the items it found in the images. Every item is <code>pending</code> until then.</td>
+</tr>
+</tbody></table>
 <h1 id='custom-webhooks'>Custom Webhooks</h1>
 <blockquote>
 <p>Example JSON payload sent to webhook URL as POST — booking event:</p>
@@ -2960,7 +3034,7 @@ let bookings = api.shoottypes.get({});
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
-<p>Example JSON payload sent to webhook URL as POST — magic job images_delivered event:</p>
+<p>Example JSON payload sent to webhook URL as POST — magic job images_delivered event. For the <code>menu_items</code> fields, see <a href="#the-menu-item-object">The Menu Item Object</a>.</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"images_delivered"</span><span class="p">,</span><span class="w">
@@ -3026,7 +3100,7 @@ let bookings = api.shoottypes.get({});
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>You can set a custom webhook URL in the Snappr Photography Portal GUI. If the custom webhook URL is set, we will POST to that URL every time a booking is created or updated, and every time a magic job delivers a batch of images (an <code>images_delivered</code> event). On a <code>food</code> booking, booking events also carry the restaurant fields you sent and <code>menu_items</code> (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>). A magic job can deliver several batches over time, so multiple <code>images_delivered</code> events may arrive for the same <code>magic_job.uid</code>, each with a different <code>delivery_uid</code>. The recommended approach is to treat every delivery the same way: retrieve the job&#39;s full image set via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a> and replace anything you have already stored for that job — the endpoint always returns the current complete set.</p>
+<p>You can set a custom webhook URL in the Snappr Photography Portal GUI. If the custom webhook URL is set, we will POST to that URL every time a booking is created or updated, and every time a magic job delivers a batch of images (an <code>images_delivered</code> event). On a <code>food</code> booking, booking events also carry the restaurant fields you sent and <code>menu_items</code> (see <a href="#menu-items">Menu Items</a>). A magic job can deliver several batches over time, so multiple <code>images_delivered</code> events may arrive for the same <code>magic_job.uid</code>, each with a different <code>delivery_uid</code>. The recommended approach is to treat every delivery the same way: retrieve the job&#39;s full image set via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a> and replace anything you have already stored for that job — the endpoint always returns the current complete set.</p>
 
 <aside class="notice">
 
