@@ -1203,18 +1203,7 @@ components:
             when `shoottype` is `food`; ignored, and not validated, for any other shoot type. `[]` is the same as
             omitting the field. Each item's `internal_id` must be unique within the list.
           items:
-            type: object
-            required: [internal_id, name]
-            properties:
-              internal_id:
-                type: string
-                description: Your ID for the menu item. Unique within `menu_items`. Treated as an opaque string.
-              name:
-                type: string
-                description: Name of the menu item.
-              description:
-                type: string
-                description: Description of the menu item.
+            $ref: '#/components/schemas/MenuItemCreate'
     Booking:
       type: object
       required: [uid, status, credits, created_at, updated_at]
@@ -1396,18 +1385,7 @@ components:
             when `type` is `menu`; ignored, and not validated, for any other type. `[]` is the same as omitting
             the field. Each item's `internal_id` must be unique within the list.
           items:
-            type: object
-            required: [internal_id, name]
-            properties:
-              internal_id:
-                type: string
-                description: Your ID for the menu item. Unique within `menu_items`. Treated as an opaque string.
-              name:
-                type: string
-                description: Name of the menu item.
-              description:
-                type: string
-                description: Description of the menu item.
+            $ref: '#/components/schemas/MenuItemCreate'
     MagicJob:
       type: object
       required: [uid, type, status]
@@ -1455,6 +1433,20 @@ components:
         updated_at:
           type: string
           format: date-time
+    MenuItemCreate:
+      type: object
+      description: One menu item you send in `menu_items` when you create a Magic Job or a booking.
+      required: [internal_id, name]
+      properties:
+        internal_id:
+          type: string
+          description: Your ID for the item. Unique within `menu_items`. Treated as an opaque string.
+        name:
+          type: string
+          description: Name of the item.
+        description:
+          type: string
+          description: Description of the item.
     MenuItem:
       type: object
       description: |
