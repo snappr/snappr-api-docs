@@ -550,12 +550,119 @@ let bookings = api.bookings.post({
 }
 ```
 
+> Example request when shoottype is food and menu items are provided:
+
+```shell
+curl "https://api.snappr.com/bookings" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0' \
+  -H "Content-Type: application/json" \
+  --data-binary $'{
+    "title": "Sample Bistro Menu Shoot",
+    "latitude": 34.0522,
+    "longitude": -118.2437,
+    "shoottype": "food",
+    "start_at": "2026-12-01T15:00:00Z",
+    "duration": 60,
+    "location_notes": "Sample Bistro - ask for the manager at the front counter on arrival",
+    "style_notes": "One hero shot per dish on a plain table; natural light where possible",
+    "customer_firstname": "Mary",
+    "customer_surname": "Smith",
+    "customer_email": "test@snappr.com",
+    "customer_mobilephone": "+14153339966",
+    "customer_company": "Sample Bistro",
+    "internal_id": "456-DEF",
+    "restaurant_name": "Sample Bistro",
+    "restaurant_address": "123 Example Street, Sampletown, CA 90000, USA",
+    "source_url": "https://www.restaurant-app.example/store/Zk8pQ2mN7xL4",
+    "menu_items": [
+      {
+        "internal_id": "7c1e3a5b-9d2f-4b6e-8a0c-2f4d6b8e1a3c",
+        "name": "Pizza Margherita (Small)",
+        "description": "Tomato, mozzarella and basil, 25 cm"
+      },
+      {
+        "internal_id": "3e5a7c9b-1d4f-4a6c-9e2b-5d7f9a1c3e6b",
+        "name": "Pizza Margherita (Large)",
+        "description": "Tomato, mozzarella and basil, 35 cm"
+      },
+      {
+        "internal_id": "9a2c4e6b-8d1f-4c3a-b5e7-0f2a4c6e8b1d",
+        "name": "Panna Cotta"
+      }
+    ]
+  }'
+```
+
+> Example JSON response:
+
+```json
+{
+  "uid": "5d8f2a4c-1e6b-4c9a-8f3d-7b2e9a1c4f6e",
+  "title": "Sample Bistro Menu Shoot",
+  "status": "paid",
+  "credits": 249,
+  "latitude": 34.0522,
+  "longitude": -118.2437,
+  "shoottype": "food",
+  "start_at": "2026-12-01T15:00:00Z",
+  "duration": 60,
+  "location_notes": "Sample Bistro - ask for the manager at the front counter on arrival",
+  "style_notes": "One hero shot per dish on a plain table; natural light where possible",
+  "customer_firstname": "Mary",
+  "customer_surname": "Smith",
+  "customer_email": "test@snappr.com",
+  "customer_mobilephone": "+14153339966",
+  "customer_company": "Sample Bistro",
+  "internal_id": "456-DEF",
+  "creator_name": "Hollie B.",
+  "creator_id": "69a66cb2-dcb2-4803-9d23-f7894e443e68",
+  "creator_profile_image_url": "https://snappr.imgix.net/d7f5be08-e189-4c9b-bdb5-172111560d9d?auto=format&w=300&h=300&fit=facearea&facepad=2&s=3dd41a8404ba86d78d54adad40fd9108",
+  "restaurant_name": "Sample Bistro",
+  "restaurant_address": "123 Example Street, Sampletown, CA 90000, USA",
+  "source_url": "https://www.restaurant-app.example/store/Zk8pQ2mN7xL4",
+  "menu_items": [
+    {
+      "uid": "1f3b5d7a-9c2e-4a6b-8d0f-3e5a7c9b1d4f",
+      "internal_id": "7c1e3a5b-9d2f-4b6e-8a0c-2f4d6b8e1a3c",
+      "name": "Pizza Margherita (Small)",
+      "description": "Tomato, mozzarella and basil, 25 cm",
+      "provided": true,
+      "status": "pending",
+      "images_count": 0
+    },
+    {
+      "uid": "6d8f0b2c-4e6a-4c8e-a1b3-5f7d9b1e3a6c",
+      "internal_id": "3e5a7c9b-1d4f-4a6c-9e2b-5d7f9a1c3e6b",
+      "name": "Pizza Margherita (Large)",
+      "description": "Tomato, mozzarella and basil, 35 cm",
+      "provided": true,
+      "status": "pending",
+      "images_count": 0
+    },
+    {
+      "uid": "b3d5f7a9-1c4e-4e6a-9c2d-7a9b1d3f5e8a",
+      "internal_id": "9a2c4e6b-8d1f-4c3a-b5e7-0f2a4c6e8b1d",
+      "name": "Panna Cotta",
+      "description": null,
+      "provided": true,
+      "status": "pending",
+      "images_count": 0
+    }
+  ],
+  "created_at": "2026-11-18T09:12:00Z",
+  "updated_at": "2026-11-18T09:12:00Z"
+}
+```
+
 This endpoint creates a new photoshoot booking.
 
 Broadly, there are two main ways to create a new photoshoot booking, and examples are provided for each:
 
 1. Provide all shoot details _including_ the start date and time for the shoot (`start_at`). With this option, Snappr will not seek any input on shoot details from your end-customer, they will simply be notified if the booking is placed successfully.
 2. Provide all shoot details _except_ the start date and time for the shoot (`start_at` set to `null`). This will trigger an automatic process to collect the start date and time from your end-customer using the contact details (email and/or mobile phone) provided. End-customers will be able to select from all available dates and times for the shoot location, using a Snappr UI.
+
+For a `food` booking you can also send the restaurant's details and your `menu_items`. Snappr then reports, item by item, which of them got photos (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>). The response echoes your items straight away, each with status `pending` and its own `uid`.
 
 ### HTTP Request
 
@@ -582,6 +689,13 @@ Broadly, there are two main ways to create a new photoshoot booking, and example
 | `internal_id`          | String         | ID for your internal systems. Useful for matching a booking with your internal data.                                                  | No       |
 | `creator_id`           | String         | The identifier of the creator. You can use this to assign this booking to a specific Snappr creator.                                  | No       |
 | `tags`                 | Array String   | An array of strings containing tags used to identify bookings within the Snappr portal, also utilized for creating reports. (Limit chars 255) | No       |
+| `restaurant_name`      | String         | Name of the restaurant as it appears on your platform. If omitted, `title` is used.                                                   | No       |
+| `restaurant_address`   | String         | Full address of the restaurant as a single string. If omitted, `address` is used.                                                     | No       |
+| `source_url`           | URL            | URL of the restaurant's store page on your platform.                                                                                  | No       |
+| `menu_items`           | Array of Menu item objects | The items on the restaurant's menu, for a per-item report (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>). Maximum of 1000 items. Sending `[]` is the same as omitting the field. | No       |
+| `menu_items[].internal_id` | String     | Your ID for the menu item. Must be unique within `menu_items`. Treated as an opaque string.                                           | Yes      |
+| `menu_items[].name`    | String         | Name of the menu item.                                                                                                                | Yes      |
+| `menu_items[].description` | String     | Description of the menu item.                                                                                                         | No       |
 
 <aside class="notice">
 
@@ -597,6 +711,21 @@ Always check <a href="#availability">availability</a> before trying to create a 
 *One of the following is required: <code>address</code>; or <code>latitude</code> and <code>longitude</code>. If both are provided, only <code>latitude</code> and <code>longitude</code> will be used
 </aside>
 
+<aside class="notice">
+<code>restaurant_name</code>, <code>restaurant_address</code>, <code>source_url</code> and <code>menu_items</code> only apply when <code>shoottype</code> is <code>food</code>. If you send any of them with another shoot type, they are ignored: they are not validated, not stored and not returned in the response, and the request still succeeds. When <code>shoottype</code> is <code>food</code>, you get a 400 error with code <code>ValidationError</code> when <code>menu_items</code> has more than 1000 items, when two items share the same <code>internal_id</code>, or when an item is missing its <code>internal_id</code> or <code>name</code>. The booking's own <code>internal_id</code> is unchanged: it is still your ID for the booking.
+</aside>
+
+### Food Booking Menu Items
+
+A `food` booking created with a non-empty `menu_items` list returns a `menu_items` list: Snappr's report of which menu items got photos. It is returned by <a href="#create-new-booking">Create New Booking</a>, <a href="#get-all-bookings">Get All Bookings</a>, <a href="#get-single-booking">Get Single Booking</a> and the booking webhook events (see <a href="#custom-webhooks">Custom Webhooks</a>). Each item has the same fields as in a magic job's report (see <a href="#menu-items-report">Menu Items Report</a>). `restaurant_name`, `restaurant_address` and `source_url` are returned only if you sent them.
+
+Every item is `pending` until the booking is `completed`. When the booking completes, Snappr matches the photographer's delivered photos to your items by `internal_id`, falling back to the item's name. Each item you sent then becomes `delivered` (it got at least one photo) or `not_found` (it got none), and the items Snappr found in the photos but you didn't send are added with `provided: false`. Items you sent come first, in the order you sent them. Join photos to items with each image's `menu_item_uids` (see <a href="#get-all-images-for-a-booking">Get All Images For a Booking</a>).
+
+Your items are used for this report, not as a shot list for the photographer, so sending menu items doesn't guarantee photos of them: the report tells you which ones got photos.
+
+<aside class="notice">
+Unlike a magic job, which lists the items Snappr discovered even when you sent no <code>menu_items</code>, a booking only has <code>menu_items</code> if you sent a non-empty list. Bookings created without menu items, and bookings of other shoot types, don't include the field.
+</aside>
 
 ## Get All Bookings
 
@@ -679,7 +808,7 @@ let bookings = api.bookings.get({
 }
 ```
 
-This endpoint retrieves all bookings.
+This endpoint retrieves all bookings. A `food` booking created with menu items also includes `menu_items` (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>).
 
 ### HTTP Request
 
@@ -747,7 +876,77 @@ let bookings = api.bookings.get({
 }
 ```
 
-This endpoint retrieves a specific booking using the ID of the booking.
+> Example JSON response for a completed food booking with menu items:
+
+```json
+{
+  "uid": "5d8f2a4c-1e6b-4c9a-8f3d-7b2e9a1c4f6e",
+  "title": "Sample Bistro Menu Shoot",
+  "status": "completed",
+  "credits": 249,
+  "latitude": 34.0522,
+  "longitude": -118.2437,
+  "shoottype": "food",
+  "start_at": "2026-12-01T15:00:00Z",
+  "duration": 60,
+  "location_notes": "Sample Bistro - ask for the manager at the front counter on arrival",
+  "style_notes": "One hero shot per dish on a plain table; natural light where possible",
+  "customer_firstname": "Mary",
+  "customer_surname": "Smith",
+  "customer_email": "test@snappr.com",
+  "customer_mobilephone": "+14153339966",
+  "customer_company": "Sample Bistro",
+  "internal_id": "456-DEF",
+  "creator_name": "Hollie B.",
+  "creator_id": "69a66cb2-dcb2-4803-9d23-f7894e443e68",
+  "creator_profile_image_url": "https://snappr.imgix.net/d7f5be08-e189-4c9b-bdb5-172111560d9d?auto=format&w=300&h=300&fit=facearea&facepad=2&s=3dd41a8404ba86d78d54adad40fd9108",
+  "restaurant_name": "Sample Bistro",
+  "restaurant_address": "123 Example Street, Sampletown, CA 90000, USA",
+  "source_url": "https://www.restaurant-app.example/store/Zk8pQ2mN7xL4",
+  "menu_items": [
+    {
+      "uid": "1f3b5d7a-9c2e-4a6b-8d0f-3e5a7c9b1d4f",
+      "internal_id": "7c1e3a5b-9d2f-4b6e-8a0c-2f4d6b8e1a3c",
+      "name": "Pizza Margherita (Small)",
+      "description": "Tomato, mozzarella and basil, 25 cm",
+      "provided": true,
+      "status": "delivered",
+      "images_count": 1
+    },
+    {
+      "uid": "6d8f0b2c-4e6a-4c8e-a1b3-5f7d9b1e3a6c",
+      "internal_id": "3e5a7c9b-1d4f-4a6c-9e2b-5d7f9a1c3e6b",
+      "name": "Pizza Margherita (Large)",
+      "description": "Tomato, mozzarella and basil, 35 cm",
+      "provided": true,
+      "status": "delivered",
+      "images_count": 1
+    },
+    {
+      "uid": "b3d5f7a9-1c4e-4e6a-9c2d-7a9b1d3f5e8a",
+      "internal_id": "9a2c4e6b-8d1f-4c3a-b5e7-0f2a4c6e8b1d",
+      "name": "Panna Cotta",
+      "description": null,
+      "provided": true,
+      "status": "not_found",
+      "images_count": 0
+    },
+    {
+      "uid": "e8a0c2d4-6f1b-4b3d-8e5f-9c1a3e5b7d0f",
+      "internal_id": null,
+      "name": "Garlic Bread",
+      "description": null,
+      "provided": false,
+      "status": "delivered",
+      "images_count": 1
+    }
+  ],
+  "created_at": "2026-11-18T09:12:00Z",
+  "updated_at": "2026-12-02T18:40:00Z"
+}
+```
+
+This endpoint retrieves a specific booking using the ID of the booking. On a `food` booking created with menu items, `menu_items` reports which items got photos (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>).
 
 ### HTTP Request
 
@@ -1568,7 +1767,54 @@ let bookings = api.bookings.getImages({
 }
 ```
 
+> Example request for a food booking with menu items:
+
+```shell
+curl "https://api.snappr.com/bookings/5d8f2a4c-1e6b-4c9a-8f3d-7b2e9a1c4f6e/images" \
+  -H "Authorization: Bearer zkTvDUe5jJBJFcjc6ckwapEwax8Kbs7h3nv2SHXSgh5qGhHP22ggsu4fbdZgf25z" \
+  -H 'accept-version: 1.0.0'
+```
+
+> Example JSON response for a food booking with menu items:
+
+```json
+{
+  "results": [
+    {
+      "uid": "4b6d8f0a-2c4e-4a6c-8e1b-3d5f7a9c1e2b",
+      "file_name": "SB 001.JPG",
+      "internal_ids": ["7c1e3a5b-9d2f-4b6e-8a0c-2f4d6b8e1a3c", "3e5a7c9b-1d4f-4a6c-9e2b-5d7f9a1c3e6b"],
+      "menu_item_uids": ["1f3b5d7a-9c2e-4a6b-8d0f-3e5a7c9b1d4f", "6d8f0b2c-4e6a-4c8e-a1b3-5f7d9b1e3a6c"],
+      "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/4b6d8f0a-2c4e-4a6c-8e1b-3d5f7a9c1e2b?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=Hn3Kq8Vw2Lp6Xc0Rt5Ym9Bd4Fs7%3D",
+      "url_thumb": "https://img.snappr.co/Tq6Wm1Rk9Zp3Lc7Xv2Nb5Hd8Gs0=/fit-in/600x0/4b6d8f0a-2c4e-4a6c-8e1b-3d5f7a9c1e2b"
+    },
+    {
+      "uid": "8f0b2d4e-6a8c-4e1a-b3d5-7f9a1c3e5b6d",
+      "file_name": "SB 002.JPG",
+      "internal_ids": [],
+      "menu_item_uids": ["e8a0c2d4-6f1b-4b3d-8e5f-9c1a3e5b7d0f"],
+      "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/8f0b2d4e-6a8c-4e1a-b3d5-7f9a1c3e5b6d?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=Pz5Lr8Ck2Wq6Ht0Ys4Nm9Fb3Vd1%3D",
+      "url_thumb": "https://img.snappr.co/Gk2Vn7Ws4Qc9Ry1Lp6Xm3Td8Bh5=/fit-in/600x0/8f0b2d4e-6a8c-4e1a-b3d5-7f9a1c3e5b6d"
+    },
+    {
+      "uid": "2a4c6e8f-0b2d-4f4a-9c6e-1b3d5f7a9c0e",
+      "file_name": "SB 003.JPG",
+      "internal_ids": [],
+      "menu_item_uids": [],
+      "url_original": "https://prod-us-media-snappr.s3.us-west-1.amazonaws.com/2a4c6e8f-0b2d-4f4a-9c6e-1b3d5f7a9c0e?AWSAccessKeyId=AKIAIIR7FMZ7RANC45MA&Expires=1586478927&Signature=Mw8Jd3Tx6Kq1Zr5Lc9Vn2Hp7Ys4%3D",
+      "url_thumb": "https://img.snappr.co/Xc4Ph9Lt2Rm7Wk3Qd6Nv1Bs8Fz5=/fit-in/600x0/2a4c6e8f-0b2d-4f4a-9c6e-1b3d5f7a9c0e"
+    }
+  ],
+  "count": 3,
+  "limit": 1000,
+  "offset": 0,
+  "total": 3
+}
+```
+
 This endpoint retrieves all the images of a specific booking.
+
+On a booking that has `menu_items` (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>), each image also lists the menu items it shows. One image can belong to several items — for example, one photo for several sizes of a pizza. `menu_item_uids` lists the `uid`s of those items, so you can join each image to the booking's `menu_items` exactly. `internal_ids` lists those items' `internal_id`s, skipping any item whose `internal_id` is `null`. Both are empty for a photo that shows none of the items, such as a photo of the restaurant itself. Images of other bookings don't include these fields.
 
 ### HTTP Request
 
@@ -2040,7 +2286,7 @@ This endpoint returns all available Snappr editing job types.
 }
 ```
 
-You can set a custom webhook URL in the Snappr Photography Portal GUI. If the custom webhook URL is set, we will POST to that URL every time a booking is created or updated, and every time a magic job delivers a batch of images (an `images_delivered` event). A magic job can deliver several batches over time, so multiple `images_delivered` events may arrive for the same `magic_job.uid`, each with a different `delivery_uid`. The recommended approach is to treat every delivery the same way: retrieve the job's full image set via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a> and replace anything you have already stored for that job — the endpoint always returns the current complete set.
+You can set a custom webhook URL in the Snappr Photography Portal GUI. If the custom webhook URL is set, we will POST to that URL every time a booking is created or updated, and every time a magic job delivers a batch of images (an `images_delivered` event). On a `food` booking, booking events also carry the restaurant fields you sent and `menu_items` (see <a href="#food-booking-menu-items">Food Booking Menu Items</a>). A magic job can deliver several batches over time, so multiple `images_delivered` events may arrive for the same `magic_job.uid`, each with a different `delivery_uid`. The recommended approach is to treat every delivery the same way: retrieve the job's full image set via <a href="#get-all-images-for-a-magic-job">Get All Images For a Magic Job</a> and replace anything you have already stored for that job — the endpoint always returns the current complete set.
 
 <aside class="notice">
 
