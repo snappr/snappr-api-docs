@@ -1314,12 +1314,12 @@ components:
         source_platform:
           type: [string, 'null']
           description: Platform Snappr found the listing on.
-        source_url:
-          type: [string, 'null']
-          format: uri
         internal_id:
           type: [string, 'null']
           description: Your restaurant's or menu's ID, as you sent it.
+        source_url:
+          type: [string, 'null']
+          format: uri
         images_count:
           type: integer
           description: Number of delivered images. Present only when `status` is `completed`.
