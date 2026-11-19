@@ -128,6 +128,8 @@ Each API key can make 1,000 requests per minute. Every response says how much of
 
 When `r` reaches `0`, wait `t` seconds before sending more requests. A request that goes over the limit gets a `429` error with code `RateLimit`; retry it after the `Retry-After` delay.
 
+Each of our API servers keeps its own count, and your requests are spread across them, so `r` is an estimate: it can go up between two requests. Use it to pace your requests, and treat a `429` with `Retry-After` as the signal to stop.
+
 # Versioning and Deprecation
 
 The current API version is `1.0.0`. You can send it in the optional `accept-version` header, as the examples in these docs do. Requests without the header get `1.0.0`.

@@ -1029,7 +1029,7 @@ components:
         type: string
       example: '"default";q=1000;w=60'
     RateLimit:
-      description: The quota left, as an IETF `RateLimit` field. `r` is the number of requests remaining in the current window, which resets in `t` seconds.
+      description: The quota left, as an IETF `RateLimit` field. `r` is the number of requests remaining in the current window, which resets in `t` seconds. Each API server keeps its own count, so `r` is an estimate and can go up between requests.
       schema:
         type: string
       example: '"default";r=998;t=42'
