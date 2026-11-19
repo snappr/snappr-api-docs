@@ -239,6 +239,12 @@
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
           </li>
           <li>
+            <a href="#rate-limits" class="toc-h1 toc-link" data-title="Rate Limits">Rate Limits</a>
+          </li>
+          <li>
+            <a href="#versioning-and-deprecation" class="toc-h1 toc-link" data-title="Versioning and Deprecation">Versioning and Deprecation</a>
+          </li>
+          <li>
             <a href="#coverage" class="toc-h1 toc-link" data-title="Coverage">Coverage</a>
               <ul class="toc-list-h2">
                   <li>
@@ -460,6 +466,61 @@ let api = snappr.authorize(
 <aside class="notice">
 You must replace <code>api_key</code> with your user API key.
 </aside>
+<h1 id='rate-limits'>Rate Limits</h1>
+<blockquote>
+<p>Headers on every response:</p>
+</blockquote>
+<pre class="highlight http tab-http"><code><span class="err">RateLimit-Policy: "default";q=1000;w=60
+RateLimit: "default";r=998;t=42
+</span></code></pre>
+<blockquote>
+<p>Headers on a 429 response:</p>
+</blockquote>
+<pre class="highlight http tab-http"><code><span class="err">RateLimit-Policy: "default";q=1000;w=60
+RateLimit: "default";r=0;t=17
+Retry-After: 17
+</span></code></pre>
+<p>Each API key can make 1,000 requests per minute. Every response says how much of that you have left, using the <a href="https://datatracker.ietf.org/doc/draft-ietf-httpapi-ratelimit-headers/">IETF RateLimit header fields</a>:</p>
+
+<table><thead>
+<tr>
+<th>Header</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>RateLimit-Policy</code></td>
+<td>The quota: <code>q</code> requests per window of <code>w</code> seconds.</td>
+</tr>
+<tr>
+<td><code>RateLimit</code></td>
+<td>What&#39;s left: <code>r</code> requests remaining in the current window, which resets in <code>t</code> seconds.</td>
+</tr>
+<tr>
+<td><code>Retry-After</code></td>
+<td>Sent only with a <code>429 RateLimit</code> error: the number of seconds to wait before sending another request.</td>
+</tr>
+</tbody></table>
+
+<p>When <code>r</code> reaches <code>0</code>, wait <code>t</code> seconds before sending more requests. A request that goes over the limit gets a <code>429</code> error with code <code>RateLimit</code>; retry it after the <code>Retry-After</code> delay.</p>
+
+<p>Each of our API servers keeps its own count, and your requests are spread across them, so <code>r</code> is an estimate: it can go up between two requests. Use it to pace your requests, and treat a <code>429</code> with <code>Retry-After</code> as the signal to stop.</p>
+<h1 id='versioning-and-deprecation'>Versioning and Deprecation</h1>
+<p>The current API version is <code>1.0.0</code>. You can send it in the optional <code>accept-version</code> header, as the examples in these docs do. Requests without the header get <code>1.0.0</code>.</p>
+
+<p>We add to version <code>1.0.0</code> without notice, and these changes don&#39;t get a new version:</p>
+
+<ul>
+<li>New endpoints.</li>
+<li>New optional request parameters.</li>
+<li>New fields in responses and webhook payloads.</li>
+<li>New error codes.</li>
+<li>New values in fields that hold a status or type.</li>
+</ul>
+
+<p>Write your integration so it ignores fields and values it doesn&#39;t recognize.</p>
+
+<p>The <a href="https://docs.snappr.com/openapi.json">OpenAPI spec</a> marks deprecated parameters and fields with <code>deprecated: true</code>. The <code>update_at</code> and <code>photographer_name</code> booking fields are deprecated: use <code>updated_at</code> and <code>creator_name</code>.</p>
 <h1 id='coverage'>Coverage</h1><h2 id='get-coverage'>Get Coverage</h2>
 <blockquote>
 <p>Example request when latitude and longitude are provided:</p>
@@ -3183,7 +3244,7 @@ All event families share this URL. Dispatch on which resource key is present in 
 <tr>
 <td>429</td>
 <td>RateLimit</td>
-<td>The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header that is included on API responses.</td>
+<td>The API key went over its rate limit. Wait the number of seconds in the <code>Retry-After</code> header, then retry (see <a href="#rate-limits">Rate Limits</a>).</td>
 </tr>
 <tr>
 <td>500</td>
