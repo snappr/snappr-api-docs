@@ -1129,7 +1129,6 @@ components:
         Error response. `code` is one of: `ValidationError`, `BadRequest`, `NoCoverage`, `NotAvailable`,
         `OutsideRegion`, `CreatorNotFound`, `Unauthorized`, `InsufficientCredits`, `NotFound`, `RateLimit`,
         `UnknownError`, `ServerError`. New codes may be added.
-      required: [code]
       properties:
         code:
           type: string
