@@ -144,15 +144,7 @@ We add to version `1.0.0` without notice, and these changes don't get a new vers
 
 Write your integration so it ignores fields and values it doesn't recognize.
 
-Breaking changes are released only as a new API version, which you choose with the `accept-version` header. Breaking changes include removing or renaming an endpoint, parameter or field, changing a field's type, and making an optional parameter required. Your requests keep getting `1.0.0` until you change the header.
-
-Before we remove an endpoint, parameter or field, or retire an API version, we deprecate it and give at least **6 months' notice**:
-
-* We announce the deprecation and the removal date in these docs and email the admins of every account that uses the API.
-* The <a href="https://docs.snappr.com/openapi.json">OpenAPI spec</a> marks deprecated parameters and fields with `deprecated: true`.
-* Responses from a deprecated endpoint or version carry a `Deprecation` header (<a href="https://www.rfc-editor.org/rfc/rfc9745">RFC 9745</a>) with the date it was deprecated, and a `Sunset` header (<a href="https://www.rfc-editor.org/rfc/rfc8594">RFC 8594</a>) with the date it will be removed.
-
-A deprecated item keeps working until its removal date. The `update_at` and `photographer_name` booking fields are deprecated, with no removal date set yet: use `updated_at` and `creator_name`.
+The <a href="https://docs.snappr.com/openapi.json">OpenAPI spec</a> marks deprecated parameters and fields with `deprecated: true`. The `update_at` and `photographer_name` booking fields are deprecated: use `updated_at` and `creator_name`.
 
 # Coverage
 

@@ -19,10 +19,9 @@ info:
     and `RateLimit` headers, and a `429` response adds `Retry-After`
     (https://docs.snappr.com/#rate-limits).
 
-    The current version is `1.0.0`, sent in the optional `accept-version` header. Additive changes ship
-    without a new version; breaking changes ship only as a new version. Removing an endpoint, parameter
-    or field, or retiring a version, is announced at least 6 months ahead, marked `deprecated: true` in
-    this spec, and signalled with `Deprecation` and `Sunset` response headers
+    The current version is `1.0.0`, sent in the optional `accept-version` header. Additive changes (new
+    endpoints, optional parameters, response fields, error codes and values) ship without a new version.
+    Deprecated parameters and fields are marked `deprecated: true` in this spec
     (https://docs.snappr.com/#versioning-and-deprecation).
   contact:
     name: Snappr Enterprise Support
