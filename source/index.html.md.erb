@@ -101,6 +101,51 @@ An API key needs to be included in all API requests in a header of this format:
 You must replace <code>api_key</code> with your user API key.
 </aside>
 
+# Rate Limits
+
+> Headers on every response:
+
+```http
+RateLimit-Policy: "default";q=1000;w=60
+RateLimit: "default";r=998;t=42
+```
+
+> Headers on a 429 response:
+
+```http
+RateLimit-Policy: "default";q=1000;w=60
+RateLimit: "default";r=0;t=17
+Retry-After: 17
+```
+
+Each API key can make 1,000 requests per minute. Every response says how much of that you have left, using the <a href="https://datatracker.ietf.org/doc/draft-ietf-httpapi-ratelimit-headers/">IETF RateLimit header fields</a>:
+
+| Header             | Meaning                                                                                               |
+| ------------------ | ----------------------------------------------------------------------------------------------------- |
+| `RateLimit-Policy` | The quota: `q` requests per window of `w` seconds.                                                    |
+| `RateLimit`        | What's left: `r` requests remaining in the current window, which resets in `t` seconds.               |
+| `Retry-After`      | Sent only with a `429 RateLimit` error: the number of seconds to wait before sending another request. |
+
+When `r` reaches `0`, wait `t` seconds before sending more requests. A request that goes over the limit gets a `429` error with code `RateLimit`; retry it after the `Retry-After` delay.
+
+Each of our API servers keeps its own count, and your requests are spread across them, so `r` is an estimate: it can go up between two requests. Use it to pace your requests, and treat a `429` with `Retry-After` as the signal to stop.
+
+# Versioning and Deprecation
+
+The current API version is `1.0.0`. You can send it in the optional `accept-version` header, as the examples in these docs do. Requests without the header get `1.0.0`.
+
+We add to version `1.0.0` without notice, and these changes don't get a new version:
+
+* New endpoints.
+* New optional request parameters.
+* New fields in responses and webhook payloads.
+* New error codes.
+* New values in fields that hold a status or type.
+
+Write your integration so it ignores fields and values it doesn't recognize.
+
+The <a href="https://docs.snappr.com/openapi.json">OpenAPI spec</a> marks deprecated parameters and fields with `deprecated: true`. The `update_at` and `photographer_name` booking fields are deprecated: use `updated_at` and `creator_name`.
+
 # Coverage
 
 ## Get Coverage
